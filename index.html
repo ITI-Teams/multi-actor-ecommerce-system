@@ -4,8 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ecommerce</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <script src="https://kit.fontawesome.com/4f91921791.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="./assets/css/styles.css">
 </head>
 <body>
-    
+    <header id="header-wrapper" class="">
+        <!-- <nav id="header-nav-wrapper"></nav> -->
+        <nav
+            class="navbar navbar-expand-md navbar-light bg-light"
+        >
+            <div class="container-fluid container-md d-flex flex-column">
+                <div class="container-fluid navbar">
+                    <button
+                    class="navbar-toggler d-lg-none border-0"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#collapsibleNavId"
+                    aria-controls="collapsibleNavId"
+                    aria-expanded="false"
+                    aria-label="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon fs-6"></span>
+                </button>
+                <a class="navbar-brand fw-bold fs-4" href="#">Buck Mason</a>
+                <div class="collapse navbar-collapse" id="collapsibleNavId">
+                    <ul class="navbar-nav me-auto mt-2 mt-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" aria-current="page"
+                                >Home
+                                <span class="visually-hidden">(current)</span></a
+                            >
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Link</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a
+                                class="nav-link dropdown-toggle"
+                                href="#"
+                                id="dropdownId"
+                                data-bs-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                                >Dropdown</a
+                            >
+                            <div
+                                class="dropdown-menu"
+                                aria-labelledby="dropdownId"
+                            >
+                                <a class="dropdown-item" href="#"
+                                    >Action 1</a
+                                >
+                                <a class="dropdown-item" href="#"
+                                    >Action 2</a
+                                >
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <p class="text-center mt-3">
+                    <button
+                        class="border-0 d-flex justify-content-center align-items-center gap-2"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#searchIcon"
+                        aria-expanded="false"
+                        aria-controls="searchIcon"
+                    >
+                        <i class="fas fa-search fa-rotate-90"></i>
+                        <i class="fas fa-cart-arrow-down"></i>
+                    </button>
+                </p>
+                <div class="collapse" id="searchIcon">
+                    <form class="d-flex my-2 my-lg-0 collapse">
+                            <input
+                                class="form-control me-sm-2"
+                                type="text"
+                                placeholder="Search"
+                            />
+                        </form>
+                </div>
+                </div>
+                
+
+
+                <div class="col d-md-none gender-section ">
+                    <p>Lorem, ipsum.</p>
+                    <p>Dolore, odio.</p>
+                </div>
+
+                
+            </div>
+        </nav>
+        
+    </header>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
 </body>
 </html>
