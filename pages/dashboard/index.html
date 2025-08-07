@@ -5,33 +5,129 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard - Home</title>
     <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../assets/css/all.min.css" />
     <link rel="stylesheet" href="../../assets/css/dashboard-styles.css" />
-    <!--Start Test style-->
-    <style>
-
-    </style>
-    <!--End Test style-->
 </head>
-<body>
-    <!--Start Header-->
-    <header>
-        <nav class="navbar bg-body-tertiary">
-            <div class="container-fluid">
-                <a class="navbar-brand">Navbar</a>
-                <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search"/>
-                <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+<body class="min-vh-100 d-flex flex-column">
+    <div class="container-fluid flex-grow-1">
+        <div class="row flex-nowrap">
+            <!--Start NavBar-->
+            <nav class="col-auto bg-dark text-white p-0 min-vh-100" id="sidebar">
+                <div class="d-flex flex-column align-items-start pt-2" id="sidebar-content">
+                    <div class="w-100 d-flex align-items-center px-3 py-3" id="toggle-area">
+                        <a href="#" class="d-flex align-items-center text-white text-decoration-none me-3" id="logo">
+                            <img src="https://via.placeholder.com/30" alt="Logo" width="30" height="30" class="me-2">
+                            <span class="fs-5" id="logo-text">Larkon</span>
+                        </a>
+                        <button class="btn btn-sm btn-outline-light ms-auto" id="collapse-btn">
+                            <i class="fas fa-greater-than"></i>
+                        </button>
+                    </div>
+                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-start" id="menu">
+                        <li class="nav-item w-100 active">
+                            <a href="#" class="nav-link text-white px-0">
+                            <i class="fas fa-home"></i> <span class="ms-2 menu-text">Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item w-100">
+                            <a href="#" class="nav-link text-white px-0">
+                            <i class="fas fa-box"></i> <span class="ms-2 menu-text">Products</span>
+                            </a>
+                        </li>
+                        <li class="nav-item w-100">
+                            <a href="#" class="nav-link text-white px-0">
+                            <i class="fas fa-th"></i> <span class="ms-2 menu-text">Categories</span>
+                            </a>
+                        </li>
+                        <li class="nav-item w-100">
+                            <a href="#" class="nav-link text-white px-0">
+                            <i class="fas fa-cogs"></i> <span class="ms-2 menu-text">Settings</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            <!--End NavBar-->
+            <div class="col p-0">
+                <!--Start Header-->
+                <header>
+                    <nav class="navbar shadow-sm px-3">
+                        <div class="container-fluid d-flex justify-content-between">
+                            <button id="modile-offcanvas" class="btn btn-outline-dark d-md-none me-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#mobileSidebar">
+                                <i class="fas fa-bars"></i>
+                            </button>
+                            <span class="navbar-brand mb-0 h1">Dashboard</span>
+                            <div class="dropdown">
+                                <button class="btn btn-light me-2" id="toggleDarkMode">
+                                    <i class="fas fa-moon" id="darkIcon"></i>
+                                </button>
+                                <button class="btn btn-light" type="button" data-bs-toggle="dropdown">
+                                    <i class="fas fa-user"></i>
+                                </button>
+                                <ul class="dropdown-menu dropdown-menu-end">
+                                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                    <li><a class="dropdown-item" href="#">Logout</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </nav>
+                    <!-- Offcanvas Sidebar for Mobile -->
+                    <div class="offcanvas offcanvas-start bg-dark text-white" tabindex="-1" id="mobileSidebar">
+                        <div class="offcanvas-header">
+                            <h5 class="offcanvas-title">Larkon</h5>
+                            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                        </div>
+                        <div class="offcanvas-body">
+                            <ul class="nav nav-pills flex-column">
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link text-white active">
+                                        <i class="fas fa-home"></i> 
+                                        <span class="ms-2">Dashboard</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link text-white">
+                                        <i class="fas fa-box"></i> 
+                                        <span class="ms-2">Products</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link text-white">
+                                        <i class="fas fa-th"></i> 
+                                        <span class="ms-2">Categories</span>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="#" class="nav-link text-white">
+                                        <i class="fas fa-cogs"></i> 
+                                        <span class="ms-2">Settings</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </header>
+                <!--End Header-->
+                <!--Start Main Section-->
+                <main class="container py-4">
+                    <h2>Welcome to the Dashboard</h2>
+                    <p>This is where your dynamic content will appear.</p>
+                </main>
+                <!--End Main Section-->
+                <!--Start Footer-->
+                <footer class="text-center py-3 shadow-sm">
+                    <div class="container">
+                        <p class="mb-0">Designed by ITI PHP Track Team &copy; <small>version 1.0</small></p>
+                    </div>
+                </footer>
+                <!--End Footer-->
             </div>
-        </nav>
-    </header>
-    <!--End Header-->
-    <!--Start NavBar-->
-    <!--End NavBar-->
-    <!--Start Main Section-->
-    <!--End Main Section-->
-    <!--Start Footer-->
-    <!--End Footer-->
+        </div>
+    </div>
     <script src="../../assets/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/all.min.js"></script>
+    <script src="../../assets/js/dashboard.js"></script>
+    
 </body>
 </html>

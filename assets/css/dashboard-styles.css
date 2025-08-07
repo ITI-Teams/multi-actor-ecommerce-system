@@ -1,0 +1,84 @@
+main.container.py-4{
+    min-height: 84vh;
+}
+#sidebar {
+    width: 250px;
+    min-width: 250px;
+    max-width: 250px;
+    transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+    position: relative;
+}
+#sidebar.collapsed {
+    width: 80px;
+    min-width: 80px;
+    max-width: 80px;
+}
+#sidebar.collapsed .menu-text,
+#sidebar.collapsed #logo-text,
+#sidebar.collapsed #collapse-btn {
+    display: none !important;
+}
+#sidebar:hover {
+    width: 250px;
+    min-width: 250px;
+    max-width: 250px;
+}
+#sidebar:hover .menu-text,
+#sidebar:hover #logo-text,
+#sidebar:hover #collapse-btn {
+    display: inline !important;
+}
+#sidebar .nav-link {
+    justify-content: start;
+    padding: 0.5rem 0.8rem;
+}
+#sidebar.collapsed .nav-link {
+    justify-content: center;
+}
+#sidebar.collapsed .nav-link .menu-text {
+    display: none;
+}
+#menu {
+    width: 100%;
+}
+@media (max-width: 768px) {
+    #sidebar {
+        display: none !important;
+    }
+}
+#sidebar li {
+    padding-left: 15px;
+}
+#sidebar li a:hover{
+    color: #5d5b5a !important;
+}
+#sidebar .active a:hover{
+    color: #f67f00 !important;
+}
+#sidebar .active {
+    border-left: 4px solid #f67f00;
+    padding-left: 15px;
+}
+#sidebar .active svg{
+    color: #f67f00 !important;
+}
+/* Strart Dark Mode*/
+body.bg-dark header,
+body.bg-dark footer{
+    background-color: #22282e;
+}
+body.bg-dark header nav span{
+    color: #ffffff !important;
+}
+body.bg-dark #sidebar{
+    background-color: #262d34 !important;
+}
+#sidebar {
+  box-shadow: inset 0px 0px 10px rgb(84 77 77);
+}
+body.bg-dark #modile-offcanvas{
+    color: #fff;
+    border: 2px solid #fff;
+}
+/* End Dark Mode*/
