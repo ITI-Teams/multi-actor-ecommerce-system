@@ -1,26 +1,128 @@
 * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-
-    font-family: acumin-pro, Helvetica, sans-serif;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: acumin-pro, Helvetica, sans-serif;
+  letter-spacing: 2px;
 }
 
+/* header */
 #header-wrapper {
-    background-image: url('');
+  border: 1px solid #000;
+  height: 100vh;
+  position: relative;
+}
+#bg-video {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  z-index: -1;
+}
+.profile .dropdown-item {
+  color: #000 !important;
+}
+#header-wrapper input {
+  outline: none;
+  border-radius: 5px;
+  background: transparent;
+}
+#header-wrapper .mycart p {
+  color: black !important;
+}
+#header-wrapper input:focus {
+  border: 1px solid #bababa;
+  background: white;
+}
+.bg-nav-transparent,
+.bg-nav-transparent a,
+.bg-nav-transparent p,
+.bg-nav-transparent button,
+.bg-nav-transparent span {
+  transition: all 0.5s linear;
 }
 
-.navbar:hover {
-    transition: all 5s ease-in-out;
+@media (min-width: 768px) {
+  .bg-nav-transparent {
+    background-color: transparent !important;
+    a,
+    p,
+    span,
+    button,
+    .navbar-toggler {
+      color: white !important;
+    }
+  }
+  .bg-nav-transparent:hover {
+    background-color: white !important;
+    a,
+    p,
+    span,
+    button,
+    .navbar-toggler {
+      color: black !important;
+    }
+  }
 }
-.gender-section {
-    opacity: 0;
-    max-height: 0;
-    overflow: hidden;
-    transition: all 0.5s ease-in-out, max-height 0.5 ease-in-out;
-};
 
-.navbar:hover .gender-section {
-    opacity: 1;
-    max-height: 200px;
+/* footer */
+
+.footer {
+  background-color: #f8f9fa;
+  padding: 40px 0;
+  font-family: Arial, sans-serif;
+  font-size: 14px;
+}
+.footer h1,
+.footer h3 {
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+.footer h1 {
+  font-size: 24px;
+}
+.footer h3 {
+  font-size: 18px;
+}
+.footer .subscribe-input {
+  border: 1px solid #ddd;
+  padding: 10px;
+  width: 80%;
+  max-width: 300px;
+  margin-bottom: 15px;
+  background-color: #000;
+  color: white;
+}
+.footer .divider {
+  border-top: 1px solid #ddd;
+  margin: 20px 0;
+}
+.footer .support-info {
+  line-height: 1.8;
+}
+.footer .support-info a {
+  text-decoration: none !important;
+  color: white;
+  width: max-content;
+  transition: all 0.3s ease-in-out;
+}
+.footer a:hover,
+.nav-item a:hover {
+  color: #b6b6b6;
+}
+.footer .account-info {
+  width: 100%;
+}
+.footer a {
+  width: max-content;
+  transition: all 0.3s ease-in-out;
+}
+.footer .copyright {
+  margin-top: 30px;
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid #515151;
 }
