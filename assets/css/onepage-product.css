@@ -1,0 +1,136 @@
+#header-wrapper {
+    height: fit-content;
+    padding-bottom: 72px;
+}
+
+/* Thumbnails column */
+.thumbnail-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.thumbnail-img {
+    cursor: pointer;
+    border: 2px solid transparent;
+    width: 80px;
+    transition: border 0.2s;
+}
+
+.thumbnail-img:hover {
+    border-color: #aaa;
+}
+
+.thumbnail-img.active {
+    border-color: black;
+}
+
+/* Main image with fade */
+.main-img {
+    width: 100%;
+    border-radius: 4px;
+    opacity: 1;
+    transition: opacity 0.4s ease-in-out;
+}
+
+/* mainProductImg zoomout*/
+#mainProductImg.zoomout {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Buttons & sections */
+.price {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+/* Color swatches */
+.color-box {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #ccc;
+    display: inline-block;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.color-box.active {
+    border: 2px solid black;
+}
+
+/* Sizes */
+.size-btn {
+    margin: 5px 5px 5px 0;
+}
+
+.size-btn.active {
+    background-color: black;
+    color: white;
+}
+
+.section-title {
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+/* Disabled cart button */
+.btn-disabled {
+    background-color: #ccc !important;
+    border: none;
+    cursor: not-allowed;
+}
+
+/* Rating Stars */
+.rating {
+    display: inline-flex;
+    align-items: center;
+}
+
+.star {
+    font-size: 1rem;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.star.hover,
+.star.selected {
+    color: gold;
+}
+
+.reviews-link {
+    margin-left: 10px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    text-decoration: underline;
+    color: #555;
+}
+
+#Some-RelatedItems {
+    padding-top: 160px;
+    padding-left: 30px;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.main {
+    display: flex;
+    flex-wrap: wrap;
+    /* padding-top: 200px; */
+}
+
+
+.main>div {
+    margin-left: 2%;
+    text-align: center;
+    font-size: 40px;
+    margin-bottom: 10px;
+}
+
+.main>div>img {
+    width: 400px;
+    padding-bottom: 20px;
+    cursor: pointer;
+
+}
