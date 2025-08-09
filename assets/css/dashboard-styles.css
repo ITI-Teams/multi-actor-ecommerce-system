@@ -1,3 +1,23 @@
+body {
+    transition: all 0.3s ease, color 0.3s ease;
+}
+body.bg-dark header,
+body.bg-dark footer {
+    transition: background-color 0.3s ease;
+}
+body.bg-dark #sidebar {
+    transition: all 0.7s ease;
+}
+body.bg-dark {
+    background-color: #22282e !important;
+    color: #ffffff !important;
+}
+body.bg-dark header nav span {
+    transition: color 0.3s ease;
+}
+body.bg-dark #modile-offcanvas {
+    transition: color 0.3s ease, border-color 0.3s ease;
+}
 main.container.py-4{
     min-height: 84vh;
 }
@@ -38,6 +58,9 @@ main.container.py-4{
 }
 #sidebar.collapsed .nav-link .menu-text {
     display: none;
+}
+#collapse-btn i{
+    transition: all 0.8s ease;
 }
 #menu {
     width: 100%;
@@ -82,3 +105,96 @@ body.bg-dark #modile-offcanvas{
     border: 2px solid #fff;
 }
 /* End Dark Mode*/
+
+/* Start Splash Screen */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url('../img/Splash-background.jpeg') center center / cover no-repeat;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.7s ease, visibility 0.7s ease;
+}
+
+#loading-screen.hidden {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.logo-container {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.logo-image {
+    width: 200px;
+    height: auto;
+    margin-bottom: 20px;
+}
+
+.logo span{
+    font-size: 100px;
+    background: -webkit-linear-gradient( #66655d, #151112);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent; 
+    font-weight: bold;
+}
+
+.logo span {
+    animation: fadeIn 1s ease forwards;
+}
+
+.logo span:nth-child(1) {
+    animation-delay: 0.2s;
+}
+
+.logo span:nth-child(2) {
+    animation-delay: 0.4s;
+}
+
+.logo span:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+.logo span:nth-child(4) {
+    animation-delay: 0.8s;
+}
+
+.logo span:nth-child(5) {
+    animation-delay: 1s;
+}
+
+.logo span:nth-child(6) {
+    animation-delay: 1.2s;
+}
+
+.logo span:nth-child(7) {
+    animation-delay: 1.4s;
+}
+
+.logo span:nth-child(8) {
+    animation-delay: 1.6s;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+#main-content {
+    display: none;
+    transition: opacity 0.5s ease;
+}
+/* End Splash Screen*/
