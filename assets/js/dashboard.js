@@ -1,4 +1,5 @@
-// import { renderHeader } from '../js/include/header.dashboard.js';
+/*Start Dashboard Layout*/
+import { renderHeader } from '../js/include/header.dashboard.js';
 import { renderFooter } from '../js/include/footer.dashboard.js';
 import { renderSidebar } from '../js/include/sidebar.dashboard.js';
 
@@ -8,14 +9,24 @@ document.querySelectorAll("#sidebar a").forEach(link => {
         link.parentElement.classList.add("active");
     }
 });
-if(currentPage === "index.html"){
+let pageName = currentPage.replace('.html', '');
+pageName = pageName.charAt(0).toUpperCase() + pageName.slice(1);
+if(currentPage == "index.html"){
     currentPage = 'dashboard.html';
+    pageName  = 'Dashboard';
 }
-
-// renderHeader("Dashboard");
+renderHeader(pageName,currentPage);
 renderFooter();
 renderSidebar(currentPage);
+/*End Dashboard Layout*/
 
+/*Start Splash Screen*/
+window.addEventListener('load', function() {
+    setTimeout(function() {
+        document.getElementById('loading-screen').classList.add('hidden');
+    }, 2000);
+});
+/*End Splash Screen*/
 
 const collapseBtn = document.getElementById('collapse-btn');
 const sidebar = document.getElementById('sidebar');

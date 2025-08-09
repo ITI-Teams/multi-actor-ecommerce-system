@@ -1,8 +1,16 @@
 export function renderSidebar(currentPage) {
     const menuItems = [
-        { href: "dashboard.html"   , icon: "fa-home"  , label: "Dashboard"   },
-        { href: "products.html"    , icon: "fa-box"   , label: "Products"    },
-        { href: "categories.html"  , icon: "fa-th"    , label: "Categories"  },
+        { href: "index.html"       , icon: "fa-home"            , label: "Dashboard"   },
+        { href: "products.html"    , icon: "fa-box"             , label: "Products"    },
+        { href: "categories.html"  , icon: "fa-th"              , label: "Categories"  },
+        { href: "orders.html"      , icon: "fa-paper-plane"     , label: "Orders"      },
+        { href: "reviews.html"     , icon: "fa-star"            , label: "Reviews"     },
+        { href: "cart.html"        , icon: "fa-cart-arrow-down" , label: "Cart"        },
+        { href: "messages.html"    , icon: "fa-inbox"           , label: "messages"    },
+        { href: "mails.html"       , icon: "fa-envelope"        , label: "Mails"       },
+        { href: "users.html"       , icon: "fa-users"           , label: "Users"       },
+        { href: "menus.html"       , icon: "fa-bars"            , label: "Menus"       },
+        { href: "settings.html"    , icon: "fa-cogs"            , label: "Settings"    },
     ];
 
     const links = menuItems.map(item => `

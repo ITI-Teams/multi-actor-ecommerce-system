@@ -59,6 +59,13 @@ main.container.py-4{
 #sidebar.collapsed .nav-link .menu-text {
     display: none;
 }
+#mobileSidebar ul .active a{
+    color: #f67f00 !important;
+}
+#sidebar .active {
+    border-left: 4px solid #f67f00;
+    padding-left: 15px;
+}
 #collapse-btn i{
     transition: all 0.8s ease;
 }
@@ -104,6 +111,189 @@ body.bg-dark #modile-offcanvas{
     color: #fff;
     border: 2px solid #fff;
 }
+/*Start User.html Dark mode*/
+.table {
+    border-collapse: separate;
+    border-spacing: 0;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: box-shadow 0.4s ease, transform 0.4s ease;
+    border: 2px solid #ddd;
+}
+.table:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+}
+.table thead th {
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.9rem;
+    color: #555;
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #dee2e6;
+    padding: 12px 15px;
+    transition: background-color 0.3s ease;
+}
+.table tbody td {
+    padding: 12px 15px;
+    border-top: 1px solid #dee2e6;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+.table tbody tr:hover {
+    background-color: #f1f3f5;
+    cursor: pointer;
+}
+/* ===== Dark Mode Styles ===== */
+body.bg-dark .table {
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    border: 2px solid #f8f8f8;
+}
+body.bg-dark .table thead th {
+    background-color: #1e1e1e;
+    color: #ffffffcc;
+    border-bottom-color: #333;
+}
+body.bg-dark .table tbody tr {
+    background-color: #1e1e1e;
+    border-top-color: #333;
+}
+body.bg-dark .table tbody tr:hover {
+    background-color: #2d2d2d;
+    color: white;
+}
+body.bg-dark .table-bordered {
+    border-color: #333;
+}
+/* Form Controls in Dark Mode */
+body.bg-dark .form-control,
+body.bg-dark .form-select {
+    background-color: #2d2d2d;
+    color: #e0e0e0;
+    border-color: #444;
+}
+body.bg-dark .form-control::placeholder,
+body.bg-dark .form-select {
+    color: #aaa;
+}
+body.bg-dark .form-control:focus,
+body.bg-dark .form-select:focus {
+    background-color: #2d2d2d;
+    border-color: #666;
+    box-shadow: 0 0 0 0.2rem rgba(108, 117, 125, 0.25);
+}
+/* Modal Styling */
+.modal-content {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: background-color 0.4s ease;
+    border: none;
+}
+body.bg-dark .modal-content {
+    background-color: #1e1e1e;
+    color: #e0e0e0;
+}
+.modal-header {
+    border-bottom: 1px solid #dee2e6;
+    background-color: #f8f9fa;
+    border-radius: 12px 12px 0 0;
+}
+body.bg-dark .modal-header {
+    border-bottom-color: #333;
+    background-color: #1e1e1e;
+}
+.modal-title {
+    font-weight: 600;
+}
+/* Buttons */
+.btn {
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+.btn:active {
+    transform: translateY(0);
+}
+.btn-outline-secondary {
+    border-width: 1.5px;
+    transition: all 0.3s ease;
+}
+body.bg-dark button.btn-close{
+    background-color: #f8f9fa;
+}
+/* Search & Create Button */
+#searchUser {
+    border-radius: 8px;
+    padding: 8px 12px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+body.bg-dark #searchUser {
+    background-color: #2d2d2d;
+    border-color: #444;
+    color: #e0e0e0;
+}
+
+#createUserBtn {
+    border-radius: 8px;
+    padding: 8px 16px;
+    box-shadow: 0 4px 10px rgba(0, 200, 100, 0.2);
+}
+
+#createUserBtn:hover {
+    box-shadow: 0 6px 15px rgba(0, 200, 100, 0.3);
+    transform: translateY(-2px);
+}
+/* Pagination Styling */
+.pagination {
+    justify-content: center;
+    margin-top: 20px;
+}
+.page-link {
+    color: #007bff;
+    border-radius: 8px !important;
+    margin: 0 4px;
+    transition: all 0.3s ease;
+    border: none;
+    background-color: #f1f1f1;
+}
+
+.page-link:hover {
+    background-color: #007bff;
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+}
+
+.page-item.active .page-link {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0, 123, 255, 0.3);
+}
+
+body.bg-dark .page-link {
+    color: #6ea8fe;
+    background-color: #2d2d2d;
+    border: 1px solid #444;
+}
+
+body.bg-dark .page-link:hover {
+    background-color: #3a3a3a;
+    color: white;
+}
+
+body.bg-dark .page-item.active .page-link {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+/*End User.html Dark mode*/
 /* End Dark Mode*/
 
 /* Start Splash Screen */
