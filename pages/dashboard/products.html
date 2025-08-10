@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Products</title>
+    <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="../../assets/css/all.min.css" />
+    <link rel="stylesheet" href="../../assets/css/dashboard-styles.css" />
+</head>
+<body class="min-vh-100 d-flex flex-column">
+    <!--Start Splash Screen -->
+    <div id="loading-screen">
+        <div class="logo-container">
+            <img src="../../assets/img/Dashboard-logo.png" alt="Trendora Logo" class="logo-image">
+            <div class="logo">
+              <span>T</span>
+              <span>r</span>
+              <span>e</span>
+              <span>n</span>
+              <span>d</span>
+              <span>o</span>
+              <span>r</span>
+              <span>a</span>
+            </div>
+        </div>
+    </div>
+    <!--End Splash Screen -->
+    <div class="container-fluid flex-grow-1">
+        <div class="row flex-nowrap">
+            <!--Start NavBar-->
+            <nav class="col-auto bg-dark text-white p-0 min-vh-100" id="sidebar"></nav>
+            <!--End NavBar-->
+            <div class="col p-0">
+                <!--Start Header-->
+                <header id="header"></header>
+                <!--End Header-->
+                <!--Start Main Section-->
+                <main class="container py-4">
+                    <div class="d-flex justify-content-between mb-3">
+                        <input type="text" id="searchProduct" class="form-control w-25" placeholder="Search Product...">
+                        <button class="btn btn-success" id="createProductBtn">
+                            <i class="fas fa-plus"></i> Create Product
+                        </button>
+                    </div>
+                    <table class="table table-bordered table-hover">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Name</th>
+                                <th>Description</th>
+                                <th>Category</th>
+                                <th>Review</th>
+                                <th>Price</th>
+                                <th>Size</th>
+                                <th>Color</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="productTableBody"></tbody>
+                    </table>
+                    <nav>
+                        <ul class="pagination" id="pagination"></ul>
+                    </nav>
+                </main>
+                <div class="modal fade" id="productModal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="productModalTitle">Create Product</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div id="formMessage" style="display:none;"></div>
+                            <div class="modal-body">
+                                <form id="productForm">
+                                    <input type="hidden" id="productId">
+                                    <div class="mb-3">
+                                        <label for="name">Name</label>
+                                        <input type="text" id="name" class="form-control" required autocomplete="off">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="description">Description</label>
+                                        <textarea id="description" class="form-control" required></textarea>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label for="category">Category</label>
+                                                <select id="category" class="form-select">
+                                                    <option>Men</option>
+                                                    <option>Women</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label for="price">price</label>
+                                                <input type="number" id="price" class="form-control" autocomplete="off">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label for="price">size</label>
+                                                <select id="size" class="form-select form-control" multiple aria-label="Multiple select example">
+                                                    <option value="xs">xs</option>
+                                                    <option value="s">s</option>
+                                                    <option value="m">m</option>
+                                                    <option value="l">l</option>
+                                                    <option value="XL">l</option>
+                                                    <option value="XXL">XXL</option>
+                                                    <option value="XXXL">XXXL</option>
+                                                </select>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label for="colorInput" class="form-label">Colors</label>
+                                                <div class="input-group">
+                                                    <input type="color" id="colorInput" class="form-control form-control-color" value="#000000">
+                                                    <button type="button" id="addColorBtn" class="btn btn-primary">Add Color</button>
+                                                </div>
+                                                <div id="colorList" class="mt-2"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="imageUrlInput" class="form-label">Product Images</label>
+                                        <div class="input-group">
+                                            <input type="text" id="imageUrlInput" class="form-control" placeholder="Enter image URL">
+                                            <button type="button" id="addImageBtn" class="btn btn-primary">Add Image</button>
+                                        </div>
+                                        <div id="imageList" class="mt-2"></div>
+                                    </div>
+                                    
+                                    <button type="submit" class="btn btn-primary w-100">Save</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--End Main Section-->
+                <!--Start Footer-->
+                <footer id="footer" class="text-center py-3 shadow-sm"></footer>
+                <!--End Footer-->
+            </div>
+        </div>
+    </div>
+    <script type="module" src="../../assets/js/dashboard.js"></script>
+    <script src="../../assets/js/bootstrap.bundle.min.js"></script>
+    <script src="../../assets/js/all.min.js"></script>
+    <script src="../../assets/js/dashboard/products.dashboard.js"></script>
+</body>
+</html>

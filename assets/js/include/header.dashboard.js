@@ -1,6 +1,6 @@
 export function renderHeader(pageName,currentPage) {
     const menuItems = [
-        { href: "index.html"       , icon: "fa-home"            , label: "Dashboard"   },
+        { href: "dashboard.html"   , icon: "fa-home"            , label: "Dashboard"   },
         { href: "products.html"    , icon: "fa-box"             , label: "Products"    },
         { href: "categories.html"  , icon: "fa-th"              , label: "Categories"  },
         { href: "orders.html"      , icon: "fa-paper-plane"     , label: "Orders"      },
@@ -8,7 +8,9 @@ export function renderHeader(pageName,currentPage) {
         { href: "cart.html"        , icon: "fa-cart-arrow-down" , label: "Cart"        },
         { href: "messages.html"    , icon: "fa-inbox"           , label: "messages"    },
         { href: "mails.html"       , icon: "fa-envelope"        , label: "Mails"       },
+        { href: "customers.html"   , icon: "fa-user"            , label: "Customers"   },
         { href: "users.html"       , icon: "fa-users"           , label: "Users"       },
+        { href: "profile.html"     , icon: "fa-id-card"         , label: "My Profile"  },
         { href: "menus.html"       , icon: "fa-bars"            , label: "Menus"       },
         { href: "settings.html"    , icon: "fa-cogs"            , label: "Settings"    },
     ];

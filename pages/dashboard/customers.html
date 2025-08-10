@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Users</title>
+    <title>Dashboard - Customers</title>
     <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="../../assets/css/all.min.css" />
     <link rel="stylesheet" href="../../assets/css/dashboard-styles.css" />
@@ -38,9 +38,9 @@
                 <!--Start Main Section-->
                 <main class="container py-4">
                     <div class="d-flex justify-content-between mb-3">
-                        <input type="text" id="searchUser" class="form-control w-25" placeholder="Search user...">
-                        <button class="btn btn-success" id="createUserBtn">
-                            <i class="fas fa-plus"></i> Create User
+                        <input type="text" id="searchCustomer" class="form-control w-25" placeholder="Search customerr...">
+                        <button class="btn btn-success" id="createCustomerBtn">
+                            <i class="fas fa-plus"></i> Create Customer
                         </button>
                     </div>
                     <table class="table table-bordered table-hover">
@@ -48,28 +48,32 @@
                             <tr>
                                 <th>Name</th>
                                 <th>Email</th>
-                                <th>Role</th>
+                                <th>gender</th>
+                                <th>country</th>
+                                <th>city</th>
+                                <th>Address</th>
+                                <th>age</th>
                                 <th>Phone</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="userTableBody"></tbody>
+                        <tbody id="customerTableBody"></tbody>
                     </table>
                     <nav>
                         <ul class="pagination" id="pagination"></ul>
                     </nav>
                 </main>
-                <div class="modal fade" id="userModal" tabindex="-1">
+                <div class="modal fade" id="customerModal" tabindex="-1">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="userModalTitle">Create User</h5>
+                                <h5 class="modal-title" id="customerModalTitle">Create Customer</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                             <div id="formMessage" style="display:none;"></div>
                             <div class="modal-body">
-                                <form id="userForm">
-                                    <input type="hidden" id="userId">
+                                <form id="customerForm">
+                                    <input type="hidden" id="customerId">
                                     <div class="mb-3">
                                         <label for="name">Name</label>
                                         <input type="text" id="name" class="form-control" required autocomplete="off">
@@ -78,13 +82,51 @@
                                         <label for="email">Email</label>
                                         <input type="email" id="email" class="form-control" required autocomplete="on">
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="role">Role</label>
-                                        <select id="role" class="form-select">
-                                            <option>Admin</option>
-                                            <option>Seller</option>
-                                        </select>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label for="gender">gender</label>
+                                                <select id="gender" class="form-select">
+                                                    <option>male</option>
+                                                    <option>female</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label for="birthday">Birthday:</label>
+                                                <input type="date" id="birthday" name="birthday" required class="form-control">
+                                            </div>
+                                        </div>
                                     </div>
+                                    <div class="row">
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label for="country">country</label>
+                                                <select id="country" class="form-select">
+                                                    <option value="">-- Select Country --</option>
+                                                    <option value="US">United States</option>
+                                                    <option value="UK">United Kingdom</option>
+                                                    <option value="EG">Egypt</option>
+                                                    <option value="SA">Saudi Arabia</option>
+                                                    <option value="FR">France</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="col">
+                                            <div class="mb-3">
+                                                <label for="city">city</label>
+                                                <select id="city" class="form-select">
+                                                    <option value="">-- Select City --</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="address">Address:</label>
+                                        <textarea id="address" name="address" class="form-control" required></textarea>
+                                    </div>
+                                    
                                     <div class="mb-3">
                                         <label for="password">Password</label>
                                         <input type="password" id="password" class="form-control" autocomplete="off">
@@ -109,6 +151,6 @@
     <script type="module" src="../../assets/js/dashboard.js"></script>
     <script src="../../assets/js/bootstrap.bundle.min.js"></script>
     <script src="../../assets/js/all.min.js"></script>
-    <script src="../../assets/js/dashboard/users.dashboard.js"></script>
+    <script src="../../assets/js/dashboard/customers.dashboard.js"></script>
 </body>
 </html>
