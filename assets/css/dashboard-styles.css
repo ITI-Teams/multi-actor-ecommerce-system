@@ -67,7 +67,7 @@ main.container.py-4{
     padding-left: 15px;
 }
 #collapse-btn i{
-    transition: all 0.8s ease;
+    transition: all 0.6s ease;
 }
 #menu {
     width: 100%;
@@ -92,6 +92,12 @@ main.container.py-4{
 }
 #sidebar .active svg{
     color: #f67f00 !important;
+}
+#sidebar span#logo-text {
+    background: -webkit-linear-gradient(#ff8701, #dabd08);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
 }
 /* Strart Dark Mode*/
 body.bg-dark header,
@@ -309,7 +315,7 @@ body.bg-dark .page-item.active .page-link {
     justify-content: center;
     align-items: center;
     z-index: 9999;
-    transition: opacity 0.7s ease, visibility 0.7s ease;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
 }
 
 #loading-screen.hidden {

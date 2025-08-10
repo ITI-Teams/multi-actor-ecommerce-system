@@ -101,38 +101,38 @@ document.getElementById("userForm").addEventListener("submit", function(e) {
     // Validation
     const invalidChars = /<.*?>|[{}[\]<>]/;
     if ([name, email, role, password, phone].some(field => invalidChars.test(field))) {
-        showFormMessage("❌ المدخلات لا يجب أن تحتوي على أكواد HTML أو رموز غير مسموحة.");
+        showFormMessage("Entries must not contain HTML codes or prohibited symbols.");
         return;
     }
     if (!name || !email || !role || (!id && !password) || !phone) {
-        showFormMessage("❌ جميع الحقول مطلوبة!");
+        showFormMessage("All fields are required!");
         return;
     }
     if (!/^[\p{L}\s]+$/u.test(name)) {
-        showFormMessage("❌ الاسم يجب أن يحتوي على حروف فقط بدون أرقام.");
+        showFormMessage("The name must contain only letters, no numbers.");
         return;
     }
     if (name.length > 50) {
-        showFormMessage("❌ الاسم طويل جدًا، الحد الأقصى 50 حرف.");
+        showFormMessage("Name is too long, maximum 50 characters.");
         return;
     }
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
     if (!emailPattern.test(email)) {
-        showFormMessage("❌ البريد الإلكتروني غير صحيح. مثال: abdullah@google.com");
+        showFormMessage("Invalid email address. Example: abdullah@google.com");
         return;
     }
     if (email.length > 100) {
-        showFormMessage("❌ البريد الإلكتروني طويل جدًا.");
+        showFormMessage("The email is too long.");
         return;
     }
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
     if (!id && !passwordPattern.test(password)) {
-        showFormMessage("❌ كلمة المرور يجب أن تكون 8 أحرف على الأقل وتحتوي على حرف كبير وصغير ورقم ورمز.");
+        showFormMessage("The password must be at least 8 characters long and contain an uppercase and lowercase letter, a number, and a symbol.");
         return;
     }
-    const phonePattern = /^(010|012|013|015)\d{8}$/;
+    const phonePattern = /^(010|011|012|013|015)\d{8}$/;
     if (!phonePattern.test(phone)) {
-        showFormMessage("❌ رقم الهاتف يجب أن يبدأ بـ 010 أو 012 أو 013 أو 015 ويتكون من 11 رقم.");
+        showFormMessage("The phone number must start with 010, 012, 013 or 015 and consist of 11 digits.");
         return;
     }
 

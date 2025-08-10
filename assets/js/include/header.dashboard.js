@@ -1,6 +1,6 @@
 export function renderHeader(pageName,currentPage) {
     const menuItems = [
-        { href: "index.html"       , icon: "fa-home"            , label: "Dashboard"   },
+        { href: "dashboard.html"   , icon: "fa-home"            , label: "Dashboard"   },
         { href: "products.html"    , icon: "fa-box"             , label: "Products"    },
         { href: "categories.html"  , icon: "fa-th"              , label: "Categories"  },
         { href: "orders.html"      , icon: "fa-paper-plane"     , label: "Orders"      },
