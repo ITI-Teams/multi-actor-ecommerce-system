@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Products</title>
+    <title>Dashboard - Customers</title>
     <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="../../assets/css/all.min.css" />
     <link rel="stylesheet" href="../../assets/css/dashboard-styles.css" />
@@ -38,102 +38,103 @@
                 <!--Start Main Section-->
                 <main class="container py-4">
                     <div class="d-flex justify-content-between mb-3">
-                        <input type="text" id="searchProduct" class="form-control w-25" placeholder="Search Product...">
-                        <button class="btn btn-success" id="createProductBtn">
-                            <i class="fas fa-plus"></i> Create Product
+                        <input type="text" id="searchCustomer" class="form-control w-25" placeholder="Search customerr...">
+                        <button class="btn btn-success" id="createCustomerBtn">
+                            <i class="fas fa-plus"></i> Create Customer
                         </button>
                     </div>
                     <table class="table table-bordered table-hover">
                         <thead class="table-light">
                             <tr>
                                 <th>Name</th>
-                                <th>Description</th>
-                                <th>Category</th>
-                                <th>Review</th>
-                                <th>Price</th>
-                                <th>Size</th>
-                                <th>Color</th>
+                                <th>Email</th>
+                                <th>gender</th>
+                                <th>country</th>
+                                <th>city</th>
+                                <th>Address</th>
+                                <th>age</th>
+                                <th>Phone</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
-                        <tbody id="productTableBody"></tbody>
+                        <tbody id="customerTableBody"></tbody>
                     </table>
                     <nav>
                         <ul class="pagination" id="pagination"></ul>
                     </nav>
                 </main>
-                <div class="modal fade" id="productModal" tabindex="-1">
+                <div class="modal fade" id="customerModal" tabindex="-1">
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="productModalTitle">Create Product</h5>
+                                <h5 class="modal-title" id="customerModalTitle">Create Customer</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                             </div>
                             <div id="formMessage" style="display:none;"></div>
                             <div class="modal-body">
-                                <form id="productForm">
-                                    <input type="hidden" id="productId">
+                                <form id="customerForm">
+                                    <input type="hidden" id="customerId">
                                     <div class="mb-3">
                                         <label for="name">Name</label>
                                         <input type="text" id="name" class="form-control" required autocomplete="off">
                                     </div>
                                     <div class="mb-3">
-                                        <label for="description">Description</label>
-                                        <textarea id="description" class="form-control" required></textarea>
+                                        <label for="email">Email</label>
+                                        <input type="email" id="email" class="form-control" required autocomplete="on">
                                     </div>
                                     <div class="row">
                                         <div class="col">
                                             <div class="mb-3">
-                                                <label for="category">Category</label>
-                                                <select id="category" class="form-select">
-                                                    <option>Men</option>
-                                                    <option>Women</option>
+                                                <label for="gender">gender</label>
+                                                <select id="gender" class="form-select">
+                                                    <option>male</option>
+                                                    <option>female</option>
                                                 </select>
                                             </div>
                                         </div>
                                         <div class="col">
                                             <div class="mb-3">
-                                                <label for="price">price</label>
-                                                <input type="number" id="price" class="form-control" autocomplete="off">
+                                                <label for="birthday">Birthday:</label>
+                                                <input type="date" id="birthday" name="birthday" required class="form-control">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col">
                                             <div class="mb-3">
-                                                <label for="price">size</label>
-                                                <select id="size" class="form-select form-control" multiple aria-label="Multiple select example">
-                                                    <option value="xs">xs</option>
-                                                    <option value="s">s</option>
-                                                    <option value="m">m</option>
-                                                    <option value="l">l</option>
-                                                    <option value="XL">l</option>
-                                                    <option value="XXL">XXL</option>
-                                                    <option value="XXXL">XXXL</option>
+                                                <label for="country">country</label>
+                                                <select id="country" class="form-select">
+                                                    <option value="">-- Select Country --</option>
+                                                    <option value="US">United States</option>
+                                                    <option value="UK">United Kingdom</option>
+                                                    <option value="EG">Egypt</option>
+                                                    <option value="SA">Saudi Arabia</option>
+                                                    <option value="FR">France</option>
                                                 </select>
                                             </div>
-                                            
                                         </div>
                                         <div class="col">
                                             <div class="mb-3">
-                                                <label for="colorInput" class="form-label">Colors</label>
-                                                <div class="input-group">
-                                                    <input type="color" id="colorInput" class="form-control form-control-color" value="#000000">
-                                                    <button type="button" id="addColorBtn" class="btn btn-primary">Add Color</button>
-                                                </div>
-                                                <div id="colorList" class="mt-2"></div>
+                                                <label for="city">city</label>
+                                                <select id="city" class="form-select">
+                                                    <option value="">-- Select City --</option>
+                                                </select>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="mb-3">
-                                        <label for="imageUrlInput" class="form-label">Product Images</label>
-                                        <div class="input-group">
-                                            <input type="text" id="imageUrlInput" class="form-control" placeholder="Enter image URL">
-                                            <button type="button" id="addImageBtn" class="btn btn-primary">Add Image</button>
-                                        </div>
-                                        <div id="imageList" class="mt-2"></div>
+                                        <label for="address">Address:</label>
+                                        <textarea id="address" name="address" class="form-control" required></textarea>
                                     </div>
                                     
+                                    <div class="mb-3">
+                                        <label for="password">Password</label>
+                                        <input type="password" id="password" class="form-control" autocomplete="off">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="phone">Phone</label>
+                                        <input type="text" id="phone" class="form-control" autocomplete="off">
+                                    </div>
                                     <button type="submit" class="btn btn-primary w-100">Save</button>
                                 </form>
                             </div>
@@ -150,6 +151,6 @@
     <script type="module" src="../../assets/js/dashboard.js"></script>
     <script src="../../assets/js/bootstrap.bundle.min.js"></script>
     <script src="../../assets/js/all.min.js"></script>
-    <script src="../../assets/js/dashboard/products.dashboard.js"></script>
+    <script src="../../assets/js/dashboard/customers.dashboard.js"></script>
 </body>
 </html>
