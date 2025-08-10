@@ -1,45 +1,75 @@
-body {
-  background-image: url("../img/e84117ded3388d1c415bdc870f21013d.jpg");
-  background-size: cover;
-  background-repeat: no-repeat;
-}
+
 .header-wrapper {
   height: fit-content;
+  margin-bottom: 100px;
 }
-.overlay {
-  background-color: rgba(0, 0, 0, 0.5);
-  background-size: cover;
-  inset: 0;
-}
+
 
 .formcontainer {
   height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-}
+  width:100%;
+  margin: auto;
 
+
+}
 .formcontainer form {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(239, 234, 212, 0.567);
   backdrop-filter: blur(10px);
   border-radius: 12px;
   padding: 30px;
-  width: 100%;
-  max-width: 400px;
+  width: 450px;
   color: white;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 50px 50px rgba(0, 0, 0, 0.7);
+  text-align: center;
 }
 
-.formcontainer form input {
-  background-color: rgba(255, 255, 255, 0.2);
+.formcontainer form input,
+.formcontainer form select {
+  width: 100%;
+  background-color: rgba(231, 227, 227, 0);
   border: none;
-  border-bottom: 2px solid white;
-  color: white;
+  border-bottom: 2px solid black;
+  color: rgba(10, 10, 10, 0.9);
+  border-radius: 0%;
 }
+.formcontainer form input:focus,
+.formcontainer form select:focus{
+  border: none;
+  color: rgba(27, 27, 27, 0.9);
+  outline: none;
+  box-shadow: 5px 5px 5px 5px rgba(117, 116, 116, 0.511) ;
+  font-size: large;
+  height: 30px;
+    background-color: rgba(231, 227, 227, 0);
+
+}
+ 
 
 .formcontainer form input::placeholder {
-  color: rgba(255, 255, 255, 0.7);
+  color: rgba(60, 59, 59, 0.7);
 }
+
+
+.formcontainer form .logo {
+  width: 200px;
+  height: 200px;
+  overflow: hidden;
+  margin: auto;
+  position: relative;
+}
+
+.formcontainer form .logo img {
+  width: 400px;
+  position: absolute;
+  top: -100px;
+  left: -100px;
+}
+
+
+
 
 .formcontainer form .btn-google {
   border-radius: 6px;
@@ -67,12 +97,66 @@ body {
 
 .formcontainer form .btn:hover {
   background-color: rgba(255, 255, 255, 0.6);
-  color: black;
+
 }
 
 .formcontainer form a {
-  color: rgb(193, 199, 170);
+  color: rgb(75, 71, 71);
 }
+
 .formcontainer form a:hover {
   color: black;
 }
+
+
+/* user profile */
+.profile-card {
+  background: rgba(239, 234, 212, 0.567);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 30px;
+  width: 100%;
+  max-width: 450px;
+  color: #222;
+  box-shadow: 0 50px 50px rgba(0, 0, 0, 0.7);
+}
+
+.profile-pic {
+  width: 130px;
+  height: 130px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid white;
+  background: white;
+}
+
+.profile-header {
+  padding-top: 60px;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+.info-label {
+  font-weight: 600;
+  color: #333;
+}
+
+.btn-edit {
+  background-color: rgba(0, 0, 0, 0.8);
+  border: none;
+  color: white;
+  border-radius: 8px;
+  padding: 10px 20px;
+  transition: all 0.3s ease;
+}
+
+.btn-edit:hover {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+}
+
+hr {
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+

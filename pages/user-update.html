@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Profile Update</title>
+  <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <link rel="stylesheet" href="../assets/css/login&register.css">
+  <style>
+    .formcontainer{
+      height: 130vh;
+    }
+
+  </style>
+</head>
+
+<body>
+  <header id="header-wrapper ">
+    <nav id="main-header" class="navbar navbar-expand-lg bg-body-tertiary fixed-top"></nav>
+  </header>
+  <div class="formcontainer ">
+    <form class="profile-form">
+
+      <div class="text-center mb-3">
+        <img id="preview" class="profile-pic mb-2"
+          src="../assets/img/default-avatar-profile-icon-social-600nw-1906669723.webp" alt="Profile Picture">
+        <input type="file" class="form-control mt-2" id="photo" accept="image/*">
+      </div>
+
+      <div class="mb-3">
+        <input type="text" placeholder="Name" required>
+      </div>
+      <div class="mb-3">
+        <input type="email" placeholder="Email" required>
+      </div>
+      <div class="mb-3">
+        <input type="password" placeholder="Password" required>
+      </div>
+      <div class="mb-3">
+        <select id="gender" required>
+          <option value="">Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <input type="date" required>
+      </div>
+      <div class="mb-3">
+        <select id="country" required>
+          <option value="">Select Country</option>
+          <option value="Egypt">Egypt</option>
+          <option value="USA">USA</option>
+          <option value="India">India</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <select id="city" required>
+          <option value="">Select City</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <input type="text" placeholder="Address">
+      </div>
+      <div class="mb-3">
+        <input type="tel" placeholder="Phone" pattern="[0-9]{10,}" required>
+      </div>
+      <button type="submit" class=" btn-edit w-50 ">Save Profile</button>
+    </form>
+  </div>
+
+  <footer id="main-footer" class="footer bg-black text-light "></footer>
+  <script src="https://kit.fontawesome.com/4f91921791.js" crossorigin="anonymous"></script>
+  <script src="../assets/js/bootstrap.bundle.min.js"></script>
+  <script type="module" src="../assets/js/main.js"></script>
+  <script src="../assets/js/update-user.js"></script>
+</body>
+
+</html>
