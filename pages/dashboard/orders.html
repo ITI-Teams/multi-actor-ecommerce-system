@@ -38,18 +38,14 @@
                 <!--Start Main Section-->
                 <main class="container py-4">
                     <div class="d-flex justify-content-between mb-3">
-                        <input type="text" id="searchOrder" class="form-control w-25" placeholder="Search Order...">
-                        <button class="btn btn-success" id="createOrderBtn">
-                            <i class="fas fa-plus"></i> Create Order
-                        </button>
+                        <input type="text" id="searchOrder" class="form-control w-25" placeholder="Search Order Status...">
                     </div>
                     <table class="table table-bordered table-hover">
                         <thead class="table-light">
-                            <tr>
+                            <tr class="text-center">
                                 <th>Product</th>
                                 <th>seller</th>
                                 <th>customer</th>
-                                <th>address</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
@@ -60,46 +56,6 @@
                         <ul class="pagination" id="pagination"></ul>
                     </nav>
                 </main>
-                <div class="modal fade" id="orderModal" tabindex="-1">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="orderModalTitle">Create Order</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div id="formMessage" style="display:none;"></div>
-                            <div class="modal-body">
-                                <form id="orderForm">
-                                    <input type="hidden" id="orderId">
-                                    <div class="mb-3">
-                                        <label for="name">Name</label>
-                                        <input type="text" id="name" class="form-control" required autocomplete="off">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="email">Email</label>
-                                        <input type="email" id="email" class="form-control" required autocomplete="off">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="role">Role</label>
-                                        <select id="role" class="form-select">
-                                            <option>Admin</option>
-                                            <option>Seller</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="password">Password</label>
-                                        <input type="password" id="password" class="form-control" autocomplete="off">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="phone">Phone</label>
-                                        <input type="text" id="phone" class="form-control" autocomplete="off">
-                                    </div>
-                                    <button type="submit" class="btn btn-primary w-100">Save</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
                 <!--End Main Section-->
                 <!--Start Footer-->
                 <footer id="footer" class="text-center py-3 shadow-sm"></footer>
@@ -110,5 +66,6 @@
     <script type="module" src="../../assets/js/dashboard.js"></script>
     <script src="../../assets/js/bootstrap.bundle.min.js"></script>
     <script src="../../assets/js/all.min.js"></script>
+    <script src="../../assets/js/dashboard/orders.dashboard.js"></script>
 </body>
 </html>
