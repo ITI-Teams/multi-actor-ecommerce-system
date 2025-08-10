@@ -1,80 +1,78 @@
+body {
+  background-image: url("../img/e84117ded3388d1c415bdc870f21013d.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.header-wrapper {
+  height: fit-content;
+}
+.overlay {
+  background-color: rgba(0, 0, 0, 0.5);
+  background-size: cover;
+  inset: 0;
+}
 
- body {
-            background-image: url("../img/e84117ded3388d1c415bdc870f21013d.jpg");
-            background-size: cover;
-            background-repeat: no-repeat;
-        }
-        .header-wrapper{
-            height: fit-content;
-        }
-        .overlay {
-            background-color: rgba(0, 0, 0, 0.5);
-            background-size: cover;
-            inset: 0;
-        }
+.formcontainer {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
-        .formcontainer {
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+.formcontainer form {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 30px;
+  width: 100%;
+  max-width: 400px;
+  color: white;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
 
-        .formcontainer form {
-             background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(10px);
-            border-radius: 12px;
-            padding: 30px;
-            width: 100%;
-            max-width: 400px;
-            color: white;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        }
+.formcontainer form input {
+  background-color: rgba(255, 255, 255, 0.2);
+  border: none;
+  border-bottom: 2px solid white;
+  color: white;
+}
 
-        .formcontainer form input {
-            background-color: rgba(255, 255, 255, 0.2);
-            border: none;
-            border-bottom: 2px solid white;
-            color: white;
-        }
+.formcontainer form input::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
 
-        .formcontainer form input::placeholder {
-            color: rgba(255, 255, 255, 0.7);
-        }
+.formcontainer form .btn-google {
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 8px;
+  font-weight: 500;
+  text-decoration: none;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
 
-        .formcontainer form .btn-google {
-            border-radius: 6px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
-            padding: 8px;
-            font-weight: 500;
-            text-decoration: none;
-            border: 1px solid  rgba(255, 255, 255, 0.3);
-        }
+.formcontainer form .btn-google img {
+  height: 20px;
+}
 
-        .formcontainer form .btn-google img {
-            height: 20px;
-        }
+.formcontainer form .btn {
+  background-color: rgba(255, 255, 255, 0.3);
+  border: none;
+  color: white;
+  transition: all 0.3s ease;
+  padding: 10px;
+}
 
-        .formcontainer form .btn {
-            background-color: rgba(255, 255, 255, 0.3);
-            border: none;
-            color: white;
-            transition: all 0.3s ease;
-            padding: 10px;
-        }
+.formcontainer form .btn:hover {
+  background-color: rgba(255, 255, 255, 0.6);
+  color: black;
+}
 
-        .formcontainer form .btn:hover {
-            background-color: rgba(255, 255, 255, 0.6);
-            color: black;
-        }
-
-        .formcontainer form a {
-            color: rgb(193, 199, 170);
-
-        } 
-        .formcontainer form a:hover{  
-            color: black;
-        }
+.formcontainer form a {
+  color: rgb(193, 199, 170);
+}
+.formcontainer form a:hover {
+  color: black;
+}

@@ -8,7 +8,6 @@
 
 /* header */
 #header-wrapper {
-  border: 1px solid #000;
   height: 100vh;
   position: relative;
    z-index: 22222222222222;
@@ -44,6 +43,9 @@
   border: 1px solid #bababa;
   background: white;
 }
+#header-wrapper #cartDropdown span {
+  letter-spacing: 0px !important;
+}
 .bg-nav-transparent,
 .bg-nav-transparent a,
 .bg-nav-transparent p,
@@ -74,8 +76,6 @@
     }
   }
 }
-
-
 
 /* footer */
 
