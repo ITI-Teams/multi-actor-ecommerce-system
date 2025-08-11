@@ -40,8 +40,8 @@ function saveProducts() {
 function renderTable() {
     const searchValue = document.getElementById("searchProduct").value.toLowerCase();
     const filteredProducts = products.filter(u =>
-        u.name.toLowerCase().includes(searchValue) ||
-        u.description.toLowerCase().includes(searchValue)
+        (u.name && u.name.toLowerCase().includes(searchValue)) ||
+        (u.description && u.description.toLowerCase().includes(searchValue))
     );
 
     const start = (currentPagePagination - 1) * rowsPerPage;
