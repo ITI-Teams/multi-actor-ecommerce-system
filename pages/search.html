@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Search</title>
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/login&register.css">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .card img {
+            object-fit: cover;
+            height: 200px;
+        }
+
+        main {
+            height: fit-content;
+            margin-top: 100px;
+        }
+
+        .product:hover {
+            transform: scale(1.1);
+        }
+
+        #searchInput:focus {
+            border: none;
+            color: rgba(27, 27, 27, 0.9);
+            outline: none;
+            box-shadow: 5px 5px 5px 5px rgba(117, 116, 116, 0.511);
+            font-size: large;
+            background-color: rgba(231, 227, 227, 0);
+
+        }
+    </style>
+</head>
+
+<body>
+    <header id="header-wrapper ">
+
+        <nav id="main-header" class="navbar navbar-expand-lg bg-body-tertiary fixed-top "></nav>
+    </header>
+    <main class="container py-5 ">
+        <h1 class="text-center ">Product Search</h1>
+
+        <div class="row mb-4">
+            <div class="col-md-6 mx-auto">
+                <input type="text" id="searchInput" class="form-control" placeholder="Search products...">
+            </div>
+        </div>
+
+
+        <div class="row" id="productContainer">
+
+        </div>
+    </main>
+
+    <footer id="main-footer" class="footer bg-black text-light "></footer>
+    <script src="https://kit.fontawesome.com/4f91921791.js" crossorigin="anonymous"></script>
+    <script type="module" src="../assets/js/main.js"></script>
+    <script src="../assets/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/search.js"></script>
+
+
+</body>
+
+</html>

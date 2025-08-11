@@ -4,31 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trendora - Login</title>
-  
-    <!-- Bootstrap -->
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-
-    <!-- FontAwesome -->
-    <script src="https://kit.fontawesome.com/4f91921791.js" crossorigin="anonymous"></script>
-
-  <!-- css style -->
-  <link rel="stylesheet" href="../assets/css/login&register.css">
-
-
+    <link rel="stylesheet" href="../assets/css/login&register.css">
     <link rel="stylesheet" href="../assets/css/styles.css">
-    <script type="module" src="../assets/js/main.js"></script>
 
 </head>
 <body> 
     <div class="overlay">
      <header id="header-wrapper ">
        
-        <nav id="main-header" class="navbar navbar-expand-lg bg-body-tertiary bg-nav-transparent"></nav>
+        <nav id="main-header" class="navbar navbar-expand-lg bg-body-tertiary fixed-top "></nav>
     </header>
-  
+ 
         <div class="formcontainer">
+           
             <form class="login-card needs-validation" id="loginForm" novalidate action="../index.html">
-                <h3 class="text-center mb-4">Login</h3>
+
+                 <div class="logo">
+                <img src="../assets/img/Black White Minimalist Simple Monogram Typography Logo.svg" alt="">
+            </div>
+            <br>
+                <h3 class="text-center mb-4 text-black">Login</h3>
                 <div class="mb-3">
                     <input type="text" class="form-control" id="loginName" placeholder="Name" required>
                     <div class="invalid-feedback">Please enter your name.</div>
@@ -40,14 +36,16 @@
                 </div>
 
                 <div class="d-flex justify-content-between align-items-center">
-                    <button class="btn w-50" type="submit">Login</button>
+                    <button class="btn w-50 bg-black" type="submit">Login</button>
                     <a href="/">Forgot Password?</a>
                 </div>
             </form>
         </div>
     </div>
+  
     <footer id="main-footer" class="footer bg-black text-light "></footer>
-
+    <script src="https://kit.fontawesome.com/4f91921791.js" crossorigin="anonymous"></script>
+    <script type="module" src="../assets/js/main.js"></script>
     <script src="../assets/js/login.js"></script>
     <script src="../assets/js/bootstrap.bundle.min.js"></script>
 </body>

@@ -4,68 +4,68 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Trendora - Login</title>
-  
-    <!-- Bootstrap -->
+    <title>Trendora - Create account</title>
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-
-    <!-- FontAwesome -->
-    <script src="https://kit.fontawesome.com/4f91921791.js" crossorigin="anonymous"></script>
-
-  <!-- css style -->
-  <link rel="stylesheet" href="../assets/css/login&register.css">
-
-
+    <link rel="stylesheet" href="../assets/css/login&register.css">
     <link rel="stylesheet" href="../assets/css/styles.css">
-    <script type="module" src="../assets/js/main.js"></script>
-
+    <style>
+        .formcontainer {
+            height: 150vh;
+        }
+    </style>
 </head>
+
 <body>
-    <div class="overlay">
-        <header id="header-wrapper ">
+<header id="header-wrapper ">
        
-        <nav id="main-header" class="navbar navbar-expand-lg bg-body-tertiary bg-nav-transparent"></nav>
+        <nav id="main-header" class="navbar navbar-expand-lg bg-body-tertiary fixed-top "></nav>
     </header>
-  
-        <div class="formcontainer">
-            <!-- Registration Form -->
-            <form class="needs-validation" id="registerForm" novalidate action="../index.html">
-                <h3 class="text-center mb-4">Create Account</h3>
+    <div class="formcontainer m-auto ">
+        
+        <form class="needs-validation" id="registerForm" novalidate action="../index.html">
+            <div class="logo">
+                <img src="../assets/img/Black White Minimalist Simple Monogram Typography Logo.svg" alt="">
+            </div>
+            <br>
+            <h3 class="text-center mb-4 text-black">Create Account</h3>
 
-                <div class="mb-3">
-                    <input type="text" class="form-control" id="name" placeholder="Name" required>
-                    <div class="invalid-feedback">Please enter your name.</div>
-                </div>
+            <div class="mb-3">
+                <input type="text" class="form-control" id="name" placeholder="Name" value="" required>
+                <div class="invalid-feedback">Please enter your name.</div>
+            </div>
 
-                <div class="mb-3">
-                    <input type="email" class="form-control" id="email" placeholder="Email" required>
-                    <div class="invalid-feedback">Please enter a valid email.</div>
-                </div>
+            <div class="mb-3">
+                <input type="email" class="form-control" id="email" placeholder="Email" value="" required>
+                <div class="invalid-feedback">Please enter a valid email.</div>
+            </div>
 
-                <div class="mb-3">
-                    <input type="password" class="form-control" id="password" placeholder="Password" required>
-                    <div class="invalid-feedback">Please enter a password.</div>
-                </div>
+            <div class="mb-3">
+                <input type="password" class="form-control" id="password" placeholder="Password" value="" required>
+                <div class="invalid-feedback">Please enter a password.</div>
+            </div>
 
-                <div class="mb-3">
-                    <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password"
-                        required>
-                    <div class="invalid-feedback" id="confirmPasswordFeedback">Please confirm your password.</div>
-                </div>
+            <div class="mb-3">
+                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm Password"
+                    required>
+                <div class="invalid-feedback" id="confirmPasswordFeedback">Please confirm your password.</div>
+            </div>
 
-                <button class="btn  w-100 mb-3 " type="submit">Create Account</button>
+            <button class="btn  w-100 mb-3 bg-black" type="submit">Create Account</button>
 
-                <a href="#" class="btn-google mb-3">
-                    <img src="../assets/img/Icon-Google.png" alt="Google Logo"> Sign up with Google
-                </a>
+            <a href="#" class="btn-google mb-3">
+                <img src="../assets/img/Icon-Google.png" alt="Google Logo"> Sign up with Google
+            </a>
 
-                <p class="text-center">
-                    Already have an account? <a href="./login.html">Login</a>
-                </p>
-            </form>
-        </div>
+            <p class="text-center text-dark">
+                Already have an account? <a href="./login.html">Login</a>
+            </p>
+        </form>
     </div>
+
+
     <footer id="main-footer" class="footer bg-black text-light "></footer>
+    <script src="https://kit.fontawesome.com/4f91921791.js" crossorigin="anonymous"></script>
+    <script type="module" src="../assets/js/main.js"></script>
     <script src="../assets/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/register.js"></script>
 

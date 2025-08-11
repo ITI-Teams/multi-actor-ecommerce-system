@@ -23,3 +23,4 @@ document.addEventListener('DOMContentLoaded', () => {
         form.classList.add('was-validated');
     });
 });
+
