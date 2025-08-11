@@ -8,10 +8,8 @@
     <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
     <script src="https://kit.fontawesome.com/4f91921791.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./assets/css/styles.css">
- 
     <script type="module" src="./assets/js/main.js"></script>
-    <!-- <script src="./assets/js/test.js"></script> -->
- 
+    <script src="./assets/js/test.js"></script>
 </head>
 
 <body>
@@ -23,8 +21,38 @@
         </video>
         <nav id="main-header" class="navbar navbar-expand-lg bg-body-tertiary bg-nav-transparent fixed-top"></nav>
     </header>
-    <main class="container">
-        
+    <main class="container mt-5">
+        <section id="newArrivles">
+            <h4 class="text-uppercase fs-6 fw-semibold">shop new arrivals</h4>
+            <div id="newArrivlesWrapper" class="mt-5 g-4 d-flex overflow-x-auto gap-5 scrollable-new-arrivals">
+            </div>
+        </section>
+
+        <section id="men-women-collections" class="my-5 row border-bottom border-3">
+            <div class="col-12 col-md-6">
+                <img class="w-100 mb-4" src="https://cdn.shopify.com/s/files/1/0123/5065/2473/files/RTP5_e4788c0a-f834-42f3-b6f1-1149ee7331ed.jpg?v=1754442553&format=webp&width=900&height=900" alt="menCollection">
+                <a href="/" class="fw-bolder text-dark text-uppercase">Men's Luxe Knits</a>
+                <p class="mt-2 pe-5 mb-5">Crafted from exclusive blends of Pima cotton, merino wool, and cashmere — designed for unparalleled softness with a refined texture and a lightweight drape.</p>
+            </div>
+            <div class="col-12 col-md-6">
+                <img class="w-100 mb-4" src="https://cdn.shopify.com/s/files/1/0123/5065/2473/files/P3-DK_238ca311-dd5c-4138-8df5-29e023c89857.jpg?v=1753837916&format=webp&width=900&height=900" alt="menCollection">
+                <a href="/" class="fw-bolder text-dark text-uppercase">Women's Luxe Knits</a>
+                <p class="mt-2 pe-5 mb-5">Woven from exquisite blends of Supima cotton, silk, and cashmere — tailored for a luxurious feel with airy textures and a graceful silhouette.</p>
+            </div>
+        </section>
+
+        <section id="newArrivals" class="row justify-content-center align-content-center gap-5 border-bottom border-3 pb-5">
+            <img class="col-12 col-md-4 border border-black border-4 p-0" src="https://cdn.shopify.com/s/files/1/0123/5065/2473/files/Journal-DK_8412b54b-c1b5-4543-8492-1fcf707233b3.jpg?v=1754067812&format=webp&width=900&height=900" alt="img for new arrivals">
+            <div class="col-12 col-md-4 d-flex flex-column justify-content-center gap-3">
+                <a class="fw-bold fs-5 text-dark text-uppercase" href="/">The New Delivery</a>
+                <p>Discover the latest arrivals in our collection, featuring the most sought-after pieces from the world's top designers.</p>
+            </div>
+        </section>
+
+        <section id="bestSeller" class="py-5 border-bottom border-3">
+            <h4 class="text-uppercase fs-6 fw-semibold">best sellers</h4>
+            <div id="bestSellerProductsWrapper" class="row"></div>
+        </section>
     </main>
     <footer id="main-footer" class="footer bg-black text-light mt-5"></footer>
     <script src="./assets/js/bootstrap.bundle.min.js"></script>

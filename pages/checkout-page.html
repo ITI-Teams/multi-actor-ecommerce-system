@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trendora</title>
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <script src="https://kit.fontawesome.com/4f91921791.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="../assets/css/styles.css">
+    <!-- CSS link -->
+    <link rel="stylesheet" href="../assets/css/checkout-page.css">
+    <script type="module" src="../assets/js/main.js"></script>
+    <!-- <script src="./assets/js/test.js"></script> -->
+
+</head>
+
+<body>
+    <header id="header-wrapper">
+        <nav id="main-header" class="navbar navbar-expand-lg bg-body-tertiary bg-nav-transparent fixed-top"></nav>
+    </header>
+    
+    <main class="container">
+        <div class="page">
+            <div class="checkout-grid">
+
+                <!-- LEFT: checkout form -->
+                <div class="panel" id="left-section">
+                    <!-- express -->
+                    <div class="section-title">Express checkout</div>
+                    <div class="express-row">
+                        <button class="btn btn-shop" id="shopPayBtn"><img src="../assets/img/shop-pay.jpg"
+                                style="height:18px;filter:invert(1) grayscale(1)"> Shop Pay</button>
+                        <button class="btn btn-paypal" id="paypalBtn"><img src="../assets/img/PayPal logo.jpg" style="height:18px">
+                            PayPal</button>
+                        <button class="btn btn-gpay" id="gpayBtn"><img src="../assets/img/google-pay.jpg" style="height:18px">
+                            GPay</button>
+                    </div>
+
+                    <div class="or-divider">
+                        <div class="small text-muted">OR</div>
+                    </div>
+
+                    <form id="checkout-form" novalidate>
+                        <div class="section-title">CONTACT</div>
+                        <div class="mb-3">
+                            <input type="email" id="email" class="form-control" placeholder="Email" required>
+                            <div class="invalid-text" data-for="email">Please enter a valid email.</div>
+                        </div>
+
+                        <div class="section-title">DELIVERY</div>
+                        <div class="row g-2 mb-3">
+                            <div class="col-sm-6">
+                                <input type="text" id="firstName" class="form-control" placeholder="First name"
+                                    required>
+                                <div class="invalid-text" data-for="firstName">First name required.</div>
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" id="lastName" class="form-control" placeholder="Last name" required>
+                                <div class="invalid-text" data-for="lastName">Last name required.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <input type="text" id="address1" class="form-control" placeholder="Address" required>
+                            <div class="invalid-text" data-for="address1">Street address required.</div>
+                        </div>
+
+                        <div class="mb-3">
+                            <input type="text" id="address2" class="form-control" placeholder="Apt, suite (optional)">
+                        </div>
+
+                        <div class="row g-2 mb-3">
+                            <div class="col-md-5">
+                                <input type="text" id="city" class="form-control" placeholder="City" required>
+                                <div class="invalid-text" data-for="city">City required.</div>
+                            </div>
+                            <div class="col-md-4">
+                                <input type="text" id="state" class="form-control" placeholder="State" required>
+                                <div class="invalid-text" data-for="state">State required.</div>
+                            </div>
+                            <div class="col-md-3">
+                                <input type="text" id="zip" class="form-control" placeholder="ZIP" required
+                                    pattern="\d{3,10}">
+                                <div class="invalid-text" data-for="zip">ZIP required.</div>
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <input type="tel" id="phone" class="form-control" placeholder="Phone" required>
+                            <div class="invalid-text" data-for="phone">Phone required (7–15 digits).</div>
+                        </div>
+
+                        <div class="section-title">SHIPPING METHOD</div>
+                        <div class="mb-3" id="shipping-method"
+                            style="background:#f7f6f4;padding:14px;border-radius:6px">
+                            Enter your shipping address to view available shipping methods.</div>
+
+                        <div class="section-title">PAYMENT</div>
+                        <div class="small text-muted mb-2">All transactions are secure and encrypted.</div>
+
+                        <!-- accordion with radios -->
+                        <div class="accordion" id="paymentAccordion">
+                            <!-- credit card -->
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed d-flex align-items-center" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapseCard" aria-expanded="true">
+                                        <input type="radio" name="payMethod" id="pay-card" value="card" checked
+                                            class="me-2"> Credit card
+                                        <div class="card-logos ms-auto">
+                                            <img src="../assets/img/Visa logo.jpg" alt="visa">
+                                            <img src="../assets/img/Mastercard Logo.jpg" alt="mc">
+                                            <img src="../assets/img/amex logo.jpg" alt="disc">
+                                        </div>
+                                    </button>
+                                </h2>
+                                <div id="collapseCard" class="accordion-collapse collapse show"
+                                    data-bs-parent="#paymentAccordion">
+                                    <div class="accordion-body">
+                                        <div id="card-fields">
+                                            <div class="mb-3">
+                                                <label class="form-label small">Card number</label>
+                                                <input type="text" id="cc-number" class="form-control"
+                                                    placeholder="---- ---- ---- ----" maxlength="23" required>
+                                                <div class="invalid-text" data-for="cc-number">Enter a valid card
+                                                    number.
+                                                </div>
+                                            </div>
+
+                                            <div class="row g-2 mb-3">
+                                                <div class="col-7">
+                                                    <label class="form-label small">Expiration (MM/YY)</label>
+                                                    <input type="text" id="cc-exp" class="form-control"
+                                                        placeholder="MM/YY" maxlength="5" required>
+                                                    <div class="invalid-text" data-for="cc-exp">Use MM/YY and a future
+                                                        date.
+                                                    </div>
+                                                </div>
+                                                <div class="col-5">
+                                                    <label class="form-label small">Security code</label>
+                                                    <input type="text" id="cc-cvc" class="form-control"
+                                                        placeholder="CVC" maxlength="4" required>
+                                                    <div class="invalid-text" data-for="cc-cvc">3–4 digits required.
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="mb-2">
+                                                <label class="form-label small">Name on card</label>
+                                                <input type="text" id="cc-name" class="form-control"
+                                                    placeholder="Full name" required>
+                                                <div class="invalid-text" data-for="cc-name">Name on card required.
+                                                </div>
+                                            </div>
+
+                                            <div class="form-check mt-2">
+                                                <input class="form-check-input" type="checkbox" id="sameAsShipping"
+                                                    checked>
+                                                <label class="form-check-label small-muted" for="sameAsShipping">Use
+                                                    shipping address as billing address</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- paypal -->
+                            <div class="accordion-item mt-2">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed d-flex align-items-center" type="button"
+                                        data-bs-toggle="collapse" data-bs-target="#collapsePay" aria-expanded="false">
+                                        <input type="radio" name="payMethod" id="pay-paypal" value="paypal"
+                                            class="me-2">
+                                        PayPal
+                                    </button>
+                                </h2>
+                                <div id="collapsePay" class="accordion-collapse collapse"
+                                    data-bs-parent="#paymentAccordion">
+                                    <div class="accordion-body">
+                                        <p class="mb-0">You will be redirected to PayPal to complete the payment.</p>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="secure-note small text-muted mt-2">All transactions are secure and encrypted.</div>
+
+                        <div class="mt-3 d-grid">
+                            <button type="submit" class="btn btn-dark btn-lg" id="completeBtn">Complete
+                                purchase</button>
+                        </div>
+
+                    </form>
+                </div>
+
+                <!-- RIGHT: order summary -->
+                <aside class="summary" id="right-section">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <div style="font-weight:500">Order summary</div>
+                        <div class="small text-muted">Shipping and taxes calculated at checkout</div>
+                    </div>
+
+                    <div class="items-scroll" id="cart-list">
+                        <!-- JS will render items here -->
+                    </div>
+
+                    <div class="mb-2">
+                        <div class="input-group">
+                            <input id="giftCode" class="form-control" placeholder="Gift card or store credit">
+                            <button id="applyGift" class="btn btn-outline-secondary">APPLY</button>
+                        </div>
+                    </div>
+
+                    <div class="summary-row">
+                        <div id="subtotal-text">Subtotal • <span id="item-count">0</span> items</div>
+                        <div id="subtotal-price">$0.00</div>
+                    </div>
+
+                    <div class="summary-row">
+                        <div>Shipping</div>
+                        <div id="shipping-text" class="text-muted">Enter shipping address</div>
+                    </div>
+
+                    <div class="summary-row summary-total">
+                        <div>Total</div>
+                        <div id="total-price">USD $0.00</div>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </main>
+
+
+        <footer id="main-footer" class="footer bg-black text-light mt-5"></footer>
+        <script src="../assets/js/bootstrap.bundle.min.js"></script>
+        <script src="../assets/js/checkout-page.js"></script>
+</body>
+
+</html>

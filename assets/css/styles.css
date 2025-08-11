@@ -46,6 +46,9 @@
 #header-wrapper #cartDropdown span {
   letter-spacing: 0px !important;
 }
+#header-wrapper .offcanvas-body a:hover {
+  text-decoration: underline;
+}
 .bg-nav-transparent,
 .bg-nav-transparent a,
 .bg-nav-transparent p,
@@ -134,4 +137,64 @@
   text-align: center;
   padding-top: 20px;
   border-top: 1px solid #515151;
+}
+
+/* main section */
+/* new arrivals */
+
+.scrollable-new-arrivals::-webkit-scrollbar {
+  width: 10px;
+  height: 5px;
+}
+.scrollable-new-arrivals::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+.scrollable-new-arrivals::-webkit-scrollbar-thumb {
+  background-color: #c2c1c1;
+  border-radius: 10px;
+}
+
+.scrollable-new-arrivals::-webkit-scrollbar-thumb:hover {
+  background-color: #484848;
+}
+
+.scrollable-new-arrivals,
+#men-women-collections,
+#bestSellerProductsWrapper,
+#newArrivals {
+  a,
+  p {
+    letter-spacing: 1px !important;
+  }
+  a {
+    max-width: fit-content;
+    color: #3b3b3b;
+    text-decoration: none;
+  }
+  a:hover {
+    color: #141414;
+    text-decoration: underline;
+  }
+}
+.scrollable-new-arrivals .prodcut-img {
+  width: 250px;
+  height: 250px;
+  border-radius: 10px;
+}
+#men-women-collections img {
+  width: 400px;
+}
+#bestSellerProductsWrapper img {
+  max-width: 300px;
+}
+#bestSellerProductsWrapper,
+.scrollable-new-arrivals {
+  a {
+    font-weight: 600;
+  }
+  a,
+  p {
+    font-size: 14px;
+  }
 }
