@@ -10,6 +10,10 @@
 #header-wrapper {
   height: 100vh;
   position: relative;
+   z-index: 22222222222222;
+}
+#main-nav ul li:hover:not(.nav-home1) {
+  text-decoration: underline;
 }
 #bg-video {
   position: absolute;
@@ -20,6 +24,9 @@
   min-height: 100%;
   object-fit: cover;
   z-index: -1;
+}
+.dropdown-menu {
+  display: none !important;
 }
 .profile .dropdown-item {
   color: #000 !important;
