@@ -1,34 +1,43 @@
 const nav_content = `<div class="container">
-                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
                     aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <a class="navbar-brand fw-bold fs-4" href="#">Trendora</a>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav">
+                    <a class="navbar-brand fw-bold fs-4" href="/">
+                    <img src="/assets/img/Black White Minimalist Simple Monogram Typography Logo.svg" alt="Logo" width="75">
+                        Trendora
+                    </a>
+                <div class="offcanvas offcanvas-start ps-3 pt-2" id="navbarNav">
+                <div class="offcanvas-header">
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">Home</a>
+                            <a class="nav-link active" aria-current="page" href="/">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Features</a>
+                            <a class="nav-link" href="#">Men</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Pricing</a>
+                            <a class="nav-link" href="#">Women</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Kids</a>
                         </li>
                     </ul>
                 </div>
 
                 <!-- profile -->
                 <div class="d-flex flex-row gap-2">
-                    <div class="dropdown bg-nav-transparent">
+                    <div class="dropdown">
                         <button class="btn btn-link text-black text-decoration-none dropdown-toggle" type="button"
                             id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-user"></i>
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end profile" aria-labelledby="profileDropdown">
-                            <li><a class="dropdown-item" href="#">Sign Up</a></li>
-                            <li><a class="dropdown-item" href="#">Login</a></li>
+                            <li><a class="dropdown-item" href="/pages/register.html">Sign Up</a></li>
+                            <li><a class="dropdown-item" href="/pages/login.html">Login</a></li>
                         </ul>
                     </div>
                 </div>

@@ -1,7 +1,10 @@
 const footer_content = `<div class="container">
             <div class="row justify-content-center">
                 <div class="col-sm mb-4 d-flex flex-column gap-1">
-                    <h1>Trendora</h1>
+                    <a class="logo-a" href="/">
+                        <img src="/assets/img/Black White Minimalist Simple Monogram Typography Logo.svg" alt="Logo" width="75">
+                        Trendora
+                    </a>
                     <h3>Subscribe</h3>
                     <p>Get 10% off your first order</p>
                     <input type="email" class="subscribe-input" placeholder="Enter your email">
