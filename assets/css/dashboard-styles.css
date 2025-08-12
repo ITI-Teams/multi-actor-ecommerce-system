@@ -394,3 +394,31 @@ body.bg-dark .page-item.active .page-link {
     transition: opacity 0.5s ease;
 }
 /* End Splash Screen*/
+/*Profile Page*/
+#profile .profile-sidebar {
+    text-align: center;
+    padding: 30px 15px;
+    border-right: 1px solid #ddd;
+}
+#profile .profile-sidebar img {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    margin-bottom: 15px;
+}
+#profile .btn-yellow {
+    background-color: #ffc107;
+    color: #000;
+}
+#profile .btn-yellow:hover {
+    background-color: #e0a800;
+    color: #ef0606;
+}
+#profile .profile-info p {
+    margin-bottom: 8px;
+    font-size: 15px;
+}
+#profile .profile-info strong {
+    display: inline-block;
+    width: 100px;
+}

@@ -1,3 +1,19 @@
+document.addEventListener("DOMContentLoaded", function () {
+    const session = JSON.parse(localStorage.getItem("session"));
+    const AdminName = document.getElementById('AdminName');
+
+    if (!session) {
+        return;
+    }
+
+    const now = Date.now();
+    if (now > session.expiresAt) {
+        localStorage.removeItem("session");
+        location.reload();
+        return;
+    }
+    AdminName.innerHTML = `Profile (<strong>${session.name}</strong>)`;
+});
 export function renderHeader(pageName,currentPage) {
     const menuItems = [
         { href: "dashboard.html"   , icon: "fa-home"            , label: "Dashboard"   },
@@ -39,9 +55,9 @@ export function renderHeader(pageName,currentPage) {
                     <i class="fas fa-user"></i>
                 </button>
                 <ul class="dropdown-menu dropdown-menu-end">
-                    <li><a class="dropdown-item" href="#">Profile</a></li>
+                    <li><a class="dropdown-item" href="../../../pages/dashboard/profile.html" id="AdminName">Profile</a></li>
                     <li><hr class="dropdown-divider"></li>
-                    <li><a class="dropdown-item" href="#">Logout</a></li>
+                    <li><button class="dropdown-item" id="logoutBtn">Logout</button></li>
                 </ul>
             </div>
         </div>

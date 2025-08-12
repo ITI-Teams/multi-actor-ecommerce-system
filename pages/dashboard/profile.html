@@ -3,10 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Users</title>
+    <title>Dashboard - Profile</title>
     <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="../../assets/css/all.min.css" />
     <link rel="stylesheet" href="../../assets/css/dashboard-styles.css" />
+    <script src="../../assets/js/dashboard/auth.dashboard.js"></script>
+    <script>
+        checkAuthorization(["Admin", "Seller"]);
+    </script>
 </head>
 <body class="min-vh-100 d-flex flex-column">
     <!--Start Splash Screen -->
@@ -36,69 +40,79 @@
                 <header id="header"></header>
                 <!--End Header-->
                 <!--Start Main Section-->
-                <main class="container py-4">
-                    <div class="d-flex justify-content-between mb-3">
-                        <input type="text" id="searchUser" class="form-control w-25" placeholder="Search user...">
-                        <button class="btn btn-success" id="createUserBtn">
-                            <i class="fas fa-plus"></i> Create User
-                        </button>
-                    </div>
-                    <table class="table table-bordered table-hover">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Role</th>
-                                <th>Phone</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="userTableBody"></tbody>
-                    </table>
-                    <nav>
-                        <ul class="pagination" id="pagination"></ul>
-                    </nav>
-                </main>
-                <div class="modal fade" id="userModal" tabindex="-1">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="userModalTitle">Create User</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                <main class="container py-4" id="profile">
+                    <div class="container mt-5">
+                        <div class="row">
+                            <div class="col-md-4 profile-sidebar">
+                                <img src="../../assets/img/avatar.png" alt="Profile">
+                                <h5 id="userName">Mohamed Gaber</h5>
+                                <p  id="userEmail">elsaw084@gmail.com</p>
+                                <p  id="userPhone">01024742487</p>
+                                <button class="btn btn-yellow w-100 mt-3" data-bs-toggle="modal" data-bs-target="#editModal">
+                                    Change Information
+                                </button>
                             </div>
-                            <div id="formMessage" style="display:none;"></div>
-                            <div class="modal-body">
-                                <form id="userForm">
-                                    <input type="hidden" id="userId">
-                                    <div class="mb-3">
-                                        <label for="name">Name</label>
-                                        <input type="text" id="name" class="form-control" required autocomplete="off">
+
+                            <div class="col-md-8 p-4">
+                            <div class="profile-info">
+                                <p id="profileName"><strong>Name:</strong> Mohamed Gaber</p>
+                                <p id="profileEmail"><strong>Email:</strong> elsaw084@gmail.com</p>
+                                <p id="profileRole"><strong>Role:</strong> Admin</p>
+                                <p id="profilePhone"><strong>Phone:</strong> 01024742487</p>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+
+                        <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                            <form>
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="editModalLabel">Edit Profile</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="row g-3">
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="name">Name</label>
+                                            <input type="text" id="name" class="form-control"/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="email">E-mail *</label>
+                                            <input type="email" id="email" class="form-control"/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="phone">Phone *</label>
+                                            <input type="text" id="phone" class="form-control"/>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="role">Role </label>
+                                            <input type="text" id="role" class="form-control"  disabled>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="currentPassword">Current Password (Optional)</label>
+                                            <input type="password" id="currentPassword" class="form-control">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="newPassword">New Password</label>
+                                            <input type="password" id="newPassword" class="form-control">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label class="form-label" for="confirmPassword">Confirm New Password</label>
+                                            <input type="password" id="confirmPassword" class="form-control">
+                                        </div>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="email">Email</label>
-                                        <input type="email" id="email" class="form-control" required autocomplete="on">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="role">Role</label>
-                                        <select id="role" class="form-select">
-                                            <option>Admin</option>
-                                            <option>Seller</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="password">Password</label>
-                                        <input type="password" id="password" class="form-control" autocomplete="off">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="phone">Phone</label>
-                                        <input type="text" id="phone" class="form-control" autocomplete="off">
-                                    </div>
-                                    <button type="submit" class="btn btn-primary w-100">Save</button>
-                                </form>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Cancel</button>
+                                    <button type="submit" class="btn btn-yellow">Save Changes</button>
+                                </div>
+                            </form>
                             </div>
                         </div>
                     </div>
-                </div>
+                </main>
                 <!--End Main Section-->
                 <!--Start Footer-->
                 <footer id="footer" class="text-center py-3 shadow-sm"></footer>
@@ -109,6 +123,7 @@
     <script type="module" src="../../assets/js/dashboard.js"></script>
     <script src="../../assets/js/bootstrap.bundle.min.js"></script>
     <script src="../../assets/js/all.min.js"></script>
-    <script src="../../assets/js/dashboard/users.dashboard.js"></script>
+    <script src="../../assets/js/dashboard/profile.dashboard.js"></script>
+    <script src="../../assets/js/dashboard/logout.dashboard.js" defer></script>
 </body>
 </html>
