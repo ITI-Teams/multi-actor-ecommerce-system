@@ -1,22 +1,28 @@
 export function renderSidebar(currentPage) {
+    const session = checkSession();
+    if (!session) return;
     const menuItems = [
-        { href: "dashboard.html"   , icon: "fa-home"            , label: "Dashboard"   },
-        { href: "products.html"    , icon: "fa-box"             , label: "Products"    },
-        { href: "categories.html"  , icon: "fa-th"              , label: "Categories"  },
-        { href: "orders.html"      , icon: "fa-paper-plane"     , label: "Orders"      },
-        { href: "reviews.html"     , icon: "fa-star"            , label: "Reviews"     },
-        { href: "cart.html"        , icon: "fa-cart-arrow-down" , label: "Cart"        },
-        { href: "messages.html"    , icon: "fa-inbox"           , label: "messages"    },
-        { href: "mails.html"       , icon: "fa-envelope"        , label: "Mails"       },
-        { href: "customers.html"   , icon: "fa-user"            , label: "Customers"   },
-        { href: "users.html"       , icon: "fa-users"           , label: "Users"       },
-        { href: "profile.html"     , icon: "fa-id-card"         , label: "My Profile"  },
-        { href: "menus.html"       , icon: "fa-bars"            , label: "Menus"       },
-        { href: "settings.html"    , icon: "fa-cogs"            , label: "Settings"    },
+        { href: "dashboard.html"   , icon: "fa-home"             , label: "Dashboard"   , role: "common" },
+        { href: "products.html"    , icon: "fa-box"              , label: "Products"    , role: "Seller" },
+        { href: "categories.html"  , icon: "fa-th"               , label: "Categories"  , role: "Seller" },
+        { href: "orders.html"      , icon: "fa-paper-plane"      , label: "Orders"      , role: "Seller" },
+        { href: "reviews.html"     , icon: "fa-star"             , label: "Reviews"     , role: "common" },
+        { href: "cart.html"        , icon: "fa-cart-arrow-down"  , label: "Cart"        , role: "common" },
+        { href: "messages.html"    , icon: "fa-inbox"            , label: "messages"    , role: "common" },
+        { href: "mails.html"       , icon: "fa-envelope"         , label: "Mails"       , role: "Admin"  },
+        { href: "customers.html"   , icon: "fa-user"             , label: "Customers"   , role: "Admin"  },
+        { href: "users.html"       , icon: "fa-users"            , label: "Users"       , role: "Admin"  },
+        { href: "profile.html"     , icon: "fa-id-card"          , label: "My Profile"  , role: "common" },
+        { href: "menus.html"       , icon: "fa-bars"             , label: "Menus"       , role: "Admin"  },
+        { href: "settings.html"    , icon: "fa-cogs"             , label: "Settings"    , role: "common" },
     ];
 
-    const links = menuItems.map(item => `
-        <li class="nav-item w-100 ${item.href === currentPage ? "active" : ""}">
+    const visibleItems = menuItems.filter(item => 
+        item.role === "common" || session.role === "admin" || item.role === session.role
+    );
+
+    const links = visibleItems.map(item => `
+        <li class="nav-item w-100 ${item.href === currentPage ? "active" : ""} data-role="${item.role}"">
             <a href="${item.href}" class="nav-link text-white px-0">
                 <i class="fas ${item.icon}"></i> 
                 <span class="ms-2 menu-text">${item.label}</span>

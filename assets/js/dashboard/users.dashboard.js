@@ -1,6 +1,18 @@
 let users = JSON.parse(localStorage.getItem("users")) || [
-    { id: 1, name: "John Doe", email: "john@example.com", role: "Admin", phone: "123456789" },
-    { id: 2, name: "Jane Smith", email: "jane@example.com", role: "Seller", phone: "987654321" }
+    { id: 1, 
+        name: "John Doe", 
+        email: "john@example.com", 
+        role: "Admin", 
+        phone: "123456789",
+        password: encryptText("Password123!")
+    },
+    { id: 2, 
+        name: "Jane Smith", 
+        email: "jane@example.com", 
+        role: "Seller", 
+        phone: "987654321",
+        password: encryptText("Password123!") 
+    }
 ];
 let currentPagePagination = 1;
 const rowsPerPage = 5;
@@ -137,13 +149,21 @@ document.getElementById("userForm").addEventListener("submit", function(e) {
     }
 
 
+    let encryptedPassword;
+    if (id) {
+        const existingUser = users.find(u => u.id == id);
+        encryptedPassword = password ? encryptText(password) : existingUser.password;
+    } else {
+        encryptedPassword = encryptText(password);
+    }
+
 
     const userData = {
         id: id ? parseInt(id) : Date.now(),
         name: name,
         email: email,
         role: role,
-        password: password || (id ? users.find(u => u.id == id).password : ""),
+        password: encryptedPassword,
         phone: phone
     };
 
@@ -184,3 +204,50 @@ function deleteUser(id) {
 document.getElementById("searchUser").addEventListener("input", renderTable);
 
 renderTable();
+
+
+function encryptText(text) {
+    if (!text) return '';
+    let step1 = text.split('').reverse().join('');
+        let step2 = '';
+    for (let i = 0; i < step1.length; i += 2) {
+        if (i + 1 < step1.length) {
+            step2 += step1[i+1] + step1[i];
+        } else {
+            step2 += step1[i];
+        }
+    }
+    
+    let step3 = '';
+    for (let i = 0; i < step2.length; i++) {
+        let charCode = step2.charCodeAt(i);
+        step3 += String.fromCharCode(charCode + 3);
+    }
+    
+    const prefix = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+    const suffix = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+    return prefix + step3 + suffix;
+}
+
+function decryptText(encryptedText) {
+    if (!encryptedText) return '';
+    
+    let step1 = encryptedText.substring(1, encryptedText.length - 1);
+    
+    let step2 = '';
+    for (let i = 0; i < step1.length; i++) {
+        let charCode = step1.charCodeAt(i);
+        step2 += String.fromCharCode(charCode - 3);
+    }
+    
+    let step3 = '';
+    for (let i = 0; i < step2.length; i += 2) {
+        if (i + 1 < step2.length) {
+            step3 += step2[i+1] + step2[i];
+        } else {
+            step3 += step2[i];
+        }
+    }
+    
+    return step3.split('').reverse().join('');
+}
