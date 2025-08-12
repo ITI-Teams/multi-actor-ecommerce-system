@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="../../assets/css/all.min.css" />
     <link rel="stylesheet" href="../../assets/css/dashboard-styles.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css" />
 </head>
 <body class="min-vh-100 d-flex flex-column">
     <!--Start Splash Screen -->
@@ -46,9 +47,11 @@
                     <table class="table table-bordered table-hover">
                         <thead class="table-light">
                             <tr>
+                                <th>From</th>
                                 <th>To</th>
                                 <th>subject</th>
                                 <th>mail</th>
+                                <th>Date</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
@@ -71,7 +74,12 @@
                                     <input type="hidden" id="mailId">
                                     <div class="mb-3">
                                         <label for="to">To</label>
-                                        <input type="email" id="to" class="form-control" required autocomplete="on">
+                                        <div class="mb-3" style="max-width:420px;">
+                                            <label for="to" class="form-label">Choose customer</label>
+                                            <select id="to" class="form-select" name="to" multiple>
+                                                <option value="">Select...</option>
+                                            </select>
+                                        </div>
                                     </div>
                                     <div class="mb-3">
                                         <label for="subject">subject</label>
@@ -97,5 +105,17 @@
     <script type="module" src="../../assets/js/dashboard.js"></script>
     <script src="../../assets/js/bootstrap.bundle.min.js"></script>
     <script src="../../assets/js/all.min.js"></script>
+    <script src="../../assets/js/dashboard/mails.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js"></script>
+    <script>
+        const choices = new Choices('#to', {
+            searchEnabled: true,
+            itemSelectText: '',
+            removeItemButton: true,
+            placeholderValue: 'Select customers...',
+            searchPlaceholderValue: 'Type to search...',
+        });
+    </script>
+    
 </body>
 </html>

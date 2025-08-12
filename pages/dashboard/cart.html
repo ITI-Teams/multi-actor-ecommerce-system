@@ -55,6 +55,33 @@
                         <ul class="pagination" id="pagination"></ul>
                     </nav>
                 </main>
+                <div class="modal fade" id="cartModal" tabindex="-1">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="cartModalTitle">Send Message</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+                            <div id="formMessage" style="display:none;"></div>
+                            <div class="modal-body">
+                                <form id="cartForm">
+                                    <input type="hidden" id="cartId">
+                                    <input type="hidden" id="sellertId">
+                                    <input type="hidden" id="customerId">
+                                    <div class="mb-3">
+                                        <label for="subject">Subject</label>
+                                        <input type="text" id="subject" class="form-control" autocomplete="off">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="message">Message</label>
+                                        <textarea id="message" class="form-control"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary w-100">Send</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <!--End Main Section-->
                 <!--Start Footer-->
                 <footer id="footer" class="text-center py-3 shadow-sm"></footer>
@@ -65,5 +92,6 @@
     <script type="module" src="../../assets/js/dashboard.js"></script>
     <script src="../../assets/js/bootstrap.bundle.min.js"></script>
     <script src="../../assets/js/all.min.js"></script>
+    <script src="../../assets/js/dashboard/cart.dashboard.js"></script>
 </body>
 </html>

@@ -17,41 +17,51 @@ let messages = JSON.parse(localStorage.getItem("messages")) || [
         message: "hi How are You ?",
         date : "2025-08-20",
     },
+    { 
+        id: 2, 
+        name: "sss", 
+        email: "sss@gmail.com", 
+        phone: "01127283620",
+        subject: "greating", 
+        message: "hi How are You ?",
+        date : "2025-08-20",
+    },
 ];
 
 let currentPagePagination = 1;
 const rowsPerPage = 5;
 
-function saveReviews() {
-    localStorage.setItem("reviews", JSON.stringify(reviews));
+function saveMessages() {
+    localStorage.setItem("messages", JSON.stringify(messages));
 }
 
 function renderTable() {
-    const products = JSON.parse(localStorage.getItem("products")) || [];
-    const customers = JSON.parse(localStorage.getItem("customers")) || [];
-
-    const searchValue = document.getElementById("searchReview").value.toLowerCase();
-    const filteredReviews = reviews.filter(u =>
-        String(u.review).toLowerCase().includes(searchValue)
+    const searchValue = document.getElementById("searchMessage").value.toLowerCase();
+    const filteredMessages = messages.filter(u =>
+        String(u.name).toLowerCase().includes(searchValue)||
+        String(u.email).toLowerCase().includes(searchValue)||
+        String(u.subject).toLowerCase().includes(searchValue)||
+        String(u.phone).toLowerCase().includes(searchValue)
     );
 
     const start = (currentPagePagination - 1) * rowsPerPage;
-    const paginatedReviews = filteredReviews.slice(start, start + rowsPerPage);
+    const paginatedMessages = filteredMessages.slice(start, start + rowsPerPage);
 
-    const tbody = document.getElementById("reviewTableBody");
+    const tbody = document.getElementById("messageTableBody");
     tbody.innerHTML = "";
 
-    paginatedReviews.forEach(review => {
-        const product = products.find(p => p.id === review.product_id);
-        const customer = customers.find(c => c.id === review.customer_id);
+    paginatedMessages.forEach(message => {
+        
         tbody.innerHTML += `
             <tr>
-                <td>${product ? product.name : "Unknown Product"}</td>
-                <td>${customer ? customer.name : "Unknown Customer"}</td>
-                <td class="text-center">${review ? getStarsHTML(review.review) : "Unknown Review"}</td>
-                
+                <td>${message.name}</td>
+                <td>${message.email}</td>
+                <td>${message.phone}</td>
+                <td>${message.subject}</td>
+                <td>${message.message}</td>
+                <td>${message.date}</td>
                 <td class="text-center">
-                    <button class="btn btn-danger btn-sm" onclick="deleteReview(${review.id})">
+                    <button class="btn btn-danger btn-sm" onclick="deleteMessage(${message.id})">
                         <i class="fas fa-trash"></i>
                     </button>
                 </td>
@@ -59,7 +69,7 @@ function renderTable() {
         `;
     });
 
-    renderPagination(filteredReviews.length);
+    renderPagination(filteredMessages.length);
 }
 function getStarsHTML(rating) {
     let starsHTML = '';
@@ -92,15 +102,15 @@ function changePage(page) {
     renderTable();
 }
 
-function deleteReview(id) {
-    if (confirm("Are you sure you want to delete this review?")) {
-        const index = reviews.findIndex(u => u.id === id);
-        reviews.splice(index, 1);
-        saveReviews();
+function deleteMessage(id) {
+    if (confirm("Are you sure you want to delete this message?")) {
+        const index = messages.findIndex(u => u.id === id);
+        messages.splice(index, 1);
+        saveMessages();
         renderTable();
     }
 }
 
-document.getElementById("searchReview").addEventListener("input", renderTable);
+document.getElementById("searchMessage").addEventListener("input", renderTable);
 
 renderTable();
