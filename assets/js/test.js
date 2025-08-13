@@ -1,17 +1,16 @@
+const url = "https://dummyjson.com/products?limit=200"; // get 194 products
+fetch(url)
+  .then((res) => {
+    if (!res.ok) throw new Error("Network response was not ok");
+    return res.json();
+  })
+  .then((data) => {
+    if (!localStorage.getItem("products")) {
+      localStorage.setItem("products", JSON.stringify(data.products)); // set the products in local storage
+    }
+  })
+  .catch((error) => console.error("Error:", error));
 window.addEventListener("load", () => {
-  const url = "https://dummyjson.com/products?limit=200"; // get 194 products
-  fetch(url)
-    .then((res) => {
-      if (!res.ok) throw new Error("Network response was not ok");
-      return res.json();
-    })
-    .then((data) => {
-      if (!localStorage.getItem("products")) {
-        localStorage.setItem("products", JSON.stringify(data.products)); // set the products in local storage
-      }
-    })
-    .catch((error) => console.error("Error:", error));
-
   const products = localStorage.getItem("products");
   if (products) {
     const productsArray = JSON.parse(products);
