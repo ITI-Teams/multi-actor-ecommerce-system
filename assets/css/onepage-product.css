@@ -248,9 +248,6 @@ body {
 }
 
 @media (max-width: 768px) {
-    body {
-        padding: 20px;
-    }
 
     .page-wrap {
         padding: 20px;
