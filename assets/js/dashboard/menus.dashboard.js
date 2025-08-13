@@ -1,6 +1,5 @@
 let menuData = JSON.parse(localStorage.getItem("menuData")) || [];
 
-// إصلاح البيانات القديمة
 menuData = menuData.map(item => {
     if (!item.children) item.children = [];
     return item;
@@ -17,7 +16,7 @@ function addMenuItem() {
     const parent = document.getElementById("parentItem").value;
 
     if (!name || !link) {
-        alert("الرجاء إدخال الاسم والرابط");
+        alert("Please enter name and link");
         return;
     }
 
@@ -45,7 +44,6 @@ function deleteMenuItem(name, isSub) {
     } else {
         let itemToDelete = menuData.find(item => item.name === name);
         if (itemToDelete) {
-            // الأطفال يصبحوا عناصر رئيسية
             menuData = menuData.filter(item => item.name !== name);
             menuData = [...menuData, ...itemToDelete.children.map(c => ({...c, children: []}))];
         }
@@ -67,7 +65,7 @@ function renderMenu() {
         li.innerHTML = `
             <div class="menu-item">
                 <a href="${item.link}" target="_blank">${item.name}</a>
-                <button class="btn btn-danger btn-sm" onclick="deleteMenuItem('${item.name}', false)">حذف</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteMenuItem('${item.name}', false)">Delete</button>
             </div>
         `;
 
@@ -82,7 +80,7 @@ function renderMenu() {
                 subLi.innerHTML = `
                     <div class="menu-item">
                         <a href="${sub.link}" target="_blank">${sub.name}</a>
-                        <button class="btn btn-danger btn-sm" onclick="deleteMenuItem('${sub.name}', true)">حذف</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteMenuItem('${sub.name}', true)">Delete</button>
                     </div>
                 `;
                 subUl.appendChild(subLi);
@@ -102,7 +100,7 @@ function renderMenu() {
 }
 
 function clearMenu() {
-    if (confirm("هل أنت متأكد من مسح القائمة؟")) {
+    if (confirm("Are you sure you want to clear the list?")) {
         menuData = [];
         saveToLocalStorage();
         renderMenu();
@@ -142,7 +140,6 @@ function enableDragAndDrop() {
             }
         });
 
-        // دعم السحب والإفلات للعناصر الفرعية
         let subItems = item.querySelectorAll(".submenu > li");
         subItems.forEach(subItem => {
             subItem.addEventListener("dragstart", () => {
