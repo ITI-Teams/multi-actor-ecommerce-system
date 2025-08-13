@@ -3,17 +3,17 @@ export function renderSidebar(currentPage) {
     if (!session) return;
     const menuItems = [
         { href: "dashboard.html"   , icon: "fa-home"             , label: "Dashboard"   , role: "common" },
-        { href: "products.html"    , icon: "fa-box"              , label: "Products"    , role: "Seller" },
-        { href: "categories.html"  , icon: "fa-th"               , label: "Categories"  , role: "Seller" },
-        { href: "orders.html"      , icon: "fa-paper-plane"      , label: "Orders"      , role: "Seller" },
+        { href: "products.html"    , icon: "fa-box"              , label: "Products"    , role: "seller" },
+        { href: "categories.html"  , icon: "fa-th"               , label: "Categories"  , role: "seller" },
+        { href: "orders.html"      , icon: "fa-paper-plane"      , label: "Orders"      , role: "seller" },
         { href: "reviews.html"     , icon: "fa-star"             , label: "Reviews"     , role: "common" },
         { href: "cart.html"        , icon: "fa-cart-arrow-down"  , label: "Cart"        , role: "common" },
         { href: "messages.html"    , icon: "fa-inbox"            , label: "messages"    , role: "common" },
-        { href: "mails.html"       , icon: "fa-envelope"         , label: "Mails"       , role: "Admin"  },
-        { href: "customers.html"   , icon: "fa-user"             , label: "Customers"   , role: "Admin"  },
-        { href: "users.html"       , icon: "fa-users"            , label: "Users"       , role: "Admin"  },
+        { href: "mails.html"       , icon: "fa-envelope"         , label: "Mails"       , role: "admin"  },
+        { href: "customers.html"   , icon: "fa-user"             , label: "Customers"   , role: "admin"  },
+        { href: "users.html"       , icon: "fa-users"            , label: "Users"       , role: "admin"  },
         { href: "profile.html"     , icon: "fa-id-card"          , label: "My Profile"  , role: "common" },
-        { href: "menus.html"       , icon: "fa-bars"             , label: "Menus"       , role: "Admin"  },
+        { href: "menus.html"       , icon: "fa-bars"             , label: "Menus"       , role: "admin"  },
         { href: "settings.html"    , icon: "fa-cogs"             , label: "Settings"    , role: "common" },
     ];
 

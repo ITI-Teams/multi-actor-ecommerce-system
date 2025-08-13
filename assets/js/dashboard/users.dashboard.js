@@ -2,14 +2,14 @@ let users = JSON.parse(localStorage.getItem("users")) || [
     { id: 1, 
         name: "John Doe", 
         email: "john@example.com", 
-        role: "Admin", 
+        role: "admin", 
         phone: "123456789",
         password: encryptText("Password123!")
     },
     { id: 2, 
         name: "Jane Smith", 
         email: "jane@example.com", 
-        role: "Seller", 
+        role: "seller", 
         phone: "987654321",
         password: encryptText("Password123!") 
     }
