@@ -1,6 +1,4 @@
-body {
-    /* padding: 40px 20px; */
-}
+
 
 #header-wrapper{
     height: fit-content;
@@ -248,7 +246,6 @@ body {
 }
 
 @media (max-width: 768px) {
-
     .page-wrap {
         padding: 20px;
     }
