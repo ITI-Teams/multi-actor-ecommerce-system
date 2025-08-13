@@ -6,9 +6,9 @@
 }
 
 body {
-    background: #f6f6f5;
+    background: #fcfcf6;
     color: var(--accent);
-    /* font-family: Inter, system-ui, Arial, sans-serif; */
+
 }
 
 
@@ -28,6 +28,7 @@ body {
     grid-template-columns: 1fr 380px;
     gap: 24px;
     align-items: start;
+    margin: 20px;
 }
 /* responsive */
 @media (max-width: 992px) {
@@ -52,7 +53,7 @@ body {
     background: var(--card-bg);
     border-radius: 8px;
     padding: 20px;
-    box-shadow: 0 6px 18px rgba(16, 16, 16, 0.06);
+    box-shadow: 0 8px 18px rgba(16, 16, 16, 0.07);
 }
 
 /* Express buttons row - side by side */

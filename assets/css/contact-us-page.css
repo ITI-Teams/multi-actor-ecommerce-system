@@ -1,41 +1,73 @@
-
-
 #header-wrapper {
     height: fit-content;
 }
 
- /* Contact Us Title  */
+/* Contact Us Title  */
 #contact-us-h1 {
     font-weight: bold;
     padding-top: 65px;
 }
 
-#contact-form{
+#contact-form {
     /* border: 1px solid black; */
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     border-radius: 15px;
 }
+
 /* Contact Form */
 #contactForm {
     padding: 12px;
     margin-bottom: 15px;
 }
 
-#btn-sub-contact-us {
-    background: #5f5d5c;
-    color: white;
-    border-radius: 8px;
-    padding: 10px 25px;
-    border: 2px solid black;
-}
 
-#btn-sub-contact-us:hover {
-    background: #3b3937;
-}
-
-form[type="input"]{
+form[type="input"] {
     border-radius: 10px;
 }
+
+.form-control.is-invalid {
+    border-color: red;
+}
+
+.form-control.is-valid {
+    border-color: green;
+}
+
+.invalid-feedback {
+    display: none;
+    color: red;
+}
+
+.form-control.is-invalid+.invalid-feedback {
+    display: block;
+}
+
+#modalDetails {
+    display: flex;
+    flex-direction: column;
+    margin-left: 20px;
+}
+
+#successModal {
+    padding: 100px;
+}
+/* 
+.modal-mesg-body {
+    word-wrap: break-word;
+    max-width: 100%;
+    overflow-x: auto;
+    font-size: 1rem;
+} */
+
+@media (max-width: 576px) {
+    .modal-mesg-body{
+        font-size: 0.7rem;
+    }
+    .modal-title{
+        font-size: small;
+    }
+}
+
 
 /* Contact Info */
 .info-section p {
@@ -51,7 +83,7 @@ iframe {
     /* padding-top: 40px; */
 }
 
-#loc-ifram{
+#loc-ifram {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -62,7 +94,9 @@ iframe {
     margin: 50px 0 30px;
 }
 
+/* Accordion */
 .accordion-button {
+    font-weight: bold;
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
@@ -75,27 +109,30 @@ iframe {
     transition: all 0.3s ease;
 }
 
+.accordion-button:focus {
+    box-shadow: none;
+}
 
-.contact-link{
+
+.contact-link {
     color: #000;
     text-decoration: none;
     opacity: 0.5;
 }
 
-.contact-link:hover{
+.contact-link:hover {
     opacity: 1;
     text-decoration: underline;
 }
 
-.social-icons .fa-facebook { color: #1877f2; }
-.social-icons .fa-twitter { color: #1da1f2; }
-.social-icons .fa-youtube { color: #ff0000; }
-
-.accordion-button {
-  font-weight: bold;
+.social-icons .fa-facebook {
+    color: #1877f2;
 }
 
-.accordion-button:not(.collapsed) {
-  background-color: #0d6efd;
-  color: white;
+.social-icons .fa-twitter {
+    color: #1da1f2;
+}
+
+.social-icons .fa-youtube {
+    color: #ff0000;
 }

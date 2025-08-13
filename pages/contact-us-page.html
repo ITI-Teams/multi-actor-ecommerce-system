@@ -10,7 +10,8 @@
     <link href="../assets/css/contact-us-page.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/styles.css">
     <script type="module" src="../assets/js/main.js"></script>
-    
+    <script src="../assets/js/test.js"></script>
+    <link href="../assets/css/contact-us-page.css" rel="stylesheet">
 </head>
 
 <body>
@@ -28,27 +29,50 @@
             <div class="row g-4" id="contact-form">
                 <!-- Contact Form -->
                 <div class="col-md-6">
-                    <form class="needs-validation" novalidate id="contactForm">
-                        <input type="text" class="form-control mb-3" placeholder="Please enter your name" name="name"
-                            required>
-                        <div class="invalid-feedback">Please enter your name.</div>
+                    <form id="contactForm" novalidate>
+                        <input type="text" class="form-control mb-1" placeholder="Please enter your name" name="name">
+                        <div class="invalid-feedback"><small>enter a vlid name,pls!</small></div>
 
-                        <input type="email" class="form-control mb-3" placeholder="Email Address" name="email" required>
-                        <div class="invalid-feedback">Please enter a valid email.</div>
+                        <input type="text" class="form-control mb-1" placeholder="Email Address" name="email">
+                        <div class="invalid-feedback"><small>enter a vlid email,pls!</small></div>
 
-                        <input type="tel" class="form-control mb-3" placeholder="Phone Number" name="phone"
-                            pattern="\+?[0-9]{7,15}" required>
-                        <div class="invalid-feedback">Please enter a valid phone number.</div>
+                        <input type="text" class="form-control mb-1" placeholder="Phone Number" name="phone">
+                        <div class="invalid-feedback"><small>enter a vlid phone,pls!</small></div>
 
-                        <input type="text" class="form-control mb-3" placeholder="Subject" name="subject" required>
-                        <div class="invalid-feedback">Please enter a subject.</div>
+                        <input type="text" class="form-control mb-1" placeholder="Subject" name="subject">
+                        <div class="invalid-feedback"><small>enter a vlid subject,pls!</small></div>
 
-                        <textarea class="form-control mb-3" rows="4" placeholder="Message" name="message"
-                            required></textarea>
-                        <div class="invalid-feedback">Please enter your message.</div>
+                        <textarea class="form-control mb-3" rows="4" placeholder="Message" name="message"></textarea>
+                        <div class="invalid-feedback"><small>enter a vlid message,pls!</small></div>
 
-                        <button id="btn-sub-contact-us" type="submit" class="btn btn-submit w-100">Submit</button>
+                        <button type="submit" class="btn btn-success w-100">Submit</button>
                     </form>
+                </div>
+
+                <!-- Success Modal -->
+                <div class="modal fade" id="successModal">
+
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header bg-success text-white">
+
+                                <h6 class="modal-title">Thanks For Reaching Out,We Will Up To You Soon.</h6>
+                                <button type="button" 
+                                    data-bs-dismiss="modal">
+                                </button>
+
+                            </div>
+
+                            <div class="modal-mesg-body" id="modalDetails">
+                                <!-- Filled by JS -->
+                            </div>
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-primary" data-bs-dismiss="modal">OK</button>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
                 <!-- Contact Info -->
