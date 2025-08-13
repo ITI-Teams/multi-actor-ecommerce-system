@@ -4,7 +4,9 @@ let orders = JSON.parse(localStorage.getItem("orders")) || [
         product_id: 1, 
         seller_id: 1, 
         customer_id: 1, 
-        status: "Delivery" 
+        status: "Delivery",
+        quantity: 1,
+        total_price : 200, 
     },
     { 
         id: 2, 

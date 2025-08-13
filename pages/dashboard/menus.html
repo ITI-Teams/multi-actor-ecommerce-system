@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="../../assets/css/all.min.css" />
     <link rel="stylesheet" href="../../assets/css/dashboard-styles.css" />
+    <script src="../../assets/js/dashboard/auth.dashboard.js"></script>
+    <script>
+        checkAuthorization(["Admin"]);
+    </script>
 </head>
 <body class="min-vh-100 d-flex flex-column">
     <!--Start Splash Screen -->
@@ -36,8 +40,46 @@
                 <header id="header"></header>
                 <!--End Header-->
                 <!--Start Main Section-->
-                <main class="container py-4">
-                    
+                <main class="container py-4" id="menu-system">
+                    <h2 class="mb-4">Menu Management</h2>
+                    <div class="row">
+        <!-- إضافة عنصر جديد -->
+        <div class="col-md-4">
+            <div class="menu-box">
+                <h5>إضافة عنصر جديد</h5>
+                <div class="mb-3">
+                    <label class="form-label">اسم العنصر</label>
+                    <input type="text" id="itemName" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">الرابط</label>
+                    <input type="text" id="itemLink" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">مستوى العنصر</label>
+                    <select id="itemLevel" class="form-select">
+                        <option value="main">رئيسي</option>
+                        <option value="sub">فرعي</option>
+                    </select>
+                </div>
+                <div class="mb-3" id="parentSelectBox" style="display:none;">
+                    <label class="form-label">اختر العنصر الأب</label>
+                    <select id="parentItem" class="form-select"></select>
+                </div>
+                <button class="btn btn-primary w-100" onclick="addMenuItem()">إضافة للقائمة</button>
+            </div>
+        </div>
+
+        <!-- عرض القائمة -->
+        <div class="col-md-8">
+            <div class="menu-box">
+                <h5>القائمة</h5>
+                <ul id="menuList" class="list-unstyled"></ul>
+                <button class="btn btn-danger mt-3" onclick="clearMenu()">مسح القائمة</button>
+            </div>
+        </div>
+    </div>
+
                 </main>
                 <!--End Main Section-->
                 <!--Start Footer-->
@@ -49,6 +91,6 @@
     <script type="module" src="../../assets/js/dashboard.js"></script>
     <script src="../../assets/js/bootstrap.bundle.min.js"></script>
     <script src="../../assets/js/all.min.js"></script>
-    <script src="../../assets/js/dashboard/users.dashboard.js"></script>
+    <script src="../../assets/js/dashboard/menus.dashboard.js"></script>
 </body>
 </html>

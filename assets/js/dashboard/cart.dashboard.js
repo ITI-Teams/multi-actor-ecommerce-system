@@ -8,6 +8,7 @@ let carts = JSON.parse(localStorage.getItem("carts")) || [
         customer_id: 1, 
         product_id: 1, 
         seller_id: 1, 
+        quantity: 1, 
     },
     { 
         id: 2, 

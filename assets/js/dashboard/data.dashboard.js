@@ -49,7 +49,7 @@ let customers = JSON.parse(localStorage.getItem("customers")) || [
         address: "12 street - cairo",
         birthday: "1999-07-15",
         phone: "01124252789",
-        password: "@A1234s",
+        password: encryptText("@A1234s"),
     },
     { 
         id: 2, 
@@ -61,7 +61,7 @@ let customers = JSON.parse(localStorage.getItem("customers")) || [
         address: "16 street - Alex",
         birthday: "1999-07-15",
         phone: "01257462789",
-        password: "s1234@A",
+        password: encryptText("s1234@A"),
     },
 ];
 let mails = JSON.parse(localStorage.getItem("mails")) || [
@@ -207,20 +207,46 @@ let users = JSON.parse(localStorage.getItem("users")) || [
     { id: 1, 
         name: "John Doe", 
         email: "john@example.com", 
-        role: "Admin", 
+        role: "admin", 
         phone: "123456789",
         password: encryptText("Password123!")
     },
     { id: 2, 
         name: "Jane Smith", 
         email: "jane@example.com", 
-        role: "Seller", 
+        role: "seller", 
         phone: "987654321",
         password: encryptText("Password123!") 
     }
 ];
 
-
+if (!localStorage.getItem("carts")) {
+    localStorage.setItem("carts", JSON.stringify(carts));
+}
+if (!localStorage.getItem("categories")) {
+    localStorage.setItem("categories", JSON.stringify(categories));
+}
+if (!localStorage.getItem("customers")) {
+    localStorage.setItem("customers", JSON.stringify(customers));
+}
+if (!localStorage.getItem("mails")) {
+    localStorage.setItem("mails", JSON.stringify(mails));
+}
+if (!localStorage.getItem("messages")) {
+    localStorage.setItem("messages", JSON.stringify(messages));
+}
+if (!localStorage.getItem("orders")) {
+    localStorage.setItem("orders", JSON.stringify(orders));
+}
+if (!localStorage.getItem("products")) {
+    localStorage.setItem("products", JSON.stringify(products));
+}
+if (!localStorage.getItem("reviews")) {
+    localStorage.setItem("reviews", JSON.stringify(reviews));
+}
+if (!localStorage.getItem("users")) {
+    localStorage.setItem("users", JSON.stringify(users));
+}
 function encryptText(text) {
     if (!text) return '';
     let step1 = text.split('').reverse().join('');
