@@ -1,0 +1,101 @@
+
+
+#header-wrapper {
+    height: fit-content;
+}
+
+ /* Contact Us Title  */
+#contact-us-h1 {
+    font-weight: bold;
+    padding-top: 65px;
+}
+
+#contact-form{
+    /* border: 1px solid black; */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+}
+/* Contact Form */
+#contactForm {
+    padding: 12px;
+    margin-bottom: 15px;
+}
+
+#btn-sub-contact-us {
+    background: #5f5d5c;
+    color: white;
+    border-radius: 8px;
+    padding: 10px 25px;
+    border: 2px solid black;
+}
+
+#btn-sub-contact-us:hover {
+    background: #3b3937;
+}
+
+form[type="input"]{
+    border-radius: 10px;
+}
+
+/* Contact Info */
+.info-section p {
+    margin-bottom: 8px;
+}
+
+/* Map */
+iframe {
+    width: 100%;
+    border: none;
+    height: 400px;
+    margin: 40px 0;
+    /* padding-top: 40px; */
+}
+
+#loc-ifram{
+    padding-top: 50px;
+    padding-bottom: 20px;
+}
+
+/* FAQ */
+.faq-title {
+    font-weight: bold;
+    margin: 50px 0 30px;
+}
+
+.accordion-button {
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #f8f9fa;
+    color: #000;
+}
+
+.accordion-body {
+    transition: all 0.3s ease;
+}
+
+
+.contact-link{
+    color: #000;
+    text-decoration: none;
+    opacity: 0.5;
+}
+
+.contact-link:hover{
+    opacity: 1;
+    text-decoration: underline;
+}
+
+.social-icons .fa-facebook { color: #1877f2; }
+.social-icons .fa-twitter { color: #1da1f2; }
+.social-icons .fa-youtube { color: #ff0000; }
+
+.accordion-button {
+  font-weight: bold;
+}
+
+.accordion-button:not(.collapsed) {
+  background-color: #0d6efd;
+  color: white;
+}
