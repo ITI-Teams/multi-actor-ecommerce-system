@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
     <script src="https://kit.fontawesome.com/4f91921791.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../assets/css/styles.css">
-    <script type="module" src="../assets/js/main.js"></script>    
+    <script type="module" src="../assets/js/main.js"></script>
     <!-- <script src="./assets/js/test.js"></script> -->
 
     <!-- link css -->
@@ -21,27 +21,28 @@
     </header>
 
     <main class="container">
-        <div class="row">
+        <div class="product-grid">
 
-            <!-- Left: thumbnails + main image -->
-            <div class="col-md-6 d-flex">
-                <!-- Thumbnails -->
-                <div class="thumbnail-list me-3">
-                    <img src="../assets/img/product01.jpg" class="thumbnail-img active" onclick="changeImage(this)">
-                    <img src="../assets/img/product02.jpg" class="thumbnail-img" onclick="changeImage(this)">
-                    <img src="../assets/img/product01.jpg" class="thumbnail-img" onclick="changeImage(this)">
-                    <img src="../assets/img/product02.jpg" class="thumbnail-img" onclick="changeImage(this)">
+            <!-- LEFT: Gallery -->
+            <section class="gallery">
+                <!-- main img product -->
+                <div class="main-image text-center">
+                    <img id="main-Img" src="../assets/img/product01.jpg" alt="Product image">
                 </div>
-                <!-- Main image + top small button -->
-                <div class="flex-fill">
-                    <img id="mainProductImg" src="../assets/img/product01.jpg" class="main-img">
-                </div>
-            </div>
 
-            <!-- Right: product details -->
-            <div class="col-md-6">
-                <h6 class="text-uppercase text-muted">New Arrival</h6>
-                <h2>Cotton Dobby Studio Shirt</h2>
+                <!-- thumbs imgs -->
+                <div class="thumbs mt-2">
+                    <img class="thumb active" src="../assets/img/product01.jpg" data-src="../assets/img/product01.jpg" alt="thumb1">
+                    <img class="thumb" src="../assets/img/product01.jpg" data-src="../assets/img/product01.jpg" alt="thumb2">
+                    <img class="thumb" src="../assets/img/product01.jpg" data-src="../assets/img/product01.jpg" alt="thumb3">
+                    <img class="thumb" src="../assets/img/product01.jpg" data-src="../assets/img/product01.jpg" alt="thumb4">
+                </div>
+            </section>
+
+            <!-- RIGHT: Details -->
+            <aside>
+
+                <h1 class="product-title">Paige Cotton Blend Tweed Jacket</h1>
 
                 <!-- Interactive Rating -->
                 <div class="rating" id="ratingStars">
@@ -54,54 +55,50 @@
                     <span class="reviews-link" onclick="scrollToReviews()">4 Reviews</span>
                 </div>
 
-                <div class="price">$148</div>
-                <p>Relaxed-fit sheer shirt made from breathable, airy cotton dobby.</p>
 
-                <!-- Color -->
-                <div class="section-title">Color: <span id="selectedColor">White</span></div>
-                <div>
-                    <div class="color-box active" style="background-color: white;" data-color="White"
-                        onclick="selectColor(this)"></div>
-                    <div class="color-box" style="background-color: black;" data-color="Black"
-                        onclick="selectColor(this)"></div>
-                    <div class="color-box" style="background-color: lightblue;" data-color="Light Blue"
-                        onclick="selectColor(this)"></div>
+                <div class="price">$199.00</div>
+                <!-- Colors -->
+                <div class="mt-3">
+                    <div class="small muted mb-2">Color</div>
+                    <div class="color-swatches">
+                        <div class="swatch" data-color="white" title="White" style="background:brown"></div>
+                        <div class="swatch" data-color="beige" title="Beige" style="background:#fbfbfb"></div>
+                        <div class="swatch" data-color="gray" title="Gray" style="background:#bdbdbd"></div>
+                        <div class="swatch" data-color="black" title="Black" style="background:#111"></div>
+                    </div>
                 </div>
-
-                <!-- Size -->
-                <div class="section-title">Size</div>
-                <div>
-                    <button class="btn btn-outline-secondary size-btn" onclick="selectSize(this)">XS</button>
-                    <button class="btn btn-outline-secondary size-btn" onclick="selectSize(this)">S</button>
-                    <button class="btn btn-outline-secondary size-btn" onclick="selectSize(this)">M</button>
-                    <button class="btn btn-outline-secondary size-btn" onclick="selectSize(this)">L</button>
-                    <button class="btn btn-outline-secondary size-btn" onclick="selectSize(this)">XL</button>
-                    <button class="btn btn-outline-secondary size-btn" onclick="selectSize(this)">XXL</button>
+                <!-- Sizes -->
+                <div class="mt-3">
+                    <div class="small muted mb-2">Sizes</div>
+                    <div class="sizes">
+                        <button class="size-btn">XS</button>
+                        <button class="size-btn">S</button>
+                        <button class="size-btn selected">M</button>
+                        <button class="size-btn">L</button>
+                        <button class="size-btn">XL</button>
+                        <button class="size-btn disabled" disabled>XXL</button>
+                    </div>
                 </div>
-
-                <!-- Add to cart (disabled by default) -->
-                <button id="cartBtn" class="btn btn-dark btn-lg w-100 mt-3 btn-disabled" disabled>
-                    Select Size to Add to Cart
-                </button>
-                <p class="mt-2 text-muted">or 4 interest-free payments of $37.00 with Afterpay</p>
-
-                <!-- Delivery / Pickup -->
-                <div class="section-title">Delivery</div>
-                <div>
-                    <input type="radio" name="ship" checked> Delivery
-                    <input type="radio" name="ship" class="ms-3"> Pick-up
+                <!-- BTN ADD to cart -->
+                <div class="add-row">
+                    <button id="addtocartBtn" class="btn btn-dark btn-lg btn-add">Add to cart</button>
                 </div>
-
-                <!-- Accordion for details -->
+                <!-- free delivery -->
+                <div class="info-line">
+                    <i class="bi bi-truck"></i>
+                    <div class="small muted">Free delivery on orders over $30.0</div>
+                </div>
+                <!-- Accordion  -->
                 <div class="accordion mt-4" id="productAccordion">
+
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#descCollapse">
+                                data-bs-target="#collapseOne" aria-expanded="true">
                                 Description
                             </button>
                         </h2>
-                        <div id="descCollapse" class="accordion-collapse collapse show"
+                        <div id="collapseOne" class="accordion-collapse collapse show"
                             data-bs-parent="#productAccordion">
                             <div class="accordion-body">
                                 Relaxed-fit sheer shirt made from breathable 80-GSM cotton for a comfortable and airy
@@ -110,93 +107,51 @@
                                 felled seams. Garment washed for a soft, worn-in feel.
                             </div>
                         </div>
+
                     </div>
+
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#fitCollapse">
+                                data-bs-target="#collapseTwo">
                                 Fit
                             </button>
                         </h2>
-                        <div id="fitCollapse" class="accordion-collapse collapse" data-bs-parent="#productAccordion">
+                        <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#productAccordion">
                             <div class="accordion-body">
                                 Relaxed fit, slightly oversized for comfort.
                             </div>
                         </div>
+
                     </div>
+
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#fabricCollapse">
+                                data-bs-target="#collapseThree">
                                 Fabric
                             </button>
                         </h2>
-                        <div id="fabricCollapse" class="accordion-collapse collapse" data-bs-parent="#productAccordion">
+                        <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#productAccordion">
                             <div class="accordion-body">
                                 100% breathable cotton dobby.
                             </div>
                         </div>
+
                     </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#returnsCollapse">
-                                Returns
-                            </button>
-                        </h2>
-                        <div id="returnsCollapse" class="accordion-collapse collapse"
-                            data-bs-parent="#productAccordion">
-                            <div class="accordion-body">
-                                Free returns within 30 days of purchase.
-                            </div>
-                        </div>
-                    </div>
+
                 </div>
 
-            </div>
-        </div>
-
-         <h6 id="Some-RelatedItems">Some Related Items</h6>
-        <div class="main">
-            <div>
-                <img src="../assets/img/product01.jpg">
-            </div>
-            <div>
-                <img src="../assets/img/product01.jpg">
-            </div>
-            <div>
-                <img src="../assets/img/product01.jpg">
-            </div>
-            <div>
-                <img src="../assets/img/product01.jpg">
-            </div>
-            <div>
-                <img src="../assets/img/product01.jpg">
-            </div>
-            <div>
-                <img src="../assets/img/product01.jpg">
-            </div>
-            <div>
-                <img src="../assets/img/product01.jpg">
-            </div>
-            <div>
-                <img src="../assets/img/product01.jpg">
-            </div>
-            <div>
-                <img src="../assets/img/product01.jpg">
-            </div>
-            <div>
-                <img src="../assets/img/product01.jpg">
-            </div>
-            <div>
-                <img src="../assets/img/product01.jpg">
-            </div>
-            <div>
-                <img src="../assets/img/product01.jpg">
-            </div>
+            </aside>
 
         </div>
+
     </main>
+
+
+
+
+
     <footer id="main-footer" class="footer bg-black text-light mt-5"></footer>
     <script src="../assets/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/onepage-product.js"></script>
