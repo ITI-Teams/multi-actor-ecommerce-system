@@ -1,57 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Trendora - User Profile</title>
-  <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>User Profile</title>
+<link rel="stylesheet" href="../assets/css/bootstrap.min.css">
   <link rel="stylesheet" href="../assets/css/styles.css">
-  <link rel="stylesheet" href="../assets/css/login&register.css">
-
-
-<style>
-.profile-pic {
-  margin-top: -65px
-}
-  .formcontainer{
-    height: 120vh;
-  }
-</style>
+  <link rel="stylesheet" href="../assets/css/user.css">
 
 </head>
+
 <body>
-        <header id="header-wrapper ">
-            <nav id="main-header" class="navbar navbar-expand-lg bg-body-tertiary fixed-top "></nav>
-        </header>
 
-  <div class="formcontainer">
-    <div class="profile-card ">
-
-      <div class="profile-header">
-        <img id="profileImage" class="profile-pic" src="" alt="Profile Picture">
-    
-      <h4 id="profileName" class="mt-3 mb-1"></h4>
-      <p id="profileEmail" class="text-muted"></p>
-        </div>
+  <header id="header-wrapper ">
+    <nav id="main-header" class="navbar navbar-expand-lg bg-body-tertiary fixed-top "></nav>
+  </header>
+ 
+  <div class="layout">
+    <!-- Sidebar -->
+    <div class="sidebar text-center">
+      <img id="profileImage" src="" class="profile-img" alt="Profile">
+      <h5 id="profileName">Unknown User</h5>
+      <span id="profileEmail">Not provided</span>
       <hr>
-      <p><span class="info-label">Gender:</span> <span id="profileGender">Not set</span></p>
-      <p><span class="info-label">Birth of date:</span> <span id="profileAge">Not set</span></p>
-      <p><span class="info-label">Country:</span> <span id="profileCountry">Not set</span></p>
-      <p><span class="info-label">City:</span> <span id="profileCity">Not set</span></p>
-      <p><span class="info-label">Address:</span> <span id="profileAddress">Not set</span></p>
-      <p><span class="info-label">Phone:</span> <span id="profilePhone">Not set</span></p>
-      <div class="mt-3 text-center">
-        <a class="btn btn-edit w-50 " href="./user-update.html">Edit Profile</a>
-      </div>
+      <p id="profileGender">Gender: -</p>
+      <p id="profileDOB">Date Of Birth: -</p>
+      <p id="profileAge">Age: -</p>
+      <p id="profileCountry">Country: -</p>
+      <p id="profileCity">City: -</p>
+      <p id="profileAddress">Address: -</p>
+      <p id="profilePhone">Phone: -</p>
+      <button class="btn bg-dark text-light mt-3 " onclick="showEditForm()">Edit Profile</button>
     </div>
+
+
+    <main class="content">
+      <!-- Orders Section -->
+      <div id="ordersSection">
+        <h2 class="text-center p-3">Your Orders</h2>
+        <div class="table-responsive">
+          <table class="table table-bordered table-striped table-hover">
+            <thead class="table-dark text-center">
+              <tr>
+                <th>ID</th>
+                <th>Image</th>
+                <th>Category</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Total</th>
+              </tr>
+            </thead>
+            <tbody id="orders-body"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Edit Profile Form -->
+      <div id="editProfileForm">
+        <h2 class="text-center p-3">Edit Profile</h2>
+        <form onsubmit="saveProfile(event)">
+
+          <div class="mb-3">
+            <input type="file" class="form-control" accept="image/*" onchange="previewImage(event)" placeholder="Profile Image">
+          </div>
+
+          <div class="mb-3">
+            <input type="text" id="nameInput" class="form-control" required placeholder="Name">
+          </div>
+
+          <div class="mb-3">
+            <input type="email" id="emailInput" class="form-control" required placeholder="Email">
+          </div>
+
+          <div class="mb-3">
+            <select id="genderInput" class="form-select">
+              <option value="">Select</option>
+              <option>Male</option>
+              <option>Female</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <input type="date" id="dobInput" class="form-control" onchange="updateAge()" placeholder="Date of Birth">
+          </div>
+
+          <div class="mb-3">
+            <select id="countryInput" class="form-select" onchange="populateCities()">
+              <option value="">Select Country</option>
+              <option value="USA">USA</option>
+              <option value="Egypt">Egypt</option>
+              <option value="Canada">Canada</option>
+              <option value="India">India</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <select id="cityInput" class="form-select">
+              <option value="">Select City</option>
+            </select>
+          </div>
+
+          <div class="mb-3">
+            <input type="text" id="addressInput" class="form-control" placeholder="Address">
+          </div>
+
+          <div class="mb-3">
+            <input type="text" id="phoneInput" class="form-control" placeholder="Phone">
+          </div>
+
+          <button type="submit" class="btn bg-dark text-light">Save</button>
+          <button type="button" class="btn bg-secondary text-light" onclick="cancelEdit()">Cancel</button>
+        </form>
+      </div>
+    </main>
   </div>
 
 
-  <footer id="main-footer" class="footer bg-black text-light"></footer>
+
+  <footer id="main-footer" class="footer bg-black text-light "></footer>
+  <script src="https://kit.fontawesome.com/4f91921791.js" crossorigin="anonymous"></script>
   <script src="../assets/js/bootstrap.bundle.min.js"></script>
   <script type="module" src="../assets/js/main.js"></script>
   <script src="../assets/js/user-profile.js"></script>
-  <script src="https://kit.fontawesome.com/4f91921791.js" crossorigin="anonymous"></script>
-
 </body>
+
 </html>
