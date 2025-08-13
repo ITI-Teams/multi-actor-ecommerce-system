@@ -1,109 +1,304 @@
- 
+  
 #header-wrapper {
     height: fit-content;
-    padding-bottom: 100px;
+    padding-bottom: 170px;
 }
 
-.container nav {
-  padding: 20px;
-  max-width: 100%;
-  margin-left: 0;
-  margin-top: 150px;
-  /* margin-bottom: 150px; */
-   
-
-}
-.container nav ul li:hover{
-    text-decoration: underline;
-
-}
-.main_category{
-  color: #222;  
-  font-weight: 700;  
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.7); 
-  padding: 10px 20px;
-  background-color: #f0f0f0; 
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);  
-  border-radius: 8px;  
-    width: fit-content;
-    position: absolute;
-     left: 50%;
-     top: 20%;
-     transform: translate(-50%,-50%);
-     text-align: center;
-    
-   
-}
-.container1{
-   
-   margin: 0px;
-   
-   width: 1255px;
-    
+ .main_category{
   
+  font-size: 2rem;              
+  font-weight: bold;           
+  text-align: center;          
+  color: #fff;                  
+  background-color: #222;       
+  padding: 15px 30px;            
+  border-radius: 8px;            
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6); 
+  width: fit-content;            
+  margin: 30px auto;  
+  width: 400px;           
 }
-.container1 .boxes{
-  display: flex;
-  gap: 20px;
-   background-color: white;
-   padding: 20px 100px ;
-    cursor: pointer;
-    
-   
-}
- .container1 .boxes .box1  a{
-  font-weight: bold;
-   
- }
- .container1 .boxes a{
- font-size: 13px;
- 
- color: #000;
- text-decoration: none;
- }
- .container1 .boxes p{
- line-height: 0.8;
- }
- .container1 .boxes .box1 a:hover{
-  text-decoration: underline;
- }
- .container1 .boxes .box2 a:hover{
-  text-decoration: underline;
- }
- .container1 .boxes .box3 a:hover{
-  text-decoration: underline;
- }
- .container1 .boxes .box4 a:hover{
-  text-decoration: underline;
- }
- .container1 .boxes .box4 h6{
-  font-weight: bold;
-  cursor: default;
- }
- .container1 .boxes .box4 h6+ p{
-margin: 20px 0;
- }
- .container1 .boxes .box5{
-  display: flex;
-  gap: 15px;
- }
- .container1 .boxes .box5 img{
-  width: 150px;
-  height: 200px;
-  transition: 0.4s;
- }
- .container1 .boxes .box5 img +p{
-  margin-top: 20px;
-  font-weight: 600;
+
+
+
+.categorybox {
    
 
- }
- .container1 .boxes .box5 img +p:hover{
-text-decoration: underline;
+   
   
- }
-.boxes.active {
+   gap: 20px;
+} 
+/* Start Men's peoducts */
+ .card {
+   width: 100%;
+   border: none;
+   
   display: grid;
-  transform: scale(1);
-  /* display: none; */
+   
+  
+  grid-template-columns: repeat(4, 1fr);  
+   
+  gap: 50px;
+  /* height: 800px; */
+   
+   
+} 
+ .product-item {
+    border: 1px solid #eee;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      background: white;  
+      transition: 0.4s;
+      position: relative;
+      min-height: 360px;
+  }
+   .product-item:hover{
+    transform: scale(1.2);
+   }
+.collapse h1{
+ 
+  font-weight: bold;
+  margin-bottom: 50px;
+  text-align: center;
+  position: relative;
+  right: -340px;
+  top: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px; 
+  display: inline-block;  
+  background: white;  
+  border-radius: 5px;  
 }
+
+   
+.text1{
+  margin-top: -5px;
+
+}
+
+p button {
+  background-color: #007bff;  
+  color: white;  
+  border: none;  
+  padding: 10px 20px;  
+  font-size: 16px;  
+  font-weight: bold;  
+  border-radius: 5px;  
+  cursor: pointer; 
+  transition: background-color 0.3s ease, transform 0.2s ease;  
+      /* width: 130px; */
+     position: absolute;
+     top: 300px;
+     left: 40px;
+     /* right: -10px; */
+     
+  
+}
+.fw-bolder{
+  text-decoration: none;
+}
+.fw-bolder:hover{
+    text-decoration: underline;
+}
+.product-item .title:hover{
+  text-decoration: underline;
+  
+}
+
+button:hover {
+  background-color: #0056b3;  
+  transform: scale(1.05);  
+}
+
+button:active {
+  transform: scale(0.95);  
+} 
+  /* End Men's Products */
+
+
+ /* Start Womens Products */
+
+.card2 {
+   
+   border: none;
+   
+  display: grid;
+   
+  
+  grid-template-columns: repeat(4, 1fr);  
+   
+  gap: 50px;
+   
+   position: relative;
+    left: -520px;
+   
+
+   
+   
+} 
+.card2 .product-item {
+    border: 1px solid #eee;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      background: white;  
+      transition: 0.4s;
+      position: relative;
+      min-height: 360px;
+  }
+   .card2 .product-item:hover{
+    transform: scale(1.2);
+   }
+  .womenss{
+ 
+  font-weight: bold;
+  margin-bottom: 50px;
+  text-align: center;
+  position: relative;
+  left: -250px;
+  top: 20px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px; 
+  display: inline-block;  
+  background: white;  
+  border-radius: 5px;  
+}
+
+   
+ 
+
+.card2 p button {
+  background-color: #007bff;  
+  color: white;  
+  border: none;  
+  padding: 10px 20px;  
+  font-size: 16px;  
+  font-weight: bold;  
+  border-radius: 5px;  
+  cursor: pointer; 
+  transition: background-color 0.3s ease, transform 0.2s ease;  
+     
+     position: absolute;
+     top: 300px;
+     left: 40px;
+     
+     
+  
+}
+.fw-bolder{
+  text-decoration: none;
+}
+.fw-bolder:hover{
+    text-decoration: underline;
+}
+.card .product-item .title:hover{
+  text-decoration: underline;
+  
+}
+
+button:hover {
+  background-color: #0056b3;  
+  transform: scale(1.05);  
+}
+
+button:active {
+  transform: scale(0.95);  
+} 
+ /* End Womens Products */
+
+ /* media query responsive */
+ @media (max-width: 768px) {
+  .main_category{
+    width: 300px;
+  }
+  .categorybox{
+    display:  flex;
+    flex-direction: column;
+  }
+    .categorybox{
+    display:  flex;
+    flex-direction: column;
+
+   }
+    .categorybox .card{
+        display:  flex;
+    flex-direction: column;
+    }
+    .categorybox .mens h1{
+       margin-left: -250px;
+    }
+    .categorybox .card .product-item{
+      transition: all 0.4s;
+    }
+    .categorybox .card .product-item:hover{
+       transform: scale(1.1);
+    } 
+    p button{
+       position: absolute;
+     top: 300px;
+     left: 120px;
+    }
+  .card2 {
+    display: flex !important;
+    flex-direction: column;
+      position: relative;
+      left: -1px;
+      
+  }
+    .card2 .product-item{
+      transition: all 0.4s;
+    }
+    .card2 .product-item:hover{
+       transform: scale(1.1);
+    }
+    .card2 p button{
+       position: absolute;
+     top: 300px;
+     left: 140px;
+     
+    }
+    .womenss{
+      margin-left: 290px;
+      width: 390px;
+    }
+    .main_category{
+        width: 400px; 
+    }
+        
+}
+
+ @media (min-width:769px) and (max-width: 1024px) {
+
+   .card{
+    display: grid;
+   grid-template-columns: repeat(2,1fr);
+   gap: 100px;
+   margin-left: 100px;
+   }
+    .categorybox .mens h1{
+       margin-left: -100px;
+    }
+
+    .card2{
+    display: grid;
+   grid-template-columns: repeat(2,1fr);
+   gap: 100px;
+   margin-left: 250px;
+   }
+    .categorybox .womenss{
+       margin-left: 0px;
+       width: 500px;
+    }
+      .main_category{
+        width: 400px; 
+    }
+
+ }
+
+ 
+  /*end media query responsive */
+
+
