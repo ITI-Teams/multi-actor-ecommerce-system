@@ -1,17 +1,50 @@
 // Bootstrap validation
-(() => {
-    'use strict';
-    const forms = document.querySelectorAll('.needs-validation');
-    Array.from(forms).forEach(form => {
-        form.addEventListener('submit', event => {
-            if (!form.checkValidity()) {
-                event.preventDefault();
-                event.stopPropagation();
-            }
-            form.classList.add('was-validated');
-        }, false);
-    });
-})();
+document.getElementById('contactForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    let isValid = true;
+    const nameField = this.name;
+    const emailField = this.email;
+    const phoneField = this.phone;
+    const subjectField = this.subject;
+    const messageField = this.message;
+
+    const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
+    const egyptPhoneRegex = /^(010|011|012|015)[0-9]{8}$/;
+
+    if (nameField.value.trim() === '') { setInvalid(nameField); isValid = false; } else { setValid(nameField); }
+    if (!emailRegex.test(emailField.value.trim())) { setInvalid(emailField); isValid = false; } else { setValid(emailField); }
+    if (!egyptPhoneRegex.test(phoneField.value.trim())) { setInvalid(phoneField); isValid = false; } else { setValid(phoneField); }
+    if (subjectField.value.trim() === '') { setInvalid(subjectField); isValid = false; } else { setValid(subjectField); }
+    if (messageField.value.trim() === '') { setInvalid(messageField); isValid = false; } else { setValid(messageField); }
+
+    if (isValid) {
+        document.getElementById('modalDetails').innerHTML = `
+            <p><strong>Name:</strong> ${nameField.value}</p>
+            <p><strong>Email:</strong> ${emailField.value}</p>
+            <p><strong>Phone:</strong> ${phoneField.value}</p>
+            <p><strong>Subject:</strong> ${subjectField.value}</p>
+            <p><strong>Message:</strong> ${messageField.value}</p>
+        `;
+        new bootstrap.Modal(document.getElementById('successModal')).show();
+        this.reset();
+        [nameField, emailField, phoneField, subjectField, messageField].forEach(f => {
+            f.classList.remove('is-valid', 'is-invalid');
+        });
+    }
+});
+
+function setInvalid(field) {
+    field.classList.add('is-invalid');
+    field.classList.remove('is-valid');
+}
+function setValid(field) {
+    field.classList.add('is-valid');
+    field.classList.remove('is-invalid');
+}
+
+
+
 
 // Google Maps with current location
 function initMap() {
