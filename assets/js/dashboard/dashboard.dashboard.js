@@ -10,22 +10,25 @@ const reviews = JSON.parse(localStorage.getItem("reviews")) || [];
 // Filter data based on role
 let filteredOrders = orders;
 let filteredProducts = products;
+let averageRating;
 
 if (session.role === "seller") {
     filteredProducts = products.filter(p => p.seller_id === session.id);
     const sellerProductIds = filteredProducts.map(p => p.id);
     filteredOrders = orders.filter(p => p.seller_id === session.id);
     filteredReviews = reviews.filter(r => sellerProductIds.includes(r.product_id));
+    averageRating = filteredReviews.length > 0 
+    ? (filteredReviews.reduce((sum, r) => sum + r.review, 0) / filteredReviews.length).toFixed(2) 
+    : 0;
 }
 
 // Calculate stats
 const totalEarnings = filteredOrders.filter(o => o.status === "Completed").reduce((sum, o) => sum + (o.totalPrice * o.quntity), 0);
+const doneOrders = filteredOrders.filter(o => o.status === "Completed");
 const totalSales = filteredOrders.length;
 const totalUsers = session.role === "admin" ? users.length : 0;
 const totalMessages = session.role === "admin" ? messages.length : messages.filter(m => m.email === session.email).length;
-const averageRating = filteredReviews.length > 0 
-    ? (filteredReviews.reduce((sum, r) => sum + r.review, 0) / filteredReviews.length).toFixed(2) 
-    : 0;
+
 
 
 /** Create Dashboard */
@@ -37,6 +40,26 @@ function renderStats() {
     }
 
     if (session.role === "admin") {
+        let ordersRows = "";
+        filteredOrders.forEach(order => {
+            const customer = customers.find(c => c.id === order.customer_id);
+            const statusColors = {
+                "Pending": "badge bg-primary",
+                "Processing": "badge bg-warning text-dark",
+                "Delivery": "badge bg-warning",
+                "Completed": "badge bg-success",
+                "Cancelled": "badge bg-danger"
+            };
+
+            ordersRows += `
+                <tr>
+                    <td>#${order.id}</td>
+                    <td>${customer ? customer.name : 'Unknown'}</td>
+                    <td><span class="${statusColors[order.status] || ''}">${order.status}</span></td>
+                    <td>$${order.totalPrice}</td>
+                </tr>
+            `;
+        });
         statsCards.innerHTML = `
             <!-- Row For Admin -->
             <div class="row align-items-start">
@@ -109,6 +132,46 @@ function renderStats() {
                         </div>
                         <div class="card-body p-0">  <!-- Remove padding for map to fill space -->
                             <div id="countryMap" style="height: 300px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Orders Row -->
+            <div class="row mt-4">
+                <!-- Recent Orders -->
+                <div class="col-12 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header bg-info text-white">
+                            <h5 class="card-title mb-0">Recent Orders</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="table-responsive">
+                                <table class="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Order ID</th>
+                                            <th>Customer</th>
+                                            <th>Status</th>
+                                            <th>Amount</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="orderTBody">
+                                    ${ordersRows}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Orders Status Chart -->
+                <div class="col-12 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <div class="card-header bg-info text-white">
+                            <h5 class="card-title mb-0">Orders Status</h5>
+                        </div>
+                        <div class="card-body">
+                            <canvas id="ordersChart" style="height: 300px;"></canvas>
                         </div>
                     </div>
                 </div>
@@ -277,7 +340,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Prepare array for 12 months
     let monthlyTotals = new Array(12).fill(0);
     // Fill monthly sales
-    filteredOrders.forEach(order => {
+    doneOrders.forEach(order => {
         if (!order.date) return;
         let orderDate = new Date(order.date);
         let monthIndex = orderDate.getMonth();
@@ -320,7 +383,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // Sales by Country Map (Plotly.js)
     let salesData = {};
 
-    filteredOrders.forEach(order => {
+    doneOrders.forEach(order => {
         let customer = customers.find(c => c.id === order.customer_id);
         if (!customer || !customer.country) return;
         let total = order.totalPrice * order.quntity;
