@@ -1,51 +1,67 @@
-.header-wrapper {
+body {
+  padding: 0%;
+  margin: 0%;
+  box-sizing: border-box;
+}
+
+#wrapper {
+  width: 100%;
   height: fit-content;
-  margin-bottom: 100px;
+  position: relative;
+  
+}
+aside {
+  width: 47%;
+  height: 100vh;
+  overflow: hidden;
+  margin: 0%;
+}
+
+.carousel-inner .carousel-item img {
+  width: 100%;
+  height: auto;
 }
 
 .formcontainer {
-  min-height: 100vh;
+  height:100vh;
+  width: 50%;
+  position: absolute;
+  top:0px;
+  right: 0px;
+  align-self: center;
   display: flex;
-  justify-content: center;
   align-items: center;
-  width: 100%;
-  margin: auto;
-  padding: 15px;
-  transition: all 0.5s;
+  justify-content: center;
+  padding: 0px 20px;
 }
-.formcontainer form:hover{
-  transform: scaley(1.1);
-}
-a{
+
+a {
   text-decoration: none;
 }
+
 .formcontainer form {
-  background: rgba(239, 234, 212, 0.567);
+
   backdrop-filter: blur(10px);
   border-radius: 12px;
-  padding: 30px;
   width: 100%;
   max-width: 450px;
   color: white;
-  box-shadow: 0 50px 50px rgba(0, 0, 0, 0.7);
   text-align: center;
-    transition: all 0.5s;
+  transition: all 0.5s;
 
 }
 
-.formcontainer form input,
-.formcontainer form select,
-.formcontainer form textarea {
-  width: 100%;
+.formcontainer form input {
+  width:95%;
   background-color: transparent;
   border: none;
   border-bottom: 2px solid black;
   color: rgba(10, 10, 10, 0.9);
   border-radius: 0%;
+  margin: auto;
 }
 
-.formcontainer form input:focus,
-.formcontainer form select:focus {
+.formcontainer form input:focus {
   border: none;
   color: rgba(27, 27, 27, 0.9);
   outline: none;
@@ -55,7 +71,7 @@ a{
 }
 
 .formcontainer form input::placeholder {
-  color: rgba(60, 59, 59, 0.7);
+  color: rgba(60, 59, 59, 0.807);
 }
 
 .formcontainer form .logo {
@@ -81,7 +97,8 @@ a{
 }
 
 .formcontainer form .btn:hover {
-  background-color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(176, 176, 175, 0.527) !important;
+  color: black !important;
 }
 
 .formcontainer form a {
@@ -95,38 +112,33 @@ a{
 /* Responsive tweaks */
 @media (max-width: 768px) {
   .formcontainer {
-    padding: 20px;
+    width: 100%;
   }
 
-  .formcontainer form {
-    padding: 20px;
+  aside {
+    width: 100%;
+
   }
 
-  .formcontainer form .logo {
-    width: 120px;
-    height: 120px;
-  }
-
-  .formcontainer form .logo img {
-    width: 240px;
-    top: -60px;
-    left: -60px;
+  .carousel-inner .carousel-item img {
+    width: 100%;
+    height: auto;
   }
 }
 
-@media (max-width: 480px) {
-  .formcontainer form {
-    padding: 15px;
+@media (max-width: 425px) {
+  .formcontainer {
+    width: 100%;
+    margin-top:150%;
   }
 
-  .formcontainer form .logo {
-    width: 100px;
-    height: 100px;
+  aside {
+    width: 100%;
+    display: block;
+    height: fit-content;
   }
 
-  .formcontainer form .logo img {
-    width: 200px;
-    top: -50px;
-    left: -50px;
+  .carousel-inner .carousel-item img {
+    width: 100%;
   }
 }
