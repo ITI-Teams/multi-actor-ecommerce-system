@@ -80,7 +80,9 @@ iframe {
     border: none;
     height: 400px;
     margin: 40px 0;
-    /* padding-top: 40px; */
+    padding-top: 40px;
+    padding-bottom: 40px;
+
 }
 
 #loc-ifram {
@@ -88,11 +90,6 @@ iframe {
     padding-bottom: 20px;
 }
 
-/* FAQ */
-.faq-title {
-    font-weight: bold;
-    margin: 50px 0 30px;
-}
 
 /* Accordion */
 .accordion-button {
