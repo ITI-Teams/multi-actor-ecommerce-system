@@ -41,67 +41,9 @@
                 <header id="header"></header>
                 <!--End Header-->
                 <!--Start Main Section-->
-                <main class="container py-4">
-                    <!-- Dashboard HTML -->
-                    <div class="container my-5">
-                        <h1 class="mb-4">Dashboard</h1>
-
-                        <!-- Cards -->
-                        <div class="row g-4 mb-4">
-                            <div class="col-md-3">
-                                <div class="card text-center shadow-sm border-0">
-                                    <div class="card-body">
-                                        <h5 class="card-title">💰 Total Earnings</h5>
-                                        <h2 id="totalEarnings">$0</h2>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="card text-center shadow-sm border-0">
-                                    <div class="card-body">
-                                        <h5 class="card-title">📦 Total Sales</h5>
-                                        <h2 id="totalSales">0</h2>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="card text-center shadow-sm border-0">
-                                    <div class="card-body">
-                                        <h5 class="card-title">👤 Users</h5>
-                                        <h2 id="totalUsers">0</h2>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <div class="card text-center shadow-sm border-0">
-                                    <div class="card-body">
-                                        <h5 class="card-title">📩 Messages</h5>
-                                        <h2 id="totalMessages">0</h2>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Charts -->
-                        <div class="row g-4">
-                            <div class="col-md-6">
-                                <div class="card shadow-sm border-0">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Sales Over Time</h5>
-                                        <canvas id="salesChart" height="150"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="card shadow-sm border-0">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Visitors by Country</h5>
-                                        <canvas id="countryChart" height="150"></canvas>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <main class="container py-4" id="dashboard">
+                    <div class="container text-center" id="statsCards"></div>
+                    
                 </main>
                 <!--End Main Section-->
                 <!--Start Footer-->
@@ -116,5 +58,6 @@
     <script src="../../assets/js/dashboard/dashboard.dashboard.js" defer></script>
     <script src="../../assets/js/dashboard/logout.dashboard.js" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
 </body>
 </html>

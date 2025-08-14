@@ -125,6 +125,7 @@ let orders = JSON.parse(localStorage.getItem("orders")) || [
         status: "Delivery",
         quntity:1,
         totalPrice:500, 
+        date: "2025-08-14"
     },
     { 
         id: 2, 
@@ -133,7 +134,8 @@ let orders = JSON.parse(localStorage.getItem("orders")) || [
         customer_id: 1, 
         status: "Delivery" ,
         quntity:1,
-        totalPrice:500, 
+        totalPrice:500,
+        date: "2025-08-14" 
     },
     { 
         id: 3, 
@@ -142,7 +144,8 @@ let orders = JSON.parse(localStorage.getItem("orders")) || [
         customer_id: 1, 
         status: "Delivery",
         quntity:5,
-        totalPrice:500,  
+        totalPrice:500,
+        date: "2025-08-14"  
     },
     { 
         id: 4, 
@@ -151,7 +154,8 @@ let orders = JSON.parse(localStorage.getItem("orders")) || [
         customer_id: 1, 
         status: "Delivery",
         quntity:4,
-        totalPrice:500,  
+        totalPrice:500,
+        date: "2025-08-14"  
     },
     { 
         id: 5, 
@@ -160,7 +164,8 @@ let orders = JSON.parse(localStorage.getItem("orders")) || [
         customer_id: 1, 
         status: "Delivery",
         quntity:1,
-        totalPrice:500,  
+        totalPrice:500,
+        date: "2025-08-14"  
     },
     { 
         id: 6, 
@@ -169,7 +174,8 @@ let orders = JSON.parse(localStorage.getItem("orders")) || [
         customer_id: 1, 
         status: "Delivery",
         quntity:3,
-        totalPrice:500,  
+        totalPrice:500,
+        date: "2025-08-14"  
     },
     
 ];
