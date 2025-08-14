@@ -193,6 +193,21 @@ document.getElementById("customerForm").addEventListener("submit", function(e) {
         showFormMessage("Birthday must be in the past.");
         return;
     }
+    const existingCustomer = customers.find(u => 
+        (u.email === email && u.id != id) || 
+        (u.phone === phone && u.id != id)
+    );
+
+    if (existingCustomer) {
+        if (existingCustomer.email === email) {
+            showFormMessage("This email is already registered. Please use a different email.");
+            return;
+        }
+        if (existingCustomer.phone === phone) {
+            showFormMessage("This phone number is already registered. Please use a different phone number.");
+            return;
+        }
+    }
 
     const customerData = {
         id: id ? parseInt(id) : Date.now(),

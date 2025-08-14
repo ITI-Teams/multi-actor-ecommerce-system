@@ -1,19 +1,4 @@
-let users = JSON.parse(localStorage.getItem("users")) || [
-    { id: 1, 
-        name: "John Doe", 
-        email: "john@example.com", 
-        role: "admin", 
-        phone: "123456789",
-        password: encryptText("Password123!")
-    },
-    { id: 2, 
-        name: "Jane Smith", 
-        email: "jane@example.com", 
-        role: "seller", 
-        phone: "987654321",
-        password: encryptText("Password123!") 
-    }
-];
+let users = JSON.parse(localStorage.getItem("users")) || [];
 let currentPagePagination = 1;
 const rowsPerPage = 5;
 
@@ -150,11 +135,26 @@ document.getElementById("userForm").addEventListener("submit", function(e) {
     if (id && password && password !== confirmPassword) {
         showFormMessage("Password and Confirm Password do not match!");
         return;
-    }s
+    }
     const phonePattern = /^(010|011|012|013|015)\d{8}$/;
     if (!phonePattern.test(phone)) {
         showFormMessage("The phone number must start with 010, 012, 013 or 015 and consist of 11 digits.");
         return;
+    }
+    const existingUser = users.find(u => 
+        (u.email === email && u.id != id) || 
+        (u.phone === phone && u.id != id)
+    );
+
+    if (existingUser) {
+        if (existingUser.email === email) {
+            showFormMessage("This email is already registered. Please use a different email.");
+            return;
+        }
+        if (existingUser.phone === phone) {
+            showFormMessage("This phone number is already registered. Please use a different phone number.");
+            return;
+        }
     }
 
 

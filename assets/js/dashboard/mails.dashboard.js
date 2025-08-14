@@ -13,9 +13,20 @@ function SendMail() {
 }
 
 function renderTable() {
+    const session = JSON.parse(localStorage.getItem("session")) || null;
+    if (!session) {
+        document.getElementById("mailTableBody").innerHTML = 
+            `<tr><td colspan="10" class="text-center text-danger">No session found</td></tr>`;
+        return;
+    }
+
+    let filteredMails = mails;
+    if (session.role === "seller") {
+        filteredMails = mails.filter(p => p.from === session.email);
+    }
     const searchValue = document.getElementById("searchMail").value.toLowerCase();
 
-    const filteredMails = mails.filter(u =>
+    filteredMails = filteredMails.filter(u =>
         u.from.toLowerCase().includes(searchValue) ||
         u.to.toLowerCase().includes(searchValue)||
         u.subject.toLowerCase().includes(searchValue)||
