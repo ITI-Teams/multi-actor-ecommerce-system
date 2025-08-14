@@ -36,10 +36,10 @@ body {
     display: none;
     text-align: center;
 }
-button {
+#editProfileForm button {
     min-width: 100px;
 }
-button:hover {
+#editProfileForm button:hover {
     background-color: rgba(176, 176, 175, 0.76) !important;
     color: black !important;
 }
