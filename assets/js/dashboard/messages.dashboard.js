@@ -1,32 +1,5 @@
-let messages = JSON.parse(localStorage.getItem("messages")) || [
-    { 
-        id: 1, 
-        name: "Abdullah Shokr", 
-        email: "abdullah@gmail.com", 
-        phone: "01027251057",
-        subject: "greating", 
-        message: "hi How are You ?",
-        date : "2025-08-15",
-    },
-    { 
-        id: 2, 
-        name: "Mahmoud", 
-        email: "mahmoud@gmail.com", 
-        phone: "01127283620",
-        subject: "greating", 
-        message: "hi How are You ?",
-        date : "2025-08-20",
-    },
-    { 
-        id: 2, 
-        name: "sss", 
-        email: "sss@gmail.com", 
-        phone: "01127283620",
-        subject: "greating", 
-        message: "hi How are You ?",
-        date : "2025-08-20",
-    },
-];
+let messages = JSON.parse(localStorage.getItem("messages")) || [];
+
 
 let currentPagePagination = 1;
 const rowsPerPage = 5;

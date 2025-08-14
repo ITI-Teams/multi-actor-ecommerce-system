@@ -1,29 +1,25 @@
-let customers = JSON.parse(localStorage.getItem("customers")) || [
-    { 
-        id: 1, 
-        name: "Ahmed", 
-        gender : "male",
-        email: "Ahmed@trendora.com", 
-        country: "Egypt",
-        city: "Cairo",
-        address: "12 street - cairo",
-        birthday: "1999-07-15",
-        phone: "01124252789",
-        password: "@A1234s",
-    },
-    { 
-        id: 2, 
-        name: "mohamed", 
-        gender : "male",
-        email: "mohamed@trendora.com", 
-        country: "Egypt",
-        city: "Alex",
-        address: "16 street - Alex",
-        birthday: "1999-07-15",
-        phone: "01257462789",
-        password: "s1234@A",
-    },
-];
+// ===== دوال التشفير =====
+function encryptText(text) {
+    if (!text) return '';
+    let step1 = text.split('').reverse().join('');
+    let step2 = '';
+    for (let i = 0; i < step1.length; i += 2) {
+        if (i + 1 < step1.length) {
+            step2 += step1[i+1] + step1[i];
+        } else {
+            step2 += step1[i];
+        }
+    }
+    let step3 = '';
+    for (let i = 0; i < step2.length; i++) {
+        let charCode = step2.charCodeAt(i);
+        step3 += String.fromCharCode(charCode + 3);
+    }
+    const prefix = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+    const suffix = String.fromCharCode(65 + Math.floor(Math.random() * 26));
+    return prefix + step3 + suffix;
+}
+let customers = JSON.parse(localStorage.getItem("customers")) || [];
 let currentPagePagination = 1;
 const rowsPerPage = 5;
 
@@ -126,6 +122,7 @@ document.getElementById("customerForm").addEventListener("submit", function(e) {
     const address = document.getElementById("address").value.trim();
     const birthday = document.getElementById("birthday").value;
     const password = document.getElementById("password").value.trim();
+    const confirmPassword = document.getElementById("confirmPassword").value.trim();
     const phone = document.getElementById("phone").value.trim();
     // Validation
     const invalidChars = /<.*?>|[{}[\]<>]/;
@@ -159,6 +156,14 @@ document.getElementById("customerForm").addEventListener("submit", function(e) {
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
     if (!id && !passwordPattern.test(password)) {
         showFormMessage("The password must be at least 8 characters long and contain an uppercase and lowercase letter, a number, and a symbol.");
+        return;
+    }
+    if (!id && password !== confirmPassword) {
+        showFormMessage("Password and Confirm Password do not match!");
+        return;
+    }
+    if (id && password && password !== confirmPassword) {
+        showFormMessage("Password and Confirm Password do not match!");
         return;
     }
     const phonePattern = /^(010|011|012|013|015)\d{8}$/;
@@ -198,7 +203,9 @@ document.getElementById("customerForm").addEventListener("submit", function(e) {
         city: city,
         address: address,
         birthday: birthday,
-        password: password || (id ? customers.find(u => u.id == id).password : ""),
+        password: password 
+            ? encryptText(password) 
+            : (id ? customers.find(u => u.id == id).password : ""),
         phone: phone
     };
 
@@ -225,6 +232,7 @@ function editCustomer(id) {
     document.getElementById("address").value = customer.address;
     document.getElementById("birthday").value = customer.birthday;
     document.getElementById("password").value = "";
+    document.getElementById("confirmPassword").value = "";
     document.getElementById("phone").value = customer.phone;
 
     clearFormMessage();
