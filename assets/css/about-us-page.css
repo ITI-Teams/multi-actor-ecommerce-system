@@ -1,9 +1,8 @@
-
-#header-wrapper{
+#header-wrapper {
     height: fit-content;
 }
 
-#about-us-page{
+#about-us-page {
     padding-top: 90px;
 }
 
@@ -103,7 +102,7 @@ body {
 
 .team-row.reverse .member-meta {
     order: 0;
-    text-align: right;
+    text-align: left;
 }
 
 .team-row.reverse .member-text {
@@ -199,6 +198,10 @@ body {
     .intro-grid {
         grid-template-columns: 1fr;
     }
+
+    .section-intro {
+        text-align: center;
+    }
 }
 
 @media (max-width: 768px) {
@@ -211,9 +214,13 @@ body {
 
     .social-col {
         flex-direction: row;
-        justify-content: flex-start;
         gap: 14px;
-        order: 3
+        order: 3;
+        justify-self: start;
+    }
+
+    .team-row.reverse .social-col {
+        justify-self: start;
     }
 
     .member-photo {
