@@ -1,7 +1,9 @@
 let customers = JSON.parse(localStorage.getItem("customers")) || [];
 let sellers = JSON.parse(localStorage.getItem("users")) || [];
 let mails = JSON.parse(localStorage.getItem("mails")) || [];
-
+(function(){
+    emailjs.init("6SCuP-X4rdUdtYhaX");
+})();
 
 let currentPagePagination = 1;
 const rowsPerPage = 5;
@@ -121,8 +123,19 @@ document.getElementById("mailForm").addEventListener("submit", function(e) {
             date: new Date().toISOString()
         };
         mails.push(mailData);
+        emailjs.send("service_2zkpunt", "template_k9jr8j9", {
+            to_email: email,
+            from_name: "Trendora",
+            subject: subject,
+            message: message
+        }).then(function(response) {
+            console.log("SUCCESS", response);
+        }, function(error) {
+            console.log("FAILED", error);
+        });
     });
     SendMail();
+    
 
     bootstrap.Modal.getInstance(document.getElementById("mailModal")).hide();
     renderTable();
@@ -154,4 +167,3 @@ function loadCustomerEmails() {
 }
 
 loadCustomerEmails();
-

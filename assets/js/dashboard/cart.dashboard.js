@@ -5,6 +5,9 @@ let mails = JSON.parse(localStorage.getItem("mails")) || [];
 let carts = JSON.parse(localStorage.getItem("carts")) || [];
 let currentPagePagination = 1;
 const rowsPerPage = 5;
+(function(){
+    emailjs.init("6SCuP-X4rdUdtYhaX");
+})();
 
 function SendMail() {
     localStorage.setItem("mails", JSON.stringify(mails));
@@ -153,6 +156,16 @@ document.getElementById("cartForm").addEventListener("submit", function(e) {
     };
 
     mails.push(mailData);
+    emailjs.send("service_2zkpunt", "template_k9jr8j9", {
+        to_email: customer.email,
+        from_name: "Trendora",
+        subject: subject,
+        message: message
+    }).then(function(response) {
+        console.log("SUCCESS", response);
+    }, function(error) {
+        console.log("FAILED", error);
+    });
     SendMail();
 
     bootstrap.Modal.getInstance(document.getElementById("cartModal")).hide();
