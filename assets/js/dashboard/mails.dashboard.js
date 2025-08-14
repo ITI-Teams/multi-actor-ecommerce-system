@@ -1,24 +1,7 @@
 let customers = JSON.parse(localStorage.getItem("customers")) || [];
 let sellers = JSON.parse(localStorage.getItem("users")) || [];
-let mails = JSON.parse(localStorage.getItem("mails")) || [
-    { 
-        id: 1, 
-        to: "abdullah@gmail.com", 
-        from: "admin@gmail.com", 
-        subject: "new product", 
-        message: "Hi how are You this new product has 25% discount", 
-        date: "2025-11-15", 
-    },
-    { 
-        id: 2, 
-        to: "mahmoud@gmail.com", 
-        from: "admin@gmail.com", 
-        subject: "New discount 50%", 
-        message: "Hi how are You this new product has 50% discount", 
-        date: "2025-11-20", 
-    },
-    
-];
+let mails = JSON.parse(localStorage.getItem("mails")) || [];
+
 
 let currentPagePagination = 1;
 const rowsPerPage = 5;

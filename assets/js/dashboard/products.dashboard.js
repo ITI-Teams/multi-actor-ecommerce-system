@@ -4,32 +4,7 @@ categorySelect.innerHTML = "";
 categoriesList.forEach(cat => {
     categorySelect.innerHTML += `<option value="${cat.name}">${cat.name}</option>`;
 });
-let products = JSON.parse(localStorage.getItem("products")) || [
-    { 
-        id: 1,
-        name: "Cotton Dobby Studio Shirt", 
-        description: "Relaxed-fit sheer shirt made from breathable, airy cotton dobby.", 
-        category: "men",
-        reviews: 5,
-        price: "148",
-        size: ['xs','s','m','L','XL','XXL'],
-        color: ['white','black','green'],
-        images: ['product01.jpg','product02.jpg'],
-        seller_id : 1,
-    },
-    { 
-        id: 2,
-        name: "Cotton Dobby Studio Shirt", 
-        description: "Relaxed-fit sheer shirt made from breathable, airy cotton dobby.", 
-        category: "Women",
-        reviews: 4,
-        price: "148",
-        size: ['xs','s','m','L','XL','XXL'],
-        color: ['white','black','green'],
-        images: ['img/product01.jpg','product02.jpg'],
-        seller_id : 2,
-    }
-];
+let products = JSON.parse(localStorage.getItem("products")) || [];
 let currentPagePagination = 1;
 const rowsPerPage = 5;
 
@@ -37,9 +12,22 @@ function saveProducts() {
     localStorage.setItem("products", JSON.stringify(products));
 }
 
+
 function renderTable() {
+    const session = JSON.parse(localStorage.getItem("session")) || null;
+    if (!session) {
+        document.getElementById("productTableBody").innerHTML = 
+            `<tr><td colspan="10" class="text-center text-danger">No session found</td></tr>`;
+        return;
+    }
+
+    let filteredProducts = products;
+    if (session.role === "seller") {
+        filteredProducts = products.filter(p => p.seller_id === session.id);
+    }
+
     const searchValue = document.getElementById("searchProduct").value.toLowerCase();
-    const filteredProducts = products.filter(u =>
+    filteredProducts = filteredProducts.filter(u =>
         (u.name && u.name.toLowerCase().includes(searchValue)) ||
         (u.description && u.description.toLowerCase().includes(searchValue))
     );
@@ -54,44 +42,16 @@ function renderTable() {
         tbody.innerHTML += `
             <tr>
                 <td>${product.name}</td>
-                <td>${product.description}</td>
+                <td>${product.description.split(" ").slice(0, 3).join(" ") + "..."}</td>
                 <td>${product.category}</td>
                 <td>${product.reviews}</td>
                 <td>${product.price}</td>
+                <td class="${product.stock == 0 ? 'bg-danger text-white' : ''}">${product.stock}</td>
+                <td>${product.size.map(z => `<span style="padding:2px; background-color: #44ff00; border-radius:4px; border:1px solid #025d74; margin:5px;">${z}</span>`).join("")}</td>
+                <td>${product.color.map(c => `<span style="width:20px;height:20px;display:inline-block;background:${c};border-radius:4px;border:1px solid #ccc;margin-right:5px;"></span>`).join("")}</td>
                 <td>
-                    ${product.size.map(z => `
-                        <span style="
-                            display:inline-block;
-                            padding :2px;
-                            background-color: #44ff00ff;
-                            border-radius:4px;
-                            border:1px solid #025d74ff;
-                            margin:5px;
-                            cursor:pointer;
-                        " title="${z}">${z}</span>
-                    `).join("")}
-                </td>
-                <td>
-                    ${product.color.map(c => `
-                        <span style="
-                            display:inline-block;
-                            width:20px;
-                            height:20px;
-                            background-color:${c};
-                            border-radius:4px;
-                            border:1px solid #ccc;
-                            margin-right:5px;
-                            cursor:pointer;
-                        " title="${c}"></span>
-                    `).join("")}
-                </td>
-                <td>
-                    <button class="btn btn-warning btn-sm" onclick="editProduct(${product.id})">
-                        <i class="fas fa-edit"></i>
-                    </button>
-                    <button class="btn btn-danger btn-sm" onclick="deleteProduct(${product.id})">
-                        <i class="fas fa-trash"></i>
-                    </button>
+                    <button class="btn btn-warning btn-sm" onclick="editProduct(${product.id})"><i class="fas fa-edit"></i></button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteProduct(${product.id})"><i class="fas fa-trash"></i></button>
                 </td>
             </tr>
         `;
@@ -99,6 +59,8 @@ function renderTable() {
 
     renderPagination(filteredProducts.length);
 }
+
+
 
 function renderPagination(totalRows) {
     const totalPages = Math.ceil(totalRows / rowsPerPage);
@@ -152,6 +114,7 @@ document.getElementById("productForm").addEventListener("submit", function(e) {
     const description = document.getElementById("description").value.trim();
     const category = document.getElementById("category").value;
     const price = document.getElementById("price").value;
+    const stock = document.getElementById("stock").value;
     const size = Array.from(document.getElementById("size").selectedOptions).map(opt => opt.value);
     const color = colorsArray;
     const images =  imagesArray;
@@ -161,11 +124,11 @@ document.getElementById("productForm").addEventListener("submit", function(e) {
     const allowedImageExtensions = /\.(png|jpg|jpeg|jpe|webp|svg)$/i;
     const colorRegex = /^#([0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/;
     const invalidChars = /<.*?>|[{}[\]<>]/;
-    if ([name, description, category, price, ...size, ...color].some(field => invalidChars.test(field))) {
+    if ([name, description, category, price,stock, ...size, ...color].some(field => invalidChars.test(field))) {
         showFormMessage("Entries must not contain HTML codes or prohibited symbols.");
         return;
     }
-    if (!name || !description || !category || !size.length || !color.length || !price || !images.length) {
+    if (!name || !description || !category || !size.length || !color.length || !price || !stock || !images.length) {
         showFormMessage("All fields are required!");
         return;
     }
@@ -189,6 +152,10 @@ document.getElementById("productForm").addEventListener("submit", function(e) {
         showFormMessage("Price must be a positive number greater than 0.");
         return;
     }
+    if (isNaN(stock) || Number(stock) < 0) {
+        showFormMessage("Stock must be a positive number or = 0.");
+        return;
+    }
     if (!category.trim()) {
         showFormMessage("Category is required.");
         return;
@@ -206,6 +173,8 @@ document.getElementById("productForm").addEventListener("submit", function(e) {
         return;
     }
 
+    const session = JSON.parse(localStorage.getItem("session")) || null;
+
     const productData = {
         id: id ? parseInt(id) : Date.now(),
         name: name,
@@ -216,7 +185,8 @@ document.getElementById("productForm").addEventListener("submit", function(e) {
         size: size,
         color: colorsArray,
         images :imagesArray,
-        seller_id : 1,
+        seller_id: session ? session.id : 1,
+        stock : stock,
     };
 
     if (id) {
@@ -238,6 +208,7 @@ function editProduct(id) {
     document.getElementById("description").value= product.description;
     document.getElementById("category").value= product.category;
     document.getElementById("price").value= product.price;
+    document.getElementById("stock").value= product.stock;
 
     Array.from(document.getElementById("size").options).forEach(opt => {
         opt.selected = product.size.includes(opt.value);

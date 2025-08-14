@@ -108,6 +108,7 @@ document.getElementById("userForm").addEventListener("submit", function(e) {
     const email = document.getElementById("email").value.trim();
     const role = document.getElementById("role").value;
     const password = document.getElementById("password").value.trim();
+    const confirmPassword = document.getElementById("confirmPassword").value.trim();
     const phone = document.getElementById("phone").value.trim();
 
     // Validation
@@ -142,6 +143,14 @@ document.getElementById("userForm").addEventListener("submit", function(e) {
         showFormMessage("The password must be at least 8 characters long and contain an uppercase and lowercase letter, a number, and a symbol.");
         return;
     }
+    if (!id && password !== confirmPassword) {
+        showFormMessage("Password and Confirm Password do not match!");
+        return;
+    }
+    if (id && password && password !== confirmPassword) {
+        showFormMessage("Password and Confirm Password do not match!");
+        return;
+    }s
     const phonePattern = /^(010|011|012|013|015)\d{8}$/;
     if (!phonePattern.test(phone)) {
         showFormMessage("The phone number must start with 010, 012, 013 or 015 and consist of 11 digits.");
@@ -186,6 +195,7 @@ function editUser(id) {
     document.getElementById("email").value = user.email;
     document.getElementById("role").value = user.role;
     document.getElementById("password").value = "";
+    document.getElementById("confirmPassword").value = "";
     document.getElementById("phone").value = user.phone;
     clearFormMessage();
     document.getElementById("userModalTitle").textContent = "Update User";

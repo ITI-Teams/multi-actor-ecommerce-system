@@ -4,25 +4,29 @@ let carts = JSON.parse(localStorage.getItem("carts")) || [
         id: 1, 
         customer_id: 1, 
         product_id: 1, 
-        seller_id: 1, 
+        seller_id: 1,
+        quantity: 1, 
     },
     { 
         id: 2, 
         customer_id: 2, 
         product_id: 2, 
-        seller_id: 1, 
+        seller_id: 2,
+        quantity: 1, 
     },
     { 
         id: 3, 
         customer_id: 1, 
         product_id: 2, 
-        seller_id: 1, 
+        seller_id: 1,
+        quantity: 1, 
     },
     { 
         id: 4, 
         customer_id: 2, 
         product_id: 1, 
-        seller_id: 1, 
+        seller_id: 1,
+        quantity: 1, 
     },
     
 ];
@@ -118,42 +122,54 @@ let orders = JSON.parse(localStorage.getItem("orders")) || [
         product_id: 1, 
         seller_id: 1, 
         customer_id: 1, 
-        status: "Delivery" 
+        status: "Delivery",
+        quntity:1,
+        totalPrice:500, 
     },
     { 
         id: 2, 
         product_id: 1, 
-        seller_id: 1, 
+        seller_id: 2, 
         customer_id: 1, 
-        status: "Delivery" 
+        status: "Delivery" ,
+        quntity:1,
+        totalPrice:500, 
     },
     { 
         id: 3, 
         product_id: 1, 
-        seller_id: 1, 
+        seller_id: 2, 
         customer_id: 1, 
-        status: "Delivery" 
+        status: "Delivery",
+        quntity:5,
+        totalPrice:500,  
     },
     { 
         id: 4, 
         product_id: 1, 
         seller_id: 1, 
         customer_id: 1, 
-        status: "Delivery" 
+        status: "Delivery",
+        quntity:4,
+        totalPrice:500,  
     },
     { 
         id: 5, 
         product_id: 1, 
         seller_id: 1, 
         customer_id: 1, 
-        status: "Delivery" 
+        status: "Delivery",
+        quntity:1,
+        totalPrice:500,  
     },
     { 
         id: 6, 
         product_id: 1, 
         seller_id: 1, 
         customer_id: 1, 
-        status: "Delivery" 
+        status: "Delivery",
+        quntity:3,
+        totalPrice:500,  
     },
     
 ];
@@ -166,9 +182,10 @@ let products = JSON.parse(localStorage.getItem("products")) || [
         reviews: 5,
         price: "148",
         size: ['xs','s','m','L','XL','XXL'],
-        color: ['white','black','green'],
+        color: ["#171111", "#ff1414", "#ffffff"],
         images: ['product01.jpg','product02.jpg'],
-        seller_id : 1,
+        seller_id : 2,
+        stock:5,
     },
     { 
         id: 2,
@@ -178,9 +195,10 @@ let products = JSON.parse(localStorage.getItem("products")) || [
         reviews: 4,
         price: "148",
         size: ['xs','s','m','L','XL','XXL'],
-        color: ['white','black','green'],
+        color: ["#171111", "#ff1414", "#ffffff"],
         images: ['img/product01.jpg','product02.jpg'],
-        seller_id : 2,
+        seller_id : 1,
+        stock:5,
     }
 ];
 let reviews = JSON.parse(localStorage.getItem("reviews")) || [
@@ -204,18 +222,28 @@ let reviews = JSON.parse(localStorage.getItem("reviews")) || [
     },
 ];
 let users = JSON.parse(localStorage.getItem("users")) || [
-    { id: 1, 
+    { 
+        id: 1, 
         name: "John Doe", 
         email: "john@example.com", 
         role: "admin", 
         phone: "123456789",
         password: encryptText("Password123!")
     },
-    { id: 2, 
+    { 
+        id: 2, 
         name: "Jane Smith", 
         email: "jane@example.com", 
         role: "seller", 
         phone: "987654321",
+        password: encryptText("Password123!") 
+    },
+    { 
+        id: 3, 
+        name: "ahmed", 
+        email: "ahmed@example.com", 
+        role: "seller", 
+        phone: "435345",
         password: encryptText("Password123!") 
     }
 ];

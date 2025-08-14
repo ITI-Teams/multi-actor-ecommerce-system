@@ -1,15 +1,4 @@
-let categories = JSON.parse(localStorage.getItem("categories")) || [
-    { 
-        id: 1,
-        name: "men", 
-        description: "This Category is for men's clothing, offers and discounts.", 
-    },
-    { 
-        id: 2,
-        name: "women", 
-        description: "This Category is for women's clothing, offers and discounts.", 
-    }
-];
+let categories = JSON.parse(localStorage.getItem("categories")) || [];
 let currentPagePagination = 1;
 const rowsPerPage = 5;
 
