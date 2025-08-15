@@ -312,12 +312,16 @@ function setupPagination() {
   });
   paginationContainer.appendChild(next);
 }
-
+function logoutCustomer() {
+  localStorage.removeItem("customerSession");
+  window.location.href = "../index.html";
+}
 document.addEventListener("DOMContentLoaded", () => {
   const birthdayInput = document.getElementById("dobInput");
   if (birthdayInput) {
     birthdayInput.max = "2015-12-31";
   }
+
   loadProfile();
   loadCustomerOrders();
 });

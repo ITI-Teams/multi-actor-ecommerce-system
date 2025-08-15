@@ -17,7 +17,7 @@
       <nav id="main-header" class="navbar navbar-expand-lg bg-body-tertiary fixed-top bg-nav-transparent shadow "></nav>
   </header>
 
-  <div class="layout">
+  <div id="layout">
     <!-- Sidebar -->
     <div class="sidebar text-center">
       <img id="profileImage" src="../assets/img/defultUser.webp" class="profile-img" alt="Profile">
@@ -31,7 +31,11 @@
       <p id="profileCity">City: -</p>
       <p id="profileAddress">Address: -</p>
       <p id="profilePhone">Phone: -</p>
-      <button class="btn bg-dark text-light mt-3 " onclick="showEditForm()">Edit Profile</button>
+      <div class="sidBtn">
+        <button class="btn bg-dark text-light mt-3 " onclick="showEditForm()">Edit Profile</button>
+        <button class="btn bg-secondary text-light mt-3 " onclick="logoutCustomer() ">Log Out</button>
+      </div>
+     
     </div>
 
 

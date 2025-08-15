@@ -74,10 +74,10 @@ form.addEventListener("submit", function (event) {
         const customers = JSON.parse(localStorage.getItem("customers")) || [];
         const newId = customers.length > 0 ? customers[customers.length - 1].id + 1 : 1;
         const emailExists = customers.some(customer => customer.email.toLowerCase() === emailInput.value.trim().toLowerCase());
-if (emailExists) {
-    setInvalid(emailInput, "This email is already registered.");
-    return;
-}
+        if (emailExists) {
+            setInvalid(emailInput, "This email is already registered.");
+            return;
+        }
         const userData = {
             id: newId, 
             name: nameInput.value.trim(),
