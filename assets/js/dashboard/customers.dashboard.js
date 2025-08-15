@@ -269,9 +269,9 @@ document.getElementById("searchCustomer").addEventListener("input", renderTable)
 renderTable();
 
 const countryCities = {
-    US: ["New York", "Los Angeles", "Chicago"],
-    UK: ["London", "Manchester", "Birmingham"],
-    EG: [  "Cairo",
+    USA: ["New York", "Los Angeles", "Chicago"],
+    GBR: ["London", "Manchester", "Birmingham"],
+    EGY: [  "Cairo",
             "Alexandria",
             "Giza",
             "Port Said",
@@ -300,8 +300,8 @@ const countryCities = {
             "Menoufia",
             "Assiut"
         ],
-    SA: ["Riyadh", "Jeddah", "Dammam"],
-    FR: ["Paris", "Lyon", "Marseille"]
+    SAU: ["Riyadh", "Jeddah", "Dammam"],
+    FRA: ["Paris", "Lyon", "Marseille"]
 };
 
 const countrySelect = document.getElementById("country");
