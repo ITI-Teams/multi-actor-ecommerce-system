@@ -6,6 +6,9 @@
   letter-spacing: 2px;
   scroll-behavior: smooth;
 }
+#header-wrapper{
+    height: fit-content;
+}
 body {
     background-color: #f8f9fa;
 }

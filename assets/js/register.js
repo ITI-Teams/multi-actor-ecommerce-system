@@ -79,12 +79,9 @@ form.addEventListener("submit", function (event) {
             email: emailInput.value.trim(),
             password: passwordInput.value //only in test
         };
-        localStorage.setItem("registeredUser", JSON.stringify(userData));
-
-        // form.reset();
-        // document.querySelectorAll(".is-valid, .is-invalid").forEach(el => {
-        //     el.classList.remove("is-valid", "is-invalid");
-        // });
+        let customers = JSON.parse(localStorage.getItem("customers")) || [];
+        customers.push(userData);
+        localStorage.setItem("customers", JSON.stringify(customers));
 
         window.location.href = "../index.html";
     }
