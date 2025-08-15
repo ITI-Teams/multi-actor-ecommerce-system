@@ -71,12 +71,17 @@ form.addEventListener("submit", function (event) {
     const confirmPasswordValid = validateConfirmPassword();
 
     if (nameValid && emailValid && passwordValid && confirmPasswordValid) {
+        // Generate unique ID for each new customer
+        const customers = JSON.parse(localStorage.getItem("customers")) || [];
+        const newId = customers.length > 0 ? customers[customers.length - 1].id + 1 : 1;
+
         const userData = {
+            id: newId, // ✅ Unique ID added
             name: nameInput.value.trim(),
             email: emailInput.value.trim(),
             password: passwordInput.value 
         };
-        let customers = JSON.parse(localStorage.getItem("customers")) || [];
+
         customers.push(userData);
         localStorage.setItem("customers", JSON.stringify(customers));
 

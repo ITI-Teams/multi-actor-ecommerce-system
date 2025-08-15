@@ -1,24 +1,25 @@
 function loadProfile() {
-  const currentEmail = localStorage.getItem("customerSession");
-  if (!currentEmail) {
+  let currentID = localStorage.getItem("customerSession");
+  if (!currentID) {
     alert("You must log in first.");
     window.location.href = "login.html";
     return;
   }
 
+  // Ensure type consistency
   const customers = JSON.parse(localStorage.getItem("customers")) || [];
-  const currentCustomer = customers.find(c => c.email === currentEmail);
+  const currentCustomer = customers.find(c => String(c.id) === String(currentID));
 
   if (!currentCustomer) {
     alert("Profile not found.");
     return;
   }
 
-  const displayName = 
-    (currentCustomer.firstName || "") + 
+  const displayName =
+    (currentCustomer.firstName || "") +
     (currentCustomer.lastName ? " " + currentCustomer.lastName : "");
   document.getElementById("profileImage").src = currentCustomer.profileImage || "../assets/img/defultUser.webp";
-  document.getElementById("profileName").textContent = displayName.trim() || currentCustomer.name ||"Unknown Customer";
+  document.getElementById("profileName").textContent = displayName.trim() || currentCustomer.name || "Unknown Customer";
   document.getElementById("profileEmail").textContent = currentCustomer.email || "Not provided";
   document.getElementById("profileGender").textContent = "Gender: " + (currentCustomer.gender || "-");
   document.getElementById("profileDOB").textContent = "Date Of Birth: " + (currentCustomer.birthday || "-");
@@ -38,14 +39,14 @@ function saveOrUpdateCustomer(email, birthday, phone, password) {
   const city = document.getElementById("cityInput").value;
   const address = document.getElementById("addressInput").value;
 
-  const currentCustomerEmail = localStorage.getItem("customerSession");
-  if (!currentCustomerEmail) {
+  const currentCustomerId = localStorage.getItem("customerSession");
+  if (!currentCustomerId) {
     alert("You must be logged in to update your profile.");
     return;
   }
 
   let customers = JSON.parse(localStorage.getItem("customers")) || [];
-  const existingIndex = customers.findIndex(cust => cust.email === currentCustomerEmail);
+  const existingIndex = customers.findIndex(cust => String(cust.id) === String(currentCustomerId));
 
   if (existingIndex === -1) {
     console.warn("Cannot update: Customer not found.");
@@ -64,9 +65,10 @@ function saveOrUpdateCustomer(email, birthday, phone, password) {
   } else {
     updateCustomerData();
   }
+
   function updateCustomerData() {
     customers[existingIndex] = {
-      ...customers[existingIndex],
+      ...customers[existingIndex], // Keep the existing ID intact
       profileImage,
       firstName,
       lastName,
@@ -82,10 +84,7 @@ function saveOrUpdateCustomer(email, birthday, phone, password) {
     };
 
     localStorage.setItem("customers", JSON.stringify(customers));
-
-    if (email !== currentCustomerEmail) {
-      localStorage.setItem("customerSession", email);
-    }
+    localStorage.setItem("customerSession", String(customers[existingIndex].id)); // ✅ keep ID consistent
   }
 }
 
@@ -193,10 +192,10 @@ function calculateAge(birthday) {
 const countryCityMap = {
   USA: ["New York", "Los Angeles", "Chicago"],
   GBR: ["London", "Manchester", "Birmingham"],
-  EGY: [  "Cairo","Alexandria","Giza","Port Said","Suez","Luxor","Aswan","Ismailia",
-          "Beheira","Dakahlia","Damietta","Sharqia","Qalyubia","Kafr El Sheikh","Minya",
-          "Faiyum","Beni Suef","Qena","Sohag","Red Sea","New Valley","North Sinai",
-          "South Sinai","Matrouh","Ash Sharqiyah","Gharbia","Menoufia","Assiut"],
+  EGY: ["Cairo", "Alexandria", "Giza", "Port Said", "Suez", "Luxor", "Aswan", "Ismailia",
+    "Beheira", "Dakahlia", "Damietta", "Sharqia", "Qalyubia", "Kafr El Sheikh", "Minya",
+    "Faiyum", "Beni Suef", "Qena", "Sohag", "Red Sea", "New Valley", "North Sinai",
+    "South Sinai", "Matrouh", "Ash Sharqiyah", "Gharbia", "Menoufia", "Assiut"],
   SAU: ["Riyadh", "Jeddah", "Dammam"],
   FRA: ["Paris", "Lyon", "Marseille"]
 };

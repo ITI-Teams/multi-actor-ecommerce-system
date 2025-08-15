@@ -20,17 +20,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const enteredEmail = emailInput.value.trim();
         const enteredPassword = passwordInput.value.trim();
 
-        const storedUsers = JSON.parse(localStorage.getItem("customers")) || [];
+        const storedCustomers = JSON.parse(localStorage.getItem("customers")) || [];
 
-        const matchedUser = storedUsers.find(user => 
-            user.email === enteredEmail && user.password === enteredPassword
+        const matchedCustomer = storedCustomers.find(Customer => 
+            Customer.email === enteredEmail && Customer.password === enteredPassword
         );
 
-        if (matchedUser) {
+        if (matchedCustomer) {
             errorDiv.style.display = "none";
             form.classList.add('was-validated');
 
-            localStorage.setItem("customerSession", matchedUser.email);
+            localStorage.setItem("customerSession", matchedCustomer.id);
             // localStorage.setItem("isLoggedIn", "true");
 
         } else {
