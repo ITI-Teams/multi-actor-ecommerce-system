@@ -391,57 +391,78 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     const countriesMap = {
-        "USA": "United States",
-        "CAN": "Canada",
-        "MEX": "Mexico",
-        "BRA": "Brazil",
-        "ARG": "Argentina",
-        "GBR": "United Kingdom",
-        "FRA": "France",
-        "DEU": "Germany",
-        "ITA": "Italy",
-        "ESP": "Spain",
-        "RUS": "Russia",
-        "CHN": "China",
-        "JPN": "Japan",
-        "IND": "India",
-        "AUS": "Australia",
-        "ZAF": "South Africa",
-        "NGA": "Nigeria",
-        "EGY": "Egypt",
-        "SAU": "Saudi Arabia"
+        "US": "United States",
+        "CA": "Canada",
+        "ME": "Mexico",
+        "BR": "Brazil",
+        "AR": "Argentina",
+        "UK": "United Kingdom",
+        "FR": "France",
+        "DE": "Germany",
+        "IT": "Italy",
+        "ES": "Spain",
+        "RU": "Russia",
+        "CH": "China",
+        "JP": "Japan",
+        "IN": "India",
+        "AU": "Australia",
+        "ZA": "South Africa",
+        "NG": "Nigeria",
+        "EG": "Egypt",
+        "SA": "Saudi Arabia"
     };
     const countriesMapleft = {
-        "United States": "USA",
-        "Canada": "CAN",
-        "Mexico": "MEX",
-        "Brazil": "BRA",
-        "Argentina": "ARG",
-        "United Kingdom": "GBR",
-        "France": "FRA",
-        "Germany": "DEU",
-        "Italy": "ITA",
-        "Spain": "ESP",
-        "Russia": "RUS",
-        "China": "CHN",
-        "Japan": "JPN",
-        "India": "IND",
-        "Australia": "AUS",
-        "South Africa": "ZAF",
-        "Nigeria": "NGA",
-        "Egypt": "EGY",
-        "Saudi Arabia": "SAU"
+        "US": "United States",
+        "CA": "Canada",
+        "ME": "Mexico",
+        "BR": "Brazil",
+        "AR": "Argentina",
+        "UK": "United Kingdom",
+        "FR": "France",
+        "DE": "Germany",
+        "IT": "Italy",
+        "ES": "Spain",
+        "RU": "Russia",
+        "CH": "China",
+        "JP": "Japan",
+        "IN": "India",
+        "AU": "Australia",
+        "ZA": "South Africa",
+        "NG": "Nigeria",
+        "EG": "Egypt",
+        "SAU": "Saudi Arabia"
     };
+    // const countriesMapleft = {
+    //     "United States": "US",
+    //     "Canada": "CA",
+    //     "Mexico": "ME",
+    //     "Brazil": "BR",
+    //     "Argentina": "AR",
+    //     "United Kingdom": "GB",
+    //     "France": "FR",
+    //     "Germany": "DE",
+    //     "Italy": "IT",
+    //     "Spain": "ES",
+    //     "Russia": "RU",
+    //     "China": "CH",
+    //     "Japan": "JP",
+    //     "India": "IN",
+    //     "Australia": "AU",
+    //     "South Africa": "ZA",
+    //     "Nigeria": "NG",
+    //     "Egypt": "EGY",
+    //     "Saudi Arabia": "SA"
+    // };
     
-    const locations = Object.keys(countriesMap);  
-    const locationsleft = Object.keys(countriesMapleft);  
+    const locations = Object.keys(countriesMapleft);  
+    const locationsleft = Object.keys(countriesMap);  
     const zValues = locationsleft.map(code => salesData[code] || null);
     const textValues = locationsleft.map(code =>
         salesData[code]
-            ? `${countriesMapleft[code]}: $${salesData[code].toLocaleString()}`
-            : `${countriesMapleft[code]}: No sales data`
+            ? `${countriesMap[code]}: $${salesData[code].toLocaleString()}`
+            : `${countriesMap[code]}: No sales data`
     );
-    console.log(locations,zValues,textValues);
+    console.log(locationsleft,zValues,textValues);
 
     const countryData = [{
         type: 'choropleth',
