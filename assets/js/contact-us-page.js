@@ -1,47 +1,97 @@
 // Bootstrap validation
-document.getElementById('contactForm').addEventListener('submit', function (e) {
-    e.preventDefault();
+(function () {
+    const form = document.getElementById('contactForm');
+    const overlay = document.getElementById('successOverlay');
+    const inputs = form.querySelectorAll('input, textarea');
 
-    let isValid = true;
-    const nameField = this.name;
-    const emailField = this.email;
-    const phoneField = this.phone;
-    const subjectField = this.subject;
-    const messageField = this.message;
+    // mark fields as "dirty" once user interacts
+    inputs.forEach(el => {
+        el.addEventListener('input', () => el.dataset.dirty = 'true');
+        el.addEventListener('blur', () => el.dataset.dirty = 'true');
+    });
 
-    const emailRegex = /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$/i;
-    const egyptPhoneRegex = /^(010|011|012|015)[0-9]{8}$/;
+    // validators
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRe = /^(010|011|012|015)\d{8}$/;
 
-    if (nameField.value.trim() === '') { setInvalid(nameField); isValid = false; } else { setValid(nameField); }
-    if (!emailRegex.test(emailField.value.trim())) { setInvalid(emailField); isValid = false; } else { setValid(emailField); }
-    if (!egyptPhoneRegex.test(phoneField.value.trim())) { setInvalid(phoneField); isValid = false; } else { setValid(phoneField); }
-    if (subjectField.value.trim() === '') { setInvalid(subjectField); isValid = false; } else { setValid(subjectField); }
-    if (messageField.value.trim() === '') { setInvalid(messageField); isValid = false; } else { setValid(messageField); }
-
-    if (isValid) {
-        document.getElementById('modalDetails').innerHTML = `
-            <p><strong>Name:</strong> ${nameField.value}</p>
-            <p><strong>Email:</strong> ${emailField.value}</p>
-            <p><strong>Phone:</strong> ${phoneField.value}</p>
-            <p><strong>Subject:</strong> ${subjectField.value}</p>
-            <p><strong>Message:</strong> ${messageField.value}</p>
-        `;
-        new bootstrap.Modal(document.getElementById('successModal')).show();
-        this.reset();
-        [nameField, emailField, phoneField, subjectField, messageField].forEach(f => {
-            f.classList.remove('is-valid', 'is-invalid');
-        });
+    function isValidField(input) {
+        const v = input.value.trim();
+        switch (input.name) {
+            case 'name': return v.length >= 2;
+            case 'email': return emailRe.test(v);
+            case 'phone': return phoneRe.test(v);
+            case 'subject': return v.length >= 2;
+            case 'message': return v.length >= 2;
+            default: return true;
+        }
     }
-});
 
-function setInvalid(field) {
-    field.classList.add('is-invalid');
-    field.classList.remove('is-valid');
-}
-function setValid(field) {
-    field.classList.add('is-valid');
-    field.classList.remove('is-invalid');
-}
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        let allValid = true;
+        let firstInvalid = null;
+
+        inputs.forEach(input => {
+            const valid = isValidField(input);
+
+            // Only show red for inputs the user touched
+            if (input.dataset.dirty === 'true') {
+                if (!valid) {
+                    input.classList.add('is-invalid');
+                    const fb = input.nextElementSibling;
+                    if (fb && fb.classList.contains('invalid-feedback')) fb.style.display = 'block';
+                } else {
+                    input.classList.remove('is-invalid');
+                    const fb = input.nextElementSibling;
+                    if (fb && fb.classList.contains('invalid-feedback')) fb.style.display = 'none';
+                }
+            }
+
+            // We still check all fields for actual submission
+            if (!valid) {
+                allValid = false;
+                if (!firstInvalid) firstInvalid = input;
+            }
+        });
+
+        if (!allValid) {
+            // focus the first invalid field (optional)
+            if (firstInvalid) firstInvalid.focus();
+            return;
+        }
+
+        // save to localStorage (array of objects)
+        const messages = JSON.parse(localStorage.getItem('messages')) || [];
+        const newId = messages.length ? messages[messages.length - 1].id + 1 : 1;
+
+        const payload = {
+            id: newId,
+            name: form.name.value.trim(),
+            email: form.email.value.trim(),
+            phone: form.phone.value.trim(),
+            subject: form.subject.value.trim(),
+            message: form.message.value.trim(),
+            date: new Date().toISOString().split('T')[0]
+        };
+
+        messages.push(payload);
+        localStorage.setItem('messages', JSON.stringify(messages));
+
+        // success overlay
+        overlay.style.display = 'flex';
+        setTimeout(() => { overlay.style.display = 'none'; }, 400);
+
+        // reset form and clear states/dirty flags
+        form.reset();
+        inputs.forEach(el => {
+            el.classList.remove('is-invalid');
+            el.dataset.dirty = '';
+            const fb = el.nextElementSibling;
+            if (fb && fb.classList.contains('invalid-feedback')) fb.style.display = 'none';
+        });
+    });
+})();
 
 
 
