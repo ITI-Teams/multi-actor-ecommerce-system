@@ -1,14 +1,63 @@
 function loadProfile() {
-  document.getElementById("profileImage").src = localStorage.getItem("profileImage");
-  document.getElementById("profileName").textContent = localStorage.getItem("name") || "Unknown User";
-  document.getElementById("profileEmail").textContent = localStorage.getItem("email") || "Not provided";
-  document.getElementById("profileGender").textContent = "Gender: " + (localStorage.getItem("gender") || "-");
-  document.getElementById("profileDOB").textContent = "Date Of Birth: " + (localStorage.getItem("dob") || "-");
-  document.getElementById("profileAge").textContent = "Age: " + (localStorage.getItem("age") || "-");
-  document.getElementById("profileCountry").textContent = "Country: " + (localStorage.getItem("country") || "-");
-  document.getElementById("profileCity").textContent = "City: " + (localStorage.getItem("city") || "-");
-  document.getElementById("profileAddress").textContent = "Address: " + (localStorage.getItem("address") || "-");
-  document.getElementById("profilePhone").textContent = "Phone: " + (localStorage.getItem("phone") || "-");
+
+    const customers = JSON.parse(localStorage.getItem("customers")) || [];
+
+  const currentCustomerEmail = customers[0].email;
+
+  if (!currentCustomerEmail) {
+    console.warn("No Customer is logged in.");
+    return;
+  }
+
+  const currentCustomer = customers.find(customer => customer.email === currentCustomerEmail);
+
+  if (!currentCustomer) {
+    console.warn("Customer not found in localStorage.");
+    return;
+  }
+
+  document.getElementById("profileName").textContent = currentCustomer.name || "Unknown Customer";
+  document.getElementById("profileEmail").textContent = currentCustomer.email || "Not provided";
+  document.getElementById("profileGender").textContent = "Gender: " + (currentCustomer.gender || "-");
+  document.getElementById("profileDOB").textContent = "Date Of Birth: " + (currentCustomer.birthday || "-");
+  document.getElementById("profileAge").textContent = "Age: " + (currentCustomer.age || "-");
+  document.getElementById("profileCountry").textContent = "Country: " + (currentCustomer.country || "-");
+  document.getElementById("profileCity").textContent = "City: " + (currentCustomer.city || "-");
+  document.getElementById("profileAddress").textContent = "Address: " + (currentCustomer.address || "-");
+  document.getElementById("profilePhone").textContent = "Phone: " + (currentCustomer.phone || "-");
+}
+function saveOrUpdateCustomer(email, birthday, phone, password) {
+  const name = document.getElementById("nameInput").value;
+  const gender = document.getElementById("genderInput").value;
+  const age = calculateAge(birthday);
+  const country = document.getElementById("countryInput").value;
+  const city = document.getElementById("cityInput").value;
+  const address = document.getElementById("addressInput").value;
+
+  let customers = JSON.parse(localStorage.getItem("customers")) || [];
+
+  const existingIndex = customers.findIndex(cust => cust.email === currentCustomerEmail);
+
+  if (existingIndex === -1) {
+    console.warn("Cannot update: Customer not found.");
+    return;
+  }
+
+  customers[existingIndex] = {
+    name,
+    email,
+    gender,
+    birthday,
+    age,
+    country,
+    city,
+    address,
+    phone,
+    password
+  };
+
+  localStorage.setItem("customers", JSON.stringify(customers));
+
 }
 
 function showEditForm() {
@@ -21,7 +70,6 @@ function cancelEdit() {
   document.getElementById("editProfileForm").style.display = "none";
 }
 
-// Helper: show error message under field
 function showError(inputId, message) {
   const input = document.getElementById(inputId);
   input.classList.add("is-invalid");
@@ -34,7 +82,6 @@ function showError(inputId, message) {
   errorElem.textContent = message;
 }
 
-// Helper: clear error
 function clearError(inputId) {
   const input = document.getElementById(inputId);
   input.classList.remove("is-invalid");
@@ -49,6 +96,10 @@ function saveProfile(e) {
   let isValid = true;
 
   const email = document.getElementById("emailInput").value.trim();
+  const birthday = document.getElementById("dobInput").value;
+  const phone = document.getElementById("phoneInput").value.trim();
+  const password = document.getElementById("passwordInput").value;
+
   if (!/^[\w.%+-]+@gmail\.com$/i.test(email)) {
     showError("emailInput", "Email must be a valid Gmail address");
     isValid = false;
@@ -56,11 +107,10 @@ function saveProfile(e) {
     clearError("emailInput");
   }
 
-  const dob = document.getElementById("dobInput").value;
-  if (dob) {
-    const year = new Date(dob).getFullYear();
-    if (year > 2015 ||year<1930) {
-      showError("dobInput", "Year of birth must between 1930 and 2015");
+  if (birthday) {
+    const year = new Date(birthday).getFullYear();
+    if (year > 2015 || year < 1930) {
+      showError("dobInput", "Year of birth must be between 1930 and 2015");
       isValid = false;
     } else {
       clearError("dobInput");
@@ -69,7 +119,6 @@ function saveProfile(e) {
     clearError("dobInput");
   }
 
-  const phone = document.getElementById("phoneInput").value.trim();
   if (!/^(010|011|012|015)[0-9]{8}$/.test(phone)) {
     showError("phoneInput", "Enter a valid Egyptian phone number (e.g., 010xxxxxxxx)");
     isValid = false;
@@ -77,8 +126,6 @@ function saveProfile(e) {
     clearError("phoneInput");
   }
 
-  // Password validation: min 8 chars, at least one uppercase letter
-  const password = document.getElementById("passwordInput").value;
   if (!/^(?=.*[A-Z]).{8,}$/.test(password)) {
     showError("passwordInput", "Password must be at least 8 characters and contain at least 1 uppercase letter");
     isValid = false;
@@ -88,20 +135,44 @@ function saveProfile(e) {
 
   if (!isValid) return;
 
-  // Save data
-  localStorage.setItem("name", document.getElementById("nameInput").value);
-  localStorage.setItem("email", email);
-  localStorage.setItem("gender", document.getElementById("genderInput").value);
-  localStorage.setItem("dob", dob);
-  localStorage.setItem("age", calculateAge(dob));
-  localStorage.setItem("country", document.getElementById("countryInput").value);
-  localStorage.setItem("city", document.getElementById("cityInput").value);
-  localStorage.setItem("address", document.getElementById("addressInput").value);
-  localStorage.setItem("phone", phone);
-  localStorage.setItem("password", password);
+  saveOrUpdateCustomer(email, birthday, phone, password);
 
   loadProfile();
   cancelEdit();
+}
+
+function saveOrUpdateCustomer(email, birthday, phone, password) {
+  const name = document.getElementById("nameInput").value;
+  const gender = document.getElementById("genderInput").value;
+  const age = calculateAge(birthday);
+  const country = document.getElementById("countryInput").value;
+  const city = document.getElementById("cityInput").value;
+  const address = document.getElementById("addressInput").value;
+
+  let customers = JSON.parse(localStorage.getItem("customers")) || [];
+
+  const existingIndex = customers.findIndex(cust => cust.email === customers[0].email);
+
+  if (existingIndex === -1) {
+    console.warn("Cannot update: Customer not found.");
+    return;
+  }
+
+  customers[existingIndex] = {
+    profileImage,
+    name,
+    email,
+    gender,
+    birthday,
+    age,
+    country,
+    city,
+    address,
+    phone,
+    password
+  };
+
+  localStorage.setItem("customers", JSON.stringify(customers));
 }
 
 function previewImage(event) {
@@ -109,16 +180,16 @@ function previewImage(event) {
   if (file) {
     const reader = new FileReader();
     reader.onload = function (e) {
-      localStorage.setItem("profileImage", e.target.result);
+      // localStorage.setItem("profileImage", e.target.result);
       document.getElementById("profileImage").src = e.target.result;
     }
     reader.readAsDataURL(file);
   }
 }
 
-function calculateAge(dob) {
-  if (!dob) return "-";
-  const diff = Date.now() - new Date(dob).getTime();
+function calculateAge(birthday) {
+  if (!birthday) return "-";
+  const diff = Date.now() - new Date(birthday).getTime();
   const ageDate = new Date(diff);
   return Math.abs(ageDate.getUTCFullYear() - 1970);
 }
@@ -144,7 +215,7 @@ function populateCities() {
   }
 }
 
-// Orders Section 
+// Orders Section
 const tbody = document.getElementById("orders-body");
 const paginationContainer = document.querySelector(".pagination");
 let orders = [];
@@ -243,11 +314,10 @@ function setupPagination() {
   paginationContainer.appendChild(next);
 }
 
-// Set DOB max year = 2015
 document.addEventListener("DOMContentLoaded", () => {
-  const dobInput = document.getElementById("dobInput");
-  if (dobInput) {
-    dobInput.max = "2015-12-31";
+  const birthdayInput = document.getElementById("dobInput");
+  if (birthdayInput) {
+    birthdayInput.max = "2015-12-31";
   }
   loadProfile();
   loadOrders();
