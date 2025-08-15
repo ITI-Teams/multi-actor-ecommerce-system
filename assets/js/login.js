@@ -16,17 +16,23 @@ document.addEventListener('DOMContentLoaded', () => {
             form.classList.add('was-validated');
             return;
         }
+
         const enteredEmail = emailInput.value.trim();
         const enteredPassword = passwordInput.value.trim();
 
-        const storedUser = JSON.parse(localStorage.getItem("registeredUser"));
-        const savedEmail = storedUser?.email || "";
-        const savedPassword = storedUser?.password || "";
+        const storedUsers = JSON.parse(localStorage.getItem("customers")) || [];
 
+        const matchedUser = storedUsers.find(user => 
+            user.email === enteredEmail && user.password === enteredPassword
+        );
 
-        if (enteredEmail === savedEmail && enteredPassword === savedPassword) {
+        if (matchedUser) {
             errorDiv.style.display = "none";
             form.classList.add('was-validated');
+
+            localStorage.setItem("customerSession", matchedUser.email);
+            // localStorage.setItem("isLoggedIn", "true");
+
         } else {
             event.preventDefault();
             errorDiv.textContent = "Invalid email or password.";
