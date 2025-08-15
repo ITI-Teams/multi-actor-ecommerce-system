@@ -45,11 +45,15 @@ let categories = JSON.parse(localStorage.getItem("categories")) || [
 let customers = JSON.parse(localStorage.getItem("customers")) || [
     { 
         id: 1, 
+        name: "Ahmed",
+        FirstName: "Ahmed",
+        lastName: "Ahmed",
         name: "Ahmed", 
         gender : "male",
         email: "Ahmed@trendora.com", 
         country: "EGY",
         city: "Cairo",
+        zip:'31589',
         address: "12 street - cairo",
         birthday: "1999-07-15",
         phone: "01124252789",
@@ -58,10 +62,13 @@ let customers = JSON.parse(localStorage.getItem("customers")) || [
     { 
         id: 2, 
         name: "mohamed", 
+        FirstName: "Ahmed",
+        lastName: "Ahmed",
         gender : "male",
         email: "mohamed@trendora.com", 
         country: "EGY",
         city: "Alex",
+        zip:'31589',
         address: "16 street - Alex",
         birthday: "1999-07-15",
         phone: "01257462789",
@@ -116,69 +123,69 @@ let messages = JSON.parse(localStorage.getItem("messages")) || [
         date : "2025-08-20",
     },
 ];
-// let orders = JSON.parse(localStorage.getItem("orders")) || [
-//     { 
-//         id: 1, 
-//         product_id: 1, 
-//         seller_id: 1, 
-//         customer_id: 1, 
-//         status: "Delivery",
-//         quntity:1,
-//         totalPrice:500, 
-//         date: "2025-08-14"
-//     },
-//     { 
-//         id: 2, 
-//         product_id: 1, 
-//         seller_id: 2, 
-//         customer_id: 1, 
-//         status: "Delivery" ,
-//         quntity:1,
-//         totalPrice:500,
-//         date: "2025-08-14" 
-//     },
-//     { 
-//         id: 3, 
-//         product_id: 1, 
-//         seller_id: 2, 
-//         customer_id: 1, 
-//         status: "Delivery",
-//         quntity:5,
-//         totalPrice:500,
-//         date: "2025-08-14"  
-//     },
-//     { 
-//         id: 4, 
-//         product_id: 1, 
-//         seller_id: 1, 
-//         customer_id: 1, 
-//         status: "Delivery",
-//         quntity:4,
-//         totalPrice:500,
-//         date: "2025-08-14"  
-//     },
-//     { 
-//         id: 5, 
-//         product_id: 1, 
-//         seller_id: 1, 
-//         customer_id: 1, 
-//         status: "Delivery",
-//         quntity:1,
-//         totalPrice:500,
-//         date: "2025-08-14"  
-//     },
-//     { 
-//         id: 6, 
-//         product_id: 1, 
-//         seller_id: 1, 
-//         customer_id: 1, 
-//         status: "Delivery",
-//         quntity:3,
-//         totalPrice:500,
-//         date: "2025-08-14"  
-//     },
+let orders = JSON.parse(localStorage.getItem("orders")) || [
+    { 
+        id: 1, 
+        product_id: 1, 
+        seller_id: 1, 
+        customer_id: 1, 
+        status: "Delivery",
+        quntity:1,
+        totalPrice:500, 
+        date: "2025-08-14"
+    },
+    { 
+        id: 2, 
+        product_id: 1, 
+        seller_id: 2, 
+        customer_id: 1, 
+        status: "Delivery" ,
+        quntity:1,
+        totalPrice:500,
+        date: "2025-08-14" 
+    },
+    { 
+        id: 3, 
+        product_id: 1, 
+        seller_id: 2, 
+        customer_id: 1, 
+        status: "Delivery",
+        quntity:5,
+        totalPrice:500,
+        date: "2025-08-14"  
+    },
+    { 
+        id: 4, 
+        product_id: 1, 
+        seller_id: 1, 
+        customer_id: 1, 
+        status: "Delivery",
+        quntity:4,
+        totalPrice:500,
+        date: "2025-08-14"  
+    },
+    { 
+        id: 5, 
+        product_id: 1, 
+        seller_id: 1, 
+        customer_id: 1, 
+        status: "Delivery",
+        quntity:1,
+        totalPrice:500,
+        date: "2025-08-14"  
+    },
+    { 
+        id: 6, 
+        product_id: 1, 
+        seller_id: 1, 
+        customer_id: 1, 
+        status: "Delivery",
+        quntity:3,
+        totalPrice:500,
+        date: "2025-08-14"  
+    },
     
-// ];
+];
 let products = JSON.parse(localStorage.getItem("products")) || [
     { 
         id: 1,

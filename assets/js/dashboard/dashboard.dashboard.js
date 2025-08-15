@@ -391,78 +391,20 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     const countriesMap = {
-        "US": "United States",
-        "CA": "Canada",
-        "ME": "Mexico",
-        "BR": "Brazil",
-        "AR": "Argentina",
-        "UK": "United Kingdom",
-        "FR": "France",
-        "DE": "Germany",
-        "IT": "Italy",
-        "ES": "Spain",
-        "RU": "Russia",
-        "CH": "China",
-        "JP": "Japan",
-        "IN": "India",
-        "AU": "Australia",
-        "ZA": "South Africa",
-        "NG": "Nigeria",
-        "EG": "Egypt",
-        "SA": "Saudi Arabia"
-    };
-    const countriesMapleft = {
-        "US": "United States",
-        "CA": "Canada",
-        "ME": "Mexico",
-        "BR": "Brazil",
-        "AR": "Argentina",
-        "UK": "United Kingdom",
-        "FR": "France",
-        "DE": "Germany",
-        "IT": "Italy",
-        "ES": "Spain",
-        "RU": "Russia",
-        "CH": "China",
-        "JP": "Japan",
-        "IN": "India",
-        "AU": "Australia",
-        "ZA": "South Africa",
-        "NG": "Nigeria",
-        "EG": "Egypt",
+        "USA": "United States",
+        "GBR": "United Kingdom",
+        "FRA": "France",
+        "EGY": "Egypt",
         "SAU": "Saudi Arabia"
     };
-    // const countriesMapleft = {
-    //     "United States": "US",
-    //     "Canada": "CA",
-    //     "Mexico": "ME",
-    //     "Brazil": "BR",
-    //     "Argentina": "AR",
-    //     "United Kingdom": "GB",
-    //     "France": "FR",
-    //     "Germany": "DE",
-    //     "Italy": "IT",
-    //     "Spain": "ES",
-    //     "Russia": "RU",
-    //     "China": "CH",
-    //     "Japan": "JP",
-    //     "India": "IN",
-    //     "Australia": "AU",
-    //     "South Africa": "ZA",
-    //     "Nigeria": "NG",
-    //     "Egypt": "EGY",
-    //     "Saudi Arabia": "SA"
-    // };
-    
-    const locations = Object.keys(countriesMapleft);  
-    const locationsleft = Object.keys(countriesMap);  
-    const zValues = locationsleft.map(code => salesData[code] || null);
-    const textValues = locationsleft.map(code =>
+    const locations = Object.keys(countriesMap);
+    const zValues = locations.map(code => salesData[code] || null);
+    const textValues = locations.map(code =>
         salesData[code]
             ? `${countriesMap[code]}: $${salesData[code].toLocaleString()}`
             : `${countriesMap[code]}: No sales data`
     );
-    console.log(locationsleft,zValues,textValues);
+    console.log(locations,zValues,textValues);
 
     const countryData = [{
         type: 'choropleth',
