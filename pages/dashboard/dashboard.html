@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../../assets/css/dashboard-styles.css" />
     <script src="../../assets/js/dashboard/auth.dashboard.js"></script>
     <script>
-        checkAuthorization(["Admin", "Seller"]);
+        checkAuthorization(["admin", "seller"]);
     </script>
     
 </head>
@@ -41,9 +41,9 @@
                 <header id="header"></header>
                 <!--End Header-->
                 <!--Start Main Section-->
-                <main class="container py-4">
-                    <h2>Welcome to the Dashboard</h2>
-                    <p>This is where your dynamic content will appear.</p>
+                <main class="container py-4" id="dashboard">
+                    <div class="container text-center" id="statsCards"></div>
+                    
                 </main>
                 <!--End Main Section-->
                 <!--Start Footer-->
@@ -55,6 +55,9 @@
     <script type="module" src="../../assets/js/dashboard.js"></script>
     <script src="../../assets/js/bootstrap.bundle.min.js"></script>
     <script src="../../assets/js/all.min.js"></script>
+    <script src="../../assets/js/dashboard/dashboard.dashboard.js" defer></script>
     <script src="../../assets/js/dashboard/logout.dashboard.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
 </body>
 </html>

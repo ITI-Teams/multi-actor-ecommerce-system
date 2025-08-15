@@ -1,24 +1,9 @@
 let customers = JSON.parse(localStorage.getItem("customers")) || [];
 let sellers = JSON.parse(localStorage.getItem("users")) || [];
-let mails = JSON.parse(localStorage.getItem("mails")) || [
-    { 
-        id: 1, 
-        to: "abdullah@gmail.com", 
-        from: "admin@gmail.com", 
-        subject: "new product", 
-        message: "Hi how are You this new product has 25% discount", 
-        date: "2025-11-15", 
-    },
-    { 
-        id: 2, 
-        to: "mahmoud@gmail.com", 
-        from: "admin@gmail.com", 
-        subject: "New discount 50%", 
-        message: "Hi how are You this new product has 50% discount", 
-        date: "2025-11-20", 
-    },
-    
-];
+let mails = JSON.parse(localStorage.getItem("mails")) || [];
+(function(){
+    emailjs.init("6SCuP-X4rdUdtYhaX");
+})();
 
 let currentPagePagination = 1;
 const rowsPerPage = 5;
@@ -28,9 +13,20 @@ function SendMail() {
 }
 
 function renderTable() {
+    const session = JSON.parse(localStorage.getItem("session")) || null;
+    if (!session) {
+        document.getElementById("mailTableBody").innerHTML = 
+            `<tr><td colspan="10" class="text-center text-danger">No session found</td></tr>`;
+        return;
+    }
+
+    let filteredMails = mails;
+    if (session.role === "seller") {
+        filteredMails = mails.filter(p => p.from === session.email);
+    }
     const searchValue = document.getElementById("searchMail").value.toLowerCase();
 
-    const filteredMails = mails.filter(u =>
+    filteredMails = filteredMails.filter(u =>
         u.from.toLowerCase().includes(searchValue) ||
         u.to.toLowerCase().includes(searchValue)||
         u.subject.toLowerCase().includes(searchValue)||
@@ -138,8 +134,19 @@ document.getElementById("mailForm").addEventListener("submit", function(e) {
             date: new Date().toISOString()
         };
         mails.push(mailData);
+        emailjs.send("service_2zkpunt", "template_k9jr8j9", {
+            to_email: email,
+            from_name: "Trendora",
+            subject: subject,
+            message: message
+        }).then(function(response) {
+            console.log("SUCCESS", response);
+        }, function(error) {
+            console.log("FAILED", error);
+        });
     });
     SendMail();
+    
 
     bootstrap.Modal.getInstance(document.getElementById("mailModal")).hide();
     renderTable();
@@ -171,4 +178,3 @@ function loadCustomerEmails() {
 }
 
 loadCustomerEmails();
-

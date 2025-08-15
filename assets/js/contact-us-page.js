@@ -1,17 +1,100 @@
 // Bootstrap validation
-(() => {
-    'use strict';
-    const forms = document.querySelectorAll('.needs-validation');
-    Array.from(forms).forEach(form => {
-        form.addEventListener('submit', event => {
-            if (!form.checkValidity()) {
-                event.preventDefault();
-                event.stopPropagation();
+(function () {
+    const form = document.getElementById('contactForm');
+    const overlay = document.getElementById('successOverlay');
+    const inputs = form.querySelectorAll('input, textarea');
+
+    // mark fields as "dirty" once user interacts
+    inputs.forEach(el => {
+        el.addEventListener('input', () => el.dataset.dirty = 'true');
+        el.addEventListener('blur', () => el.dataset.dirty = 'true');
+    });
+
+    // validators
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRe = /^(010|011|012|015)\d{8}$/;
+
+    function isValidField(input) {
+        const v = input.value.trim();
+        switch (input.name) {
+            case 'name': return v.length >= 2;
+            case 'email': return emailRe.test(v);
+            case 'phone': return phoneRe.test(v);
+            case 'subject': return v.length >= 2;
+            case 'message': return v.length >= 2;
+            default: return true;
+        }
+    }
+
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        let allValid = true;
+        let firstInvalid = null;
+
+        inputs.forEach(input => {
+            const valid = isValidField(input);
+
+            // Only show red for inputs the user touched
+            if (input.dataset.dirty === 'true') {
+                if (!valid) {
+                    input.classList.add('is-invalid');
+                    const fb = input.nextElementSibling;
+                    if (fb && fb.classList.contains('invalid-feedback')) fb.style.display = 'block';
+                } else {
+                    input.classList.remove('is-invalid');
+                    const fb = input.nextElementSibling;
+                    if (fb && fb.classList.contains('invalid-feedback')) fb.style.display = 'none';
+                }
             }
-            form.classList.add('was-validated');
-        }, false);
+
+            // We still check all fields for actual submission
+            if (!valid) {
+                allValid = false;
+                if (!firstInvalid) firstInvalid = input;
+            }
+        });
+
+        if (!allValid) {
+            // focus the first invalid field (optional)
+            if (firstInvalid) firstInvalid.focus();
+            return;
+        }
+
+        // save to localStorage (array of objects)
+        const messages = JSON.parse(localStorage.getItem('messages')) || [];
+        const newId = messages.length ? messages[messages.length - 1].id + 1 : 1;
+
+        const payload = {
+            id: newId,
+            name: form.name.value.trim(),
+            email: form.email.value.trim(),
+            phone: form.phone.value.trim(),
+            subject: form.subject.value.trim(),
+            message: form.message.value.trim(),
+            date: new Date().toISOString().split('T')[0]
+        };
+
+        messages.push(payload);
+        localStorage.setItem('messages', JSON.stringify(messages));
+
+        // success overlay
+        overlay.style.display = 'flex';
+        setTimeout(() => { overlay.style.display = 'none'; }, 400);
+
+        // reset form and clear states/dirty flags
+        form.reset();
+        inputs.forEach(el => {
+            el.classList.remove('is-invalid');
+            el.dataset.dirty = '';
+            const fb = el.nextElementSibling;
+            if (fb && fb.classList.contains('invalid-feedback')) fb.style.display = 'none';
+        });
     });
 })();
+
+
+
 
 // Google Maps with current location
 function initMap() {

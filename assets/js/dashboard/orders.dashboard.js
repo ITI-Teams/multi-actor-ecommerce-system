@@ -1,48 +1,4 @@
-let orders = JSON.parse(localStorage.getItem("orders")) || [
-    { 
-        id: 1, 
-        product_id: 1, 
-        seller_id: 1, 
-        customer_id: 1, 
-        status: "Delivery" 
-    },
-    { 
-        id: 2, 
-        product_id: 1, 
-        seller_id: 1, 
-        customer_id: 1, 
-        status: "Delivery" 
-    },
-    { 
-        id: 3, 
-        product_id: 1, 
-        seller_id: 1, 
-        customer_id: 1, 
-        status: "Delivery" 
-    },
-    { 
-        id: 4, 
-        product_id: 1, 
-        seller_id: 1, 
-        customer_id: 1, 
-        status: "Delivery" 
-    },
-    { 
-        id: 5, 
-        product_id: 1, 
-        seller_id: 1, 
-        customer_id: 1, 
-        status: "Delivery" 
-    },
-    { 
-        id: 6, 
-        product_id: 1, 
-        seller_id: 1, 
-        customer_id: 1, 
-        status: "Delivery" 
-    },
-    
-];
+let orders = JSON.parse(localStorage.getItem("orders")) || [];
 let currentPagePagination = 1;
 const rowsPerPage = 5;
 
@@ -51,12 +7,25 @@ function saveOrders() {
 }
 
 function renderTable() {
+    const session = JSON.parse(localStorage.getItem("session")) || null;
+    if (!session) {
+        document.getElementById("orderTableBody").innerHTML = 
+            `<tr><td colspan="10" class="text-center text-danger">No session found</td></tr>`;
+        return;
+    }
+
+    let filteredOrders = orders;
+    if (session.role === "seller") {
+        filteredOrders = orders.filter(p => p.seller_id === session.id);
+    }
+
+
     const products = JSON.parse(localStorage.getItem("products")) || [];
     const sellers = JSON.parse(localStorage.getItem("users")) || [];
     const customers = JSON.parse(localStorage.getItem("customers")) || [];
 
     const searchValue = document.getElementById("searchOrder").value.toLowerCase();
-    const filteredOrders = orders.filter(u =>
+    filteredOrders = filteredOrders.filter(u =>
         u.status.toLowerCase().includes(searchValue)
     );
 
@@ -84,6 +53,8 @@ function renderTable() {
                 <td>${product ? product.name : "Unknown Product"}</td>
                 <td>${seller ? seller.name : "Unknown Seller"}</td>
                 <td>${customer ? customer.name : "Unknown Customer"}</td>
+                <td>${order ? order.quntity : "Unknown Customer"}</td>
+                <td>${order ? order.totalPrice : "Unknown Customer"}</td>
                 <td>
                     <select class="form-select ${statusColors[order.status] || ''}" 
                             onchange="updateOrderStatus(${order.id}, this.value)">

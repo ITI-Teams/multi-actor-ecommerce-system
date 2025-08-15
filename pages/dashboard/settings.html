@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../../assets/css/dashboard-styles.css" />
     <script src="../../assets/js/dashboard/auth.dashboard.js"></script>
     <script>
-        checkAuthorization(["Admin", "Seller"]);
+        checkAuthorization(["admin"]);
     </script>
 </head>
 <body class="min-vh-100 d-flex flex-column">
@@ -41,68 +41,9 @@
                 <!--End Header-->
                 <!--Start Main Section-->
                 <main class="container py-4">
-                    <div class="d-flex justify-content-between mb-3">
-                        <input type="text" id="searchUser" class="form-control w-25" placeholder="Search user...">
-                        <button class="btn btn-success" id="createUserBtn">
-                            <i class="fas fa-plus"></i> Create User
-                        </button>
-                    </div>
-                    <table class="table table-bordered table-hover">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>Role</th>
-                                <th>Phone</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="userTableBody"></tbody>
-                    </table>
-                    <nav>
-                        <ul class="pagination" id="pagination"></ul>
-                    </nav>
+                    
                 </main>
-                <div class="modal fade" id="userModal" tabindex="-1">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="userModalTitle">Create User</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div id="formMessage" style="display:none;"></div>
-                            <div class="modal-body">
-                                <form id="userForm">
-                                    <input type="hidden" id="userId">
-                                    <div class="mb-3">
-                                        <label for="name">Name</label>
-                                        <input type="text" id="name" class="form-control" required autocomplete="off">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="email">Email</label>
-                                        <input type="email" id="email" class="form-control" required autocomplete="off">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="role">Role</label>
-                                        <select id="role" class="form-select">
-                                            <option>Admin</option>
-                                            <option>Seller</option>
-                                        </select>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="password">Password</label>
-                                        <input type="password" id="password" class="form-control" autocomplete="off">
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="phone">Phone</label>
-                                        <input type="text" id="phone" class="form-control" autocomplete="off">
-                                    </div>
-                                    <button type="submit" class="btn btn-primary w-100">Save</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
                 <!--End Main Section-->
                 <!--Start Footer-->
                 <footer id="footer" class="text-center py-3 shadow-sm"></footer>
@@ -113,6 +54,6 @@
     <script type="module" src="../../assets/js/dashboard.js"></script>
     <script src="../../assets/js/bootstrap.bundle.min.js"></script>
     <script src="../../assets/js/all.min.js"></script>
-    <script src="../../assets/js/dashboard/users.dashboard.js"></script>
+    <script src="../../assets/js/dashboard/logout.dashboard.js" defer></script>
 </body>
 </html>

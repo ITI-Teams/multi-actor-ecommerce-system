@@ -7,23 +7,32 @@
     <title>Product Search</title>
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/css/styles.css">
-    <link rel="stylesheet" href="../assets/css/login&register.css">
     <style>
-        body {
-            background-color: #f8f9fa;
+        *{
+            padding: 0%;
+            margin: 0%;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
         }
+        #header-wrapper{
+            height: fit-content;
+        }
+        body{
+            background-color: #f8f9fa;
 
+        }
         .card img {
             object-fit: cover;
             height: 200px;
         }
 
-        main {
+        #main {
             height: fit-content;
             margin-top: 100px;
+
         }
 
-        .product:hover {
+        #productContainer.product:hover {
             transform: scale(1.1);
         }
 
@@ -36,15 +45,32 @@
             background-color: rgba(231, 227, 227, 0);
 
         }
+        .page-item.active .page-link {
+            background-color: #212529;
+            border-color: #212529;
+            color: #fff !important;
+        }
+
+
+
+        @media (max-width: 320px) {
+            #main {
+                margin-top: 140px;
+            }
+
+            #pagination {
+                max-width: 100%;
+            }
+        }
     </style>
 </head>
 
 <body>
-    <header id="header-wrapper ">
-
-        <nav id="main-header" class="navbar navbar-expand-lg bg-body-tertiary fixed-top "></nav>
+    <header id="header-wrapper">
+        <nav id="main-header" class="navbar navbar-expand-lg bg-body-tertiary fixed-top bg-nav-transparent shadow "></nav>
     </header>
-    <main class="container py-5 ">
+    
+    <main class="container py-5" id="main">
         <h1 class="text-center ">Product Search</h1>
 
         <div class="row mb-4">
@@ -57,7 +83,23 @@
         <div class="row" id="productContainer">
 
         </div>
+        <nav aria-label="Page navigation" id="pagination">
+            <ul class="pagination justify-content-center flex-wrap">
+                <li class="page-item" >
+                    <a class="page-link " href="#" aria-label="Previous">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+                <li class="page-item" >
+                    <a class="page-link" href="#" aria-label="Next">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </main>
+
+
 
     <footer id="main-footer" class="footer bg-black text-light "></footer>
     <script src="https://kit.fontawesome.com/4f91921791.js" crossorigin="anonymous"></script>

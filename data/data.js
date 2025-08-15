@@ -4,25 +4,29 @@ let carts = JSON.parse(localStorage.getItem("carts")) || [
         id: 1, 
         customer_id: 1, 
         product_id: 1, 
-        seller_id: 1, 
+        seller_id: 1,
+        quantity: 1, 
     },
     { 
         id: 2, 
         customer_id: 2, 
         product_id: 2, 
-        seller_id: 1, 
+        seller_id: 2,
+        quantity: 1, 
     },
     { 
         id: 3, 
         customer_id: 1, 
         product_id: 2, 
-        seller_id: 1, 
+        seller_id: 1,
+        quantity: 1, 
     },
     { 
         id: 4, 
         customer_id: 2, 
         product_id: 1, 
-        seller_id: 1, 
+        seller_id: 1,
+        quantity: 1, 
     },
     
 ];
@@ -41,27 +45,34 @@ let categories = JSON.parse(localStorage.getItem("categories")) || [
 let customers = JSON.parse(localStorage.getItem("customers")) || [
     { 
         id: 1, 
+        name: "Ahmed",
+        FirstName: "Ahmed",
+        lastName: "Ahmed",
         name: "Ahmed", 
         gender : "male",
         email: "Ahmed@trendora.com", 
-        country: "Egypt",
+        country: "EGY",
         city: "Cairo",
+        zip:'31589',
         address: "12 street - cairo",
         birthday: "1999-07-15",
         phone: "01124252789",
-        password: "@A1234s",
+        password: encryptText("@A1234s"),
     },
     { 
         id: 2, 
         name: "mohamed", 
+        FirstName: "Ahmed",
+        lastName: "Ahmed",
         gender : "male",
         email: "mohamed@trendora.com", 
-        country: "Egypt",
+        country: "EGY",
         city: "Alex",
+        zip:'31589',
         address: "16 street - Alex",
         birthday: "1999-07-15",
         phone: "01257462789",
-        password: "s1234@A",
+        password: encryptText("s1234@A"),
     },
 ];
 let mails = JSON.parse(localStorage.getItem("mails")) || [
@@ -118,42 +129,60 @@ let orders = JSON.parse(localStorage.getItem("orders")) || [
         product_id: 1, 
         seller_id: 1, 
         customer_id: 1, 
-        status: "Delivery" 
+        status: "Delivery",
+        quntity:1,
+        totalPrice:500, 
+        date: "2025-08-14"
     },
     { 
         id: 2, 
         product_id: 1, 
-        seller_id: 1, 
+        seller_id: 2, 
         customer_id: 1, 
-        status: "Delivery" 
+        status: "Delivery" ,
+        quntity:1,
+        totalPrice:500,
+        date: "2025-08-14" 
     },
     { 
         id: 3, 
         product_id: 1, 
-        seller_id: 1, 
+        seller_id: 2, 
         customer_id: 1, 
-        status: "Delivery" 
+        status: "Delivery",
+        quntity:5,
+        totalPrice:500,
+        date: "2025-08-14"  
     },
     { 
         id: 4, 
         product_id: 1, 
         seller_id: 1, 
         customer_id: 1, 
-        status: "Delivery" 
+        status: "Delivery",
+        quntity:4,
+        totalPrice:500,
+        date: "2025-08-14"  
     },
     { 
         id: 5, 
         product_id: 1, 
         seller_id: 1, 
         customer_id: 1, 
-        status: "Delivery" 
+        status: "Delivery",
+        quntity:1,
+        totalPrice:500,
+        date: "2025-08-14"  
     },
     { 
         id: 6, 
         product_id: 1, 
         seller_id: 1, 
         customer_id: 1, 
-        status: "Delivery" 
+        status: "Delivery",
+        quntity:3,
+        totalPrice:500,
+        date: "2025-08-14"  
     },
     
 ];
@@ -166,9 +195,10 @@ let products = JSON.parse(localStorage.getItem("products")) || [
         reviews: 5,
         price: "148",
         size: ['xs','s','m','L','XL','XXL'],
-        color: ['white','black','green'],
+        color: ["#171111", "#ff1414", "#ffffff"],
         images: ['product01.jpg','product02.jpg'],
-        seller_id : 1,
+        seller_id : 2,
+        stock:5,
     },
     { 
         id: 2,
@@ -178,9 +208,10 @@ let products = JSON.parse(localStorage.getItem("products")) || [
         reviews: 4,
         price: "148",
         size: ['xs','s','m','L','XL','XXL'],
-        color: ['white','black','green'],
+        color: ["#171111", "#ff1414", "#ffffff"],
         images: ['img/product01.jpg','product02.jpg'],
-        seller_id : 2,
+        seller_id : 1,
+        stock:5,
     }
 ];
 let reviews = JSON.parse(localStorage.getItem("reviews")) || [
@@ -204,23 +235,59 @@ let reviews = JSON.parse(localStorage.getItem("reviews")) || [
     },
 ];
 let users = JSON.parse(localStorage.getItem("users")) || [
-    { id: 1, 
+    { 
+        id: 1, 
         name: "John Doe", 
         email: "john@example.com", 
-        role: "Admin", 
+        role: "admin", 
         phone: "123456789",
         password: encryptText("Password123!")
     },
-    { id: 2, 
+    { 
+        id: 2, 
         name: "Jane Smith", 
         email: "jane@example.com", 
-        role: "Seller", 
+        role: "seller", 
         phone: "987654321",
+        password: encryptText("Password123!") 
+    },
+    { 
+        id: 3, 
+        name: "ahmed", 
+        email: "ahmed@example.com", 
+        role: "seller", 
+        phone: "435345",
         password: encryptText("Password123!") 
     }
 ];
 
-
+if (!localStorage.getItem("carts")) {
+    localStorage.setItem("carts", JSON.stringify(carts));
+}
+if (!localStorage.getItem("categories")) {
+    localStorage.setItem("categories", JSON.stringify(categories));
+}
+if (!localStorage.getItem("customers")) {
+    localStorage.setItem("customers", JSON.stringify(customers));
+}
+if (!localStorage.getItem("mails")) {
+    localStorage.setItem("mails", JSON.stringify(mails));
+}
+if (!localStorage.getItem("messages")) {
+    localStorage.setItem("messages", JSON.stringify(messages));
+}
+if (!localStorage.getItem("orders")) {
+    localStorage.setItem("orders", JSON.stringify(orders));
+}
+if (!localStorage.getItem("products")) {
+    localStorage.setItem("products", JSON.stringify(products));
+}
+if (!localStorage.getItem("reviews")) {
+    localStorage.setItem("reviews", JSON.stringify(reviews));
+}
+if (!localStorage.getItem("users")) {
+    localStorage.setItem("users", JSON.stringify(users));
+}
 function encryptText(text) {
     if (!text) return '';
     let step1 = text.split('').reverse().join('');

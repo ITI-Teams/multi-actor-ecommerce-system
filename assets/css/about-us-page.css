@@ -1,0 +1,247 @@
+#header-wrapper {
+    height: fit-content;
+}
+
+#about-us-page {
+    padding-top: 90px;
+}
+
+:root {
+    --page-bg: #cfc7b9;
+    /* beige page background from screenshot */
+    --ink: #1f1f1f;
+    /* dark text */
+    --muted: #6c6a64;
+    /* muted text */
+    --rule: #b9b2a4;
+    /* thin separators */
+    --accent: #3e8f8b;
+    /* tiny accent for emails/links */
+    --narrow: 920px;
+    /* content width */
+    --photo: 230px;
+    /* photo size */
+    --icons: 44px;
+    /* social column width */
+    --gap: 28px;
+    /* gap between columns */
+}
+
+
+body {
+    /* background: var(--page-bg); */
+    color: var(--ink);
+    /* font-family: system-ui, -apple-system, "Segoe UI", Roboto, Inter, Arial, sans-serif; */
+    /* letter-spacing: .1px; */
+}
+
+
+/* Section header */
+.section-intro {
+    max-width: var(--narrow);
+    margin: 28px auto 8px;
+    padding: 0 20px;
+}
+
+.intro-grid {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 26px;
+    align-items: start;
+}
+
+.intro-left {
+    font-weight: 900;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    font-size: 2.2rem;
+    line-height: 1.05;
+}
+
+.intro-right {
+    color: var(--muted);
+    font-size: 1.1rem;
+    line-height: 1.4;
+}
+
+.intro-rule {
+    height: 1px;
+    /* background: var(--rule); */
+    margin: 20px 0 10px;
+}
+
+/* Team list container */
+.team-wrap {
+    max-width: var(--narrow);
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* One team row = social column + photo + content (centered width) */
+.team-row {
+    display: grid;
+    grid-template-columns: var(--icons) var(--photo) 1fr;
+    gap: var(--gap);
+    align-items: center;
+    padding: 24px 0;
+    border-top: 1px solid var(--rule);
+}
+
+.team-row:last-child {
+    border-bottom: 1px solid var(--rule);
+}
+
+/* Alternate layout (photo right, icons right) */
+.team-row.reverse {
+    grid-template-columns: 1fr var(--photo) var(--icons);
+}
+
+.team-row.reverse .member-photo {
+    order: 2;
+}
+
+.team-row.reverse .member-meta {
+    order: 0;
+    text-align: left;
+}
+
+.team-row.reverse .member-text {
+    order: 1;
+    text-align: left;
+}
+
+.team-row.reverse .social-col {
+    order: 3;
+    justify-self: end;
+}
+
+/* Social column (vertical) */
+.social-col {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    align-items: center;
+    justify-content: center;
+    color: var(--muted);
+}
+
+.social-col a {
+    color: var(--muted);
+}
+
+.social-col a:hover {
+    color: #000;
+}
+
+/* Photo */
+.member-photo {
+    width: var(--photo);
+    height: var(--photo);
+    background: #e9e7e2;
+    border: 1px solid var(--rule);
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.member-photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Right/left content block */
+.member-content {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    gap: 6px;
+}
+
+.member-meta h5 {
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin: 0;
+    font-size: 1rem;
+}
+
+.member-title {
+    color: var(--muted);
+    font-size: .9rem;
+}
+
+.member-email a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px dotted currentColor;
+}
+
+.member-email a:hover {
+    opacity: .8;
+}
+
+.member-text {
+    color: #4b4a46;
+    font-size: .95rem;
+    line-height: 1.5;
+}
+
+
+/* Responsive */
+@media (max-width: 992px) {
+    :root {
+        --hero-h: 300px;
+    }
+
+    .intro-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .section-intro {
+        text-align: center;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .team-row,
+    .team-row.reverse {
+        grid-template-columns: 1fr;
+        text-align: left;
+    }
+
+    .social-col {
+        flex-direction: row;
+        gap: 14px;
+        order: 3;
+        justify-self: start;
+    }
+
+    .team-row.reverse .social-col {
+        justify-self: start;
+    }
+
+    .member-photo {
+        order: 1;
+        width: 200px;
+        height: 200px
+    }
+
+    .member-meta {
+        order: 2;
+        text-align: left
+    }
+
+    .member-text {
+        order: 4
+    }
+}
+
+@media (max-width: 480px) {
+    .member-photo {
+        width: 160px;
+        height: 160px
+    }
+}

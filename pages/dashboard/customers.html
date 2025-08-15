@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../../assets/css/dashboard-styles.css" />
     <script src="../../assets/js/dashboard/auth.dashboard.js"></script>
     <script>
-        checkAuthorization(["Admin", "Seller"]);
+        checkAuthorization(["admin"]);
     </script>
 </head>
 <body class="min-vh-100 d-flex flex-column">
@@ -136,6 +136,10 @@
                                         <input type="password" id="password" class="form-control" autocomplete="off">
                                     </div>
                                     <div class="mb-3">
+                                        <label for="confirmPassword" class="form-label">Confirm Password</label>
+                                        <input type="password" class="form-control" id="confirmPassword" >
+                                    </div>
+                                    <div class="mb-3">
                                         <label for="phone">Phone</label>
                                         <input type="text" id="phone" class="form-control" autocomplete="off">
                                     </div>
@@ -156,5 +160,6 @@
     <script src="../../assets/js/bootstrap.bundle.min.js"></script>
     <script src="../../assets/js/all.min.js"></script>
     <script src="../../assets/js/dashboard/customers.dashboard.js"></script>
+    <script src="../../assets/js/dashboard/logout.dashboard.js" defer></script>
 </body>
 </html>

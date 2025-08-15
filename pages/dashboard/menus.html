@@ -7,6 +7,10 @@
     <link rel="stylesheet" href="../../assets/css/bootstrap.min.css" />
     <link rel="stylesheet" href="../../assets/css/all.min.css" />
     <link rel="stylesheet" href="../../assets/css/dashboard-styles.css" />
+    <script src="../../assets/js/dashboard/auth.dashboard.js"></script>
+    <script>
+        checkAuthorization(["admin"]);
+    </script>
 </head>
 <body class="min-vh-100 d-flex flex-column">
     <!--Start Splash Screen -->
@@ -36,8 +40,45 @@
                 <header id="header"></header>
                 <!--End Header-->
                 <!--Start Main Section-->
-                <main class="container py-4">
-                    
+                <main class="container py-4" id="menu-system">
+                    <h2 class="mb-4">Menu Management</h2>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="menu-box">
+                                <h5>Add new Item</h5>
+                                <div class="mb-3">
+                                    <label class="form-label">name</label>
+                                    <input type="text" id="itemName" class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">link</label>
+                                    <input type="text" id="itemLink" class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Level</label>
+                                    <select id="itemLevel" class="form-select">
+                                        <option value="main">main</option>
+                                        <option value="sub">sub</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3" id="parentSelectBox" style="display:none;">
+                                    <label class="form-label">choice the parent item</label>
+                                    <select id="parentItem" class="form-select"></select>
+                                </div>
+                                <button class="btn btn-primary w-100" onclick="addMenuItem()">Add item & Save</button>
+                            </div>
+                        </div>
+
+                        <!-- عرض القائمة -->
+                        <div class="col-md-8">
+                            <div class="menu-box">
+                                <h5>Menu</h5>
+                                <ul id="menuList" class="list-unstyled"></ul>
+                                <button class="btn btn-danger mt-3" onclick="clearMenu()">Delete Menu</button>
+                            </div>
+                        </div>
+                    </div>
+
                 </main>
                 <!--End Main Section-->
                 <!--Start Footer-->
@@ -49,6 +90,7 @@
     <script type="module" src="../../assets/js/dashboard.js"></script>
     <script src="../../assets/js/bootstrap.bundle.min.js"></script>
     <script src="../../assets/js/all.min.js"></script>
-    <script src="../../assets/js/dashboard/users.dashboard.js"></script>
+    <script src="../../assets/js/dashboard/menus.dashboard.js"></script>
+    <script src="../../assets/js/dashboard/logout.dashboard.js" defer></script>
 </body>
 </html>

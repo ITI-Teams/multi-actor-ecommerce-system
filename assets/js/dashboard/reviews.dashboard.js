@@ -1,23 +1,4 @@
-let reviews = JSON.parse(localStorage.getItem("reviews")) || [
-    { 
-        id: 1, 
-        product_id: 1, 
-        customer_id: 1, 
-        review: 5
-    },
-    { 
-        id: 2, 
-        product_id: 2, 
-        customer_id: 2, 
-        review: 3 
-    },
-    { 
-        id: 3, 
-        product_id: 1, 
-        customer_id: 2, 
-        review: 4 
-    },
-];
+let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
 let currentPagePagination = 1;
 const rowsPerPage = 5;
 
@@ -26,8 +7,16 @@ function saveReviews() {
 }
 
 function renderTable() {
+    const session = JSON.parse(localStorage.getItem("session")) || null;
+    if (!session) return [];
     const products = JSON.parse(localStorage.getItem("products")) || [];
     const customers = JSON.parse(localStorage.getItem("customers")) || [];
+    if (session.role === "seller") {
+        const sellerProductsIds = products
+            .filter(p => p.seller_id === session.id)
+            .map(p => p.id);
+        reviews = reviews.filter(r => sellerProductsIds.includes(r.product_id));
+    }
 
     const searchValue = document.getElementById("searchReview").value.toLowerCase();
     const filteredReviews = reviews.filter(u =>
