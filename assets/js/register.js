@@ -71,12 +71,15 @@ form.addEventListener("submit", function (event) {
     const confirmPasswordValid = validateConfirmPassword();
 
     if (nameValid && emailValid && passwordValid && confirmPasswordValid) {
-        // Generate unique ID for each new customer
         const customers = JSON.parse(localStorage.getItem("customers")) || [];
         const newId = customers.length > 0 ? customers[customers.length - 1].id + 1 : 1;
-
+        const emailExists = customers.some(customer => customer.email.toLowerCase() === emailInput.value.trim().toLowerCase());
+if (emailExists) {
+    setInvalid(emailInput, "This email is already registered.");
+    return;
+}
         const userData = {
-            id: newId, // ✅ Unique ID added
+            id: newId, 
             name: nameInput.value.trim(),
             email: emailInput.value.trim(),
             password: passwordInput.value 
@@ -85,7 +88,7 @@ form.addEventListener("submit", function (event) {
         customers.push(userData);
         localStorage.setItem("customers", JSON.stringify(customers));
 
-        localStorage.setItem("customerSession", userData.email);
+        localStorage.setItem("customerSession", userData.id);
 
         window.location.href = "../index.html";
     }
