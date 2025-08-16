@@ -88,7 +88,6 @@ function saveOrUpdateCustomer(email, birthday, phone, password) {
   }
 }
 
-// NEW FUNCTION: Fill form with customer values
 function fillEditForm(currentCustomer) {
   document.getElementById("fnameInput").value = currentCustomer.firstName || "";
   document.getElementById("lnameInput").value = currentCustomer.lastName || "";
@@ -98,7 +97,7 @@ function fillEditForm(currentCustomer) {
   document.getElementById("phoneInput").value = currentCustomer.phone || "";
   document.getElementById("passwordInput").value = currentCustomer.password || "";
   document.getElementById("countryInput").value = currentCustomer.country || "";
-  populateCities(); // repopulate cities dropdown
+  populateCities(); 
   document.getElementById("cityInput").value = currentCustomer.city || "";
   document.getElementById("addressInput").value = currentCustomer.address || "";
 }
@@ -107,7 +106,6 @@ function showEditForm() {
   document.getElementById("ordersSection").style.display = "none";
   document.getElementById("editProfileForm").style.display = "block";
 
-  // get current customer and fill form
   const currentID = localStorage.getItem("customerSession");
   const customers = JSON.parse(localStorage.getItem("customers")) || [];
   const currentCustomer = customers.find(c => String(c.id) === String(currentID));
