@@ -119,6 +119,22 @@ window.addEventListener('load', () => {
 
         // sizes
         const addtocartBtn = document.getElementById('addtocartBtn')
+        addtocartBtn.addEventListener('click', function () {
+            let Carts = localStorage.getItem('carts');
+            Carts = JSON.parse(Carts);
+            const lastcartid = Carts[Carts.length - 1].id
+            const newcartid = lastcartid + 1;
+            const newcart = {
+                id: newcartid,
+                customer_id: 1,
+                seller_id: 1,
+                product_id: product.id,
+                quantity: 1,
+            }
+            Carts.push(newcart);
+            localStorage.setItem('carts', JSON.stringify(Carts));
+            alert('Product added to cart')
+        })
         document.querySelectorAll('.size-btn').forEach(b => {
             if (b.classList.contains('disabled')) return;
             b.addEventListener('click', function () {
