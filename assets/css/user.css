@@ -61,7 +61,7 @@ table {
 }
 
 .page-link {
-  color: #212529;
+  color: #212529 !important;
 }
 .is-invalid {
   border-color: red !important;
