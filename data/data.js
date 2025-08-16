@@ -45,7 +45,7 @@ let products = JSON.parse(localStorage.getItem("products")) || Array.from({ leng
     stock: Math.floor(Math.random() * 50) + 1
 }));
 // ========== ORDERS ==========
-let statuses = ["Pending", "Processing", "Shipped", "Delivered", "Cancelled"];
+let statuses = ["Pending", "Processing", "Delivery", "Completed", "Cancelled"];
 let orders = JSON.parse(localStorage.getItem("orders")) || Array.from({ length: 50 }, (_, i) => ({
     id: i + 1,
     product_id: (i % 100) + 1,
