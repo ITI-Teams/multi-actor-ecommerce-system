@@ -1,265 +1,95 @@
 // ======  تحميل الببانات ======
-let carts = JSON.parse(localStorage.getItem("carts")) || [
-    { 
-        id: 1, 
-        customer_id: 1, 
-        product_id: 1, 
-        seller_id: 1,
-        quantity: 1, 
-    },
-    { 
-        id: 2, 
-        customer_id: 2, 
-        product_id: 2, 
-        seller_id: 2,
-        quantity: 1, 
-    },
-    { 
-        id: 3, 
-        customer_id: 1, 
-        product_id: 2, 
-        seller_id: 1,
-        quantity: 1, 
-    },
-    { 
-        id: 4, 
-        customer_id: 2, 
-        product_id: 1, 
-        seller_id: 1,
-        quantity: 1, 
-    },
-    
-];
+// ========== CATEGORIES ==========
 let categories = JSON.parse(localStorage.getItem("categories")) || [
-    { 
-        id: 1,
-        name: "men", 
-        description: "This Category is for men's clothing, offers and discounts.", 
-    },
-    { 
-        id: 2,
-        name: "women", 
-        description: "This Category is for women's clothing, offers and discounts.", 
-    }
+    { id: 1, name: "Men", description: "Clothing and accessories for men" },
+    { id: 2, name: "Women", description: "Clothing and accessories for women" },
+    { id: 3, name: "Kids", description: "Clothing and accessories for kids" },
 ];
-let customers = JSON.parse(localStorage.getItem("customers")) || [
-    { 
-        id: 1, 
-        name: "Ahmed",
-        FirstName: "Ahmed",
-        lastName: "Ahmed",
-        name: "Ahmed", 
-        gender : "male",
-        email: "Ahmed@trendora.com", 
-        country: "EGY",
-        city: "Cairo",
-        zip:'31589',
-        address: "12 street - cairo",
-        birthday: "1999-07-15",
-        phone: "01124252789",
-        password: encryptText("@A1234s"),
-    },
-    { 
-        id: 2, 
-        name: "mohamed", 
-        FirstName: "Ahmed",
-        lastName: "Ahmed",
-        gender : "male",
-        email: "mohamed@trendora.com", 
-        country: "EGY",
-        city: "Alex",
-        zip:'31589',
-        address: "16 street - Alex",
-        birthday: "1999-07-15",
-        phone: "01257462789",
-        password: encryptText("s1234@A"),
-    },
-];
-let mails = JSON.parse(localStorage.getItem("mails")) || [
-    { 
-        id: 1, 
-        to: "abdullah@gmail.com", 
-        from: "admin@gmail.com", 
-        subject: "new product", 
-        message: "Hi how are You this new product has 25% discount", 
-        date: "2025-11-15", 
-    },
-    { 
-        id: 2, 
-        to: "mahmoud@gmail.com", 
-        from: "admin@gmail.com", 
-        subject: "New discount 50%", 
-        message: "Hi how are You this new product has 50% discount", 
-        date: "2025-11-20", 
-    },
-    
-];
-let messages = JSON.parse(localStorage.getItem("messages")) || [
-    { 
-        id: 1, 
-        name: "Abdullah Shokr", 
-        email: "abdullah@gmail.com", 
-        phone: "01027251057",
-        subject: "greating", 
-        message: "hi How are You ?",
-        date : "2025-08-15",
-    },
-    { 
-        id: 2, 
-        name: "Mahmoud", 
-        email: "mahmoud@gmail.com", 
-        phone: "01127283620",
-        subject: "greating", 
-        message: "hi How are You ?",
-        date : "2025-08-20",
-    },
-    { 
-        id: 2, 
-        name: "sss", 
-        email: "sss@gmail.com", 
-        phone: "01127283620",
-        subject: "greating", 
-        message: "hi How are You ?",
-        date : "2025-08-20",
-    },
-];
-let orders = JSON.parse(localStorage.getItem("orders")) || [
-    { 
-        id: 1, 
-        product_id: 1, 
-        seller_id: 1, 
-        customer_id: 1, 
-        status: "Delivery",
-        quntity:1,
-        totalPrice:500, 
-        date: "2025-08-14"
-    },
-    { 
-        id: 2, 
-        product_id: 1, 
-        seller_id: 2, 
-        customer_id: 1, 
-        status: "Delivery" ,
-        quntity:1,
-        totalPrice:500,
-        date: "2025-08-14" 
-    },
-    { 
-        id: 3, 
-        product_id: 1, 
-        seller_id: 2, 
-        customer_id: 1, 
-        status: "Delivery",
-        quntity:5,
-        totalPrice:500,
-        date: "2025-08-14"  
-    },
-    { 
-        id: 4, 
-        product_id: 1, 
-        seller_id: 1, 
-        customer_id: 1, 
-        status: "Delivery",
-        quntity:4,
-        totalPrice:500,
-        date: "2025-08-14"  
-    },
-    { 
-        id: 5, 
-        product_id: 1, 
-        seller_id: 1, 
-        customer_id: 1, 
-        status: "Delivery",
-        quntity:1,
-        totalPrice:500,
-        date: "2025-08-14"  
-    },
-    { 
-        id: 6, 
-        product_id: 1, 
-        seller_id: 1, 
-        customer_id: 1, 
-        status: "Delivery",
-        quntity:3,
-        totalPrice:500,
-        date: "2025-08-14"  
-    },
-    
-];
-let products = JSON.parse(localStorage.getItem("products")) || [
-    { 
-        id: 1,
-        name: "Cotton Dobby Studio Shirt", 
-        description: "Relaxed-fit sheer shirt made from breathable, airy cotton dobby.", 
-        category: "men",
-        reviews: 5,
-        price: "148",
-        size: ['xs','s','m','L','XL','XXL'],
-        color: ["#171111", "#ff1414", "#ffffff"],
-        images: ['product01.jpg','product02.jpg'],
-        seller_id : 2,
-        stock:5,
-    },
-    { 
-        id: 2,
-        name: "Cotton Dobby Studio Shirt", 
-        description: "Relaxed-fit sheer shirt made from breathable, airy cotton dobby.", 
-        category: "Women",
-        reviews: 4,
-        price: "148",
-        size: ['xs','s','m','L','XL','XXL'],
-        color: ["#171111", "#ff1414", "#ffffff"],
-        images: ['img/product01.jpg','product02.jpg'],
-        seller_id : 1,
-        stock:5,
-    }
-];
-let reviews = JSON.parse(localStorage.getItem("reviews")) || [
-    { 
-        id: 1, 
-        product_id: 1, 
-        customer_id: 1, 
-        review: 5
-    },
-    { 
-        id: 2, 
-        product_id: 2, 
-        customer_id: 2, 
-        review: 3 
-    },
-    { 
-        id: 3, 
-        product_id: 1, 
-        customer_id: 2, 
-        review: 4 
-    },
-];
+// ========== USERS ==========
 let users = JSON.parse(localStorage.getItem("users")) || [
-    { 
-        id: 1, 
-        name: "John Doe", 
-        email: "john@example.com", 
-        role: "admin", 
-        phone: "123456789",
-        password: encryptText("Password123!")
-    },
-    { 
-        id: 2, 
-        name: "Jane Smith", 
-        email: "jane@example.com", 
-        role: "seller", 
-        phone: "987654321",
-        password: encryptText("Password123!") 
-    },
-    { 
-        id: 3, 
-        name: "ahmed", 
-        email: "ahmed@example.com", 
-        role: "seller", 
-        phone: "435345",
-        password: encryptText("Password123!") 
-    }
+    { id: 1, name: "Admin User", email: "admin@trendora.com", role: "admin", phone: "0100000001", password: encryptText("Admin123!") },
+    { id: 2, name: "Seller One", email: "seller1@trendora.com", role: "seller", phone: "0100000002", password: encryptText("Seller123!") },
+    { id: 3, name: "Seller Two", email: "seller2@trendora.com", role: "seller", phone: "0100000003", password: encryptText("Seller123!") },
+    { id: 4, name: "Seller Three", email: "seller3@trendora.com", role: "seller", phone: "0100000004", password: encryptText("Seller123!") },
+    { id: 5, name: "Seller Four", email: "seller4@trendora.com", role: "seller", phone: "0100000005", password: encryptText("Seller123!") },
+    { id: 6, name: "Seller Five", email: "seller5@trendora.com", role: "seller", phone: "0100000006", password: encryptText("Seller123!") },
 ];
+// ========== CUSTOMERS ==========
+let customers = JSON.parse(localStorage.getItem("customers")) || Array.from({ length: 100 }, (_, i) => ({
+    id: i + 1,
+    name: `Customer${i + 1}`,
+    FirstName: `First${i + 1}`,
+    lastName: `Last${i + 1}`,
+    gender: i % 2 === 0 ? "male" : "female",
+    email: `customer${i + 1}@trendora.com`,
+    country: "EGY",
+    city: i % 2 === 0 ? "Cairo" : "Alex",
+    zip: "31589",
+    address: `${i + 10} Street, City`,
+    birthday: "1995-01-01",
+    phone: `0100000${i + 100}`,
+    password: encryptText("Cust1234!")
+}));
+// ========== PRODUCTS ==========
+let products = JSON.parse(localStorage.getItem("products")) || Array.from({ length: 100 }, (_, i) => ({
+    id: i + 1,
+    name: `Product ${i + 1}`,
+    description: `This is description for product ${i + 1}`,
+    category: categories[i % 3].name,
+    reviews: Math.floor(Math.random() * 5) + 1,
+    price: (Math.random() * 500 + 50).toFixed(2),
+    size: ['S','M','L','XL'],
+    color: ["#000000", "#FFFFFF", "#FF0000"],
+    images: [`product${(i % 10) + 1}.jpg`],
+    seller_id: (i % 5) + 2, // sellers start from id=2
+    stock: Math.floor(Math.random() * 50) + 1
+}));
+// ========== ORDERS ==========
+let statuses = ["Pending", "Processing", "Shipped", "Delivered", "Cancelled"];
+let orders = JSON.parse(localStorage.getItem("orders")) || Array.from({ length: 50 }, (_, i) => ({
+    id: i + 1,
+    product_id: (i % 100) + 1,
+    seller_id: (i % 5) + 2,
+    customer_id: (i % 100) + 1,
+    status: statuses[i % statuses.length],
+    quntity: Math.floor(Math.random() * 5) + 1,
+    totalPrice: (Math.random() * 500 + 50).toFixed(2),
+    date: `2025-08-${(i % 28) + 1}`
+}));
+// ========== CARTS ==========
+let carts = JSON.parse(localStorage.getItem("carts")) || Array.from({ length: 20 }, (_, i) => ({
+    id: i + 1,
+    customer_id: (i % 100) + 1,
+    product_id: (i % 100) + 1,
+    seller_id: (i % 5) + 2,
+    quantity: Math.floor(Math.random() * 3) + 1
+}));
+// ========== REVIEWS ==========
+let reviews = JSON.parse(localStorage.getItem("reviews")) || Array.from({ length: 20 }, (_, i) => ({
+    id: i + 1,
+    product_id: (i % 100) + 1,
+    customer_id: (i % 100) + 1,
+    review: Math.floor(Math.random() * 5) + 1
+}));
+// ========== MAILS ==========
+let mails = JSON.parse(localStorage.getItem("mails")) || Array.from({ length: 20 }, (_, i) => ({
+    id: i + 1,
+    to: `customer${(i % 100) + 1}@trendora.com`,
+    from: "admin@trendora.com",
+    subject: `Mail Subject ${i + 1}`,
+    message: `Hello, this is test message number ${i + 1}`,
+    date: `2025-08-${(i % 28) + 1}`
+}));
+// ========== MESSAGES ==========
+let messages = JSON.parse(localStorage.getItem("messages")) || Array.from({ length: 20 }, (_, i) => ({
+    id: i + 1,
+    name: `User ${i + 1}`,
+    email: `user${i + 1}@gmail.com`,
+    phone: `010${100000 + i}`,
+    subject: "Contact Us",
+    message: `This is message number ${i + 1}`,
+    date: `2025-08-${(i % 28) + 1}`
+}));
 
 if (!localStorage.getItem("carts")) {
     localStorage.setItem("carts", JSON.stringify(carts));
