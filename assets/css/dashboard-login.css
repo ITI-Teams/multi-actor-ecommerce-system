@@ -20,18 +20,35 @@ body::before {
     inset 100px 0 150px rgba(255, 255, 255, 0.05),
     inset -100px 0 150px rgba(255, 255, 255, 0.05);
 }
-form {
+.form_login{
   background-color: rgba(0, 0, 0, 0.4);
-  padding: 40px;
+  padding: 20px 40px ;
   border-radius: 16px;
   border: 1px solid #3c3d3f;
-
+ 
   z-index: 1;
   background: linear-gradient(304deg, #000000, #232427);
   width: 800px;
   margin: auto;
-  margin-top: -80px;
+  margin-top: -85px;
+  position: relative; 
+   
+
+  
 }
+ .register_form{
+   background-color: rgba(0, 0, 0, 0.4);
+  padding: 8px 40px ;
+  border-radius: 16px;
+  border: 1px solid #3c3d3f;
+max-height: 550px;
+  z-index: 1;
+  background: linear-gradient(304deg, #000000, #232427);
+  width: 800px;
+  margin: auto;
+  margin-top: -85px;
+  position: relative; 
+ }
 form .back {
   color: #cfcfcf;
   border: 1px solid #3c3d3f;
@@ -155,9 +172,9 @@ label {
 }
 .one,
 .two {
-  margin-top: 20px;
+  margin-top: -20px;
   color: #cfcfcf;
-  padding: 10px 15px;
+  padding: 8px 15px;
   font-weight: bold;
   text-align: center;
   border: 1px solid #eee;
@@ -166,7 +183,9 @@ label {
   background-color: #000;
   cursor: pointer;
   transition: all 0.4s;
-  margin-top: 7px;
+  position: relative;
+  top: -2px;
+   
 }
 .two {
   margin-right: -20px;
@@ -191,14 +210,17 @@ div a {
   left: -35px;
   color: white;
 }
+ 
 @media (max-width: 768px) {
   body {
     padding: 90px;
   }
-  form {
+  .register_form {
     width: 90%;
   }
-
+ .form_login {
+    width: 90%;
+  }
   .input-group input,
   .input2-group input {
     width: 100%;
@@ -264,4 +286,18 @@ div a {
   .back {
     background-color: red;
   }
+}
+#rememberMe{
+position: relative;
+left: -45px;
+ 
+}
+#rememberMe+label{
+   position: relative;
+   left: -40px;
+}
+.register a{
+  position: relative;
+  top: 3px;
+  
 }

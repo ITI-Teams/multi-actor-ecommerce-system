@@ -1,79 +1,100 @@
-let card=document.querySelector('.card');
-fetch('https://dummyjson.com/products?limit=194')
-.then((myData)=>{
-  let result=myData.json();
+ 
+const categories=JSON.parse(localStorage.getItem('categories'))|| [];
+let products = JSON.parse(localStorage.getItem('products')) || [];
+const categoriesRow = document.querySelector('#categoriesRow');
+
+let productsContainer = document.querySelector("#productsContainer .card-body");
+let collapseEl = document.getElementById("productsContainer");
+let bsCollapse = new bootstrap.Collapse(collapseEl, { toggle: false });
+
+let activeCategory = null; 
+
+
   
-   return result;
+
    
-})
-.then((myData)=>{
 
-const mainProducts=myData.products;
- mainProducts.forEach(product => {
-    if(product.category=='mens-shirts'|| product.category=='mens-shoes'|| product.category=='mens-watches'){
-      document.querySelector('.card').innerHTML+=`
-
-      
-        <div class='product-item'>
-    
-      
-      <img src=${product.images[0]} width='200px' height='200px'>
-      
-     
-        <p class='title'>${product.title}</p>
-      <p>${product.price}$</p>
-      <p><button>Add to card</button></p>
-      
-      </div>
-      
-    
-      `
-     
-    }else if(product.category=='womens-bags'|| product.category=='womens-dresses'|| product.category=='womens-shoes'|| product.category=='womens-watches'){
+categories.forEach((category)=>{
   
-        
-      
-       document.querySelector('.card2').innerHTML+=`
+categoriesRow.innerHTML+=`
+  <div class="col ">
+  <div class='category  '>
+  <img src="/assets/img/logo_category.webp" class="card-img-top" alt="Category">
+   
+  <p><button class=" mt-2 category-btn" data-name="${category.name}">
+          ${category.name}
+       </button></p>
+<p class='desc'>${category.description}</p>
+ 
+</div>
+</div>
+ 
+`
+ 
+ 
 
-      
-        <div class='product-item'>
-    
-      
-      <img src=${product.images[0]} width='200px' height='200px'>
-      
+
+})
+
+document.querySelectorAll(".category-btn").forEach(btn => {
+  btn.addEventListener("click", (e) => {
+    let categoryName = e.target.dataset.name;
+
      
-      <p class='title'>${product.title}</p>
-      <p>${product.price}$</p>
-      <p><button>Add to card</button></p>
-      
-      </div>
-      
-    
-      `
-    
+    if (activeCategory === categoryName && collapseEl.classList.contains("show")) {
+      bsCollapse.hide();
+      activeCategory = null;
+      return;
     }
-      
-  
+    activeCategory = categoryName;
 
-    
-    
- 
- });
- 
+      let filteredProducts = products.filter(p => p.category === categoryName);
+       productsContainer.innerHTML = "<div class='row'></div";
+       let row = productsContainer.querySelector(".row");
+        if (filteredProducts.length > 0) {
+      filteredProducts.forEach(prod => {
+         row.innerHTML += `
+            <div class='col-lg-4 col-sm-12 mb-4'>
+          <div class="product p-2 mb-3   rounded ">
+          
+         
+            <img src=${prod.images[0]} width='200px' height='200px'>
+             
+             
+            <h5 class='title'>${prod.title}</h5>
+          
+            
+            <p class='desc'>${prod.description}</p>
+           
+
+            <span class="text-success fw-bold price">${prod.price} EGP</span>
+            </div>
+          </div>
+          </div>
+        `;
+      });
+    } else {
+      productsContainer.innerHTML = `<p class="text-muted">لا توجد منتجات لهذا القسم.</p>`;
+    }
+      bsCollapse.show();
+
+       collapseEl.scrollIntoView({ behavior: "smooth", block: "start" });
+  })
 })
- let men=document.querySelector('.men');
- let women=document.querySelector('.women');
-  let mens=document.querySelector('.mens');
- let womens=document.querySelector('.womens');
-
- men.addEventListener('click', () => {
-     mens.style.display = 'block';
-    womens.style.display = 'none';
-});
-
-document.querySelector('.women').addEventListener('click', () => {
-     mens.style.display = 'none';
-     womens.style.display = 'block';
-});
-
  
+   $(document).ready(function () {
+       
+      $(window).scroll(function () {
+        if ($(this).scrollTop() > 200) {
+          $("#toTop").fadeIn();
+        } else {
+          $("#toTop").fadeOut();
+        }
+      });
+
+      
+      $("#toTop").click(function () {
+        $("html, body").animate({ scrollTop: 0 },300);
+        return false;
+      });
+    });
