@@ -103,7 +103,7 @@ window.addEventListener('load', () => {
 
         // sizes
         const productSizeWrapper = document.getElementById('product-size');
-        const sizes = ['xs', 's', 'm', 'l', 'xl', 'xxl']
+        const sizes = ['S', 'M', 'L', 'XL']
 
         productSizeWrapper.innerHTML = '';
         sizes.forEach(size => {

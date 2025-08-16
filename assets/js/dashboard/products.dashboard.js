@@ -168,10 +168,10 @@ document.getElementById("productForm").addEventListener("submit", function(e) {
         showFormMessage("Invalid color format. Use valid hex color codes like #FFF, #FFFFFF.");
         return;
     }
-    if (!images.every(img => allowedImageExtensions.test(img))) {
-        showFormMessage("All images must end with .png, .jpg, .jpeg, .jpe, .webp, or .svg");
-        return;
-    }
+    // if (!images.every(img => allowedImageExtensions.test(img))) {
+    //     showFormMessage("All images must end with .png, .jpg, .jpeg, .jpe, .webp, or .svg");
+    //     return;
+    // }
 
     const session = JSON.parse(localStorage.getItem("session")) || null;
 
@@ -270,20 +270,33 @@ addColorBtn.addEventListener("click", () => {
 });
 /// Add URL Images
 let imagesArray = [];
-const imageUrlInput = document.getElementById("imageUrlInput");
-const addImageBtn = document.getElementById("addImageBtn");
+const fileInput = document.getElementById("imageFileInput");
 const imageList = document.getElementById("imageList");
+
+fileInput.addEventListener("change", () => {
+    const files = fileInput.files;
+    if (files.length) {
+        Array.from(files).forEach(file => {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                imagesArray.push(e.target.result);
+                renderImages();
+            };
+            reader.readAsDataURL(file);
+        });
+    }
+});
 
 function renderImages() {
     imageList.innerHTML = "";
-    imagesArray.forEach((url, index) => {
+    imagesArray.forEach((imgSrc, index) => {
         const imgWrapper = document.createElement("div");
         imgWrapper.style.display = "inline-block";
         imgWrapper.style.position = "relative";
         imgWrapper.style.marginRight = "10px";
-        
+
         const img = document.createElement("img");
-        img.src = "../../assets/img/"+url;
+        img.src = imgSrc;
         img.style.width = "60px";
         img.style.height = "60px";
         img.style.objectFit = "cover";
@@ -310,12 +323,3 @@ function renderImages() {
         imageList.appendChild(imgWrapper);
     });
 }
-
-addImageBtn.addEventListener("click", () => {
-    const url = imageUrlInput.value.trim();
-    if (url && !imagesArray.includes(url)) {
-        imagesArray.push(url);
-        renderImages();
-        imageUrlInput.value = "";
-    }
-});
