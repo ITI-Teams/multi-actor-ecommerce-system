@@ -78,11 +78,15 @@ form.addEventListener("submit", function (event) {
             setInvalid(emailInput, "This email is already registered.");
             return;
         }
+
+   
+        const encryptedPassword = encryptText(passwordInput.value);
+
         const userData = {
             id: newId, 
             name: nameInput.value.trim(),
             email: emailInput.value.trim(),
-            password: passwordInput.value 
+            password: encryptedPassword 
         };
 
         customers.push(userData);

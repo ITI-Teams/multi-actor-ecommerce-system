@@ -5,11 +5,8 @@ function loadProfile() {
     window.location.href = "login.html";
     return;
   }
-
-  // Ensure type consistency
   const customers = JSON.parse(localStorage.getItem("customers")) || [];
   const currentCustomer = customers.find(c => String(c.id) === String(currentID));
-
   if (!currentCustomer) {
     alert("Profile not found.");
     return;
@@ -65,10 +62,9 @@ function saveOrUpdateCustomer(email, birthday, phone, password) {
   } else {
     updateCustomerData();
   }
-
   function updateCustomerData() {
     customers[existingIndex] = {
-      ...customers[existingIndex], // Keep the existing ID intact
+      ...customers[existingIndex], 
       profileImage,
       firstName,
       lastName,
@@ -82,9 +78,9 @@ function saveOrUpdateCustomer(email, birthday, phone, password) {
       phone,
       password
     };
-
     localStorage.setItem("customers", JSON.stringify(customers));
-    localStorage.setItem("customerSession", String(customers[existingIndex].id)); // ✅ keep ID consistent
+    localStorage.setItem("customerSession", String(customers[existingIndex].id)); 
+    loadProfile(); 
   }
 }
 
@@ -122,14 +118,18 @@ function clearError(inputId) {
 function saveProfile(e) {
   e.preventDefault();
   let isValid = true;
-
+  const customers = JSON.parse(localStorage.getItem("customers")) || [];
   const email = document.getElementById("emailInput").value.trim();
   const birthday = document.getElementById("dobInput").value;
   const phone = document.getElementById("phoneInput").value.trim();
   const password = document.getElementById("passwordInput").value;
+  const emailExists = customers.some(customer => customer.email.toLowerCase() === email.toLowerCase());
 
   if (!/^[\w.%+-]+@gmail\.com$/i.test(email)) {
     showError("emailInput", "Email must be a valid Gmail address");
+    isValid = false;
+  } else if (emailExists) {
+    showError("emailInput", "This email is already registered.");
     isValid = false;
   } else {
     clearError("emailInput");
@@ -168,7 +168,6 @@ function saveProfile(e) {
   loadProfile();
   cancelEdit();
 
-  location.reload();
 }
 
 function previewImage(event) {
@@ -184,9 +183,14 @@ function previewImage(event) {
 
 function calculateAge(birthday) {
   if (!birthday) return "-";
-  const diff = Date.now() - new Date(birthday).getTime();
-  const ageDate = new Date(diff);
-  return Math.abs(ageDate.getUTCFullYear() - 1970);
+  const today = new Date();
+  const birthDate = new Date(birthday);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  return age;
 }
 
 const countryCityMap = {
@@ -312,10 +316,12 @@ function setupPagination() {
   });
   paginationContainer.appendChild(next);
 }
+
 function logoutCustomer() {
   localStorage.removeItem("customerSession");
   window.location.href = "../index.html";
 }
+
 document.addEventListener("DOMContentLoaded", () => {
   const birthdayInput = document.getElementById("dobInput");
   if (birthdayInput) {

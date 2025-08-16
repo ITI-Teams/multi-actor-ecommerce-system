@@ -22,9 +22,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const storedCustomers = JSON.parse(localStorage.getItem("customers")) || [];
 
-        const matchedCustomer = storedCustomers.find(Customer => 
-            Customer.email === enteredEmail && Customer.password === enteredPassword
-        );
+        const matchedCustomer = storedCustomers.find(Customer => {
+            if (Customer.email === enteredEmail) {
+                const decryptedPassword = decryptText(Customer.password); 
+                return decryptedPassword === enteredPassword;
+            }
+            return false;
+        });
 
         if (matchedCustomer) {
             errorDiv.style.display = "none";

@@ -43,7 +43,7 @@ body {
     text-align: center;
 }
 #layout button {
-    min-width: 100px;
+    min-width: 10%;
 }
 #layout button:hover {
     background-color: rgba(176, 176, 175, 0.76) !important;
@@ -72,17 +72,20 @@ table {
 
 
 /* Responsive layout */
-@media (min-width: 992px) {
+
+@media (min-width: 990px) {
     #layout {
     display: flex;
     margin-top: 110px;
+    padding-bottom: 70px;
     }
 
     .sidebar {
-    position: sticky;
+    position:sticky;
     top: 0;
     width: 25%;
-    height: 100vh;
+    height: 110vh;
+
     }
 
     .content {
