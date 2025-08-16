@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
   <link rel="stylesheet" href="../assets/css/styles.css">
   <link rel="stylesheet" href="../assets/css/user.css">
-
+  <script src="../assets/js/authorization.js"></script>
 </head>
 
 <body>
@@ -17,10 +17,10 @@
       <nav id="main-header" class="navbar navbar-expand-lg bg-body-tertiary fixed-top bg-nav-transparent shadow "></nav>
   </header>
 
-  <div class="layout">
+  <div id="layout">
     <!-- Sidebar -->
     <div class="sidebar text-center">
-      <img id="profileImage" src="" class="profile-img" alt="Profile">
+      <img id="profileImage" src="../assets/img/defultUser.webp" class="profile-img" alt="Profile">
       <h5 id="profileName">Unknown User</h5>
       <span id="profileEmail">Not provided</span>
       <hr>
@@ -31,7 +31,11 @@
       <p id="profileCity">City: -</p>
       <p id="profileAddress">Address: -</p>
       <p id="profilePhone">Phone: -</p>
-      <button class="btn bg-dark text-light mt-3 " onclick="showEditForm()">Edit Profile</button>
+      <div class="sidBtn">
+        <button class="btn bg-dark text-light mt-3 " onclick="showEditForm()">Edit Profile</button>
+        <button class="btn bg-secondary text-light mt-3 " onclick="logoutCustomer() ">Log Out</button>
+      </div>
+     
     </div>
 
 
@@ -82,15 +86,20 @@
               placeholder="Profile Image">
           </div>
 
-          <div class="mb-3">
-            <input type="text" id="nameInput" class="form-control" required placeholder="Name">
+          <div class="row g-2 mb-3">
+            <div class="col-md-6">
+              <input  type="text" id="fnameInput" class="form-control"  placeholder="Frist Name">
+            </div>
+            <div class="col-md-6" >
+             <input type="text" id="lnameInput" class="form-control"  placeholder="Last Name">
+            </div>
           </div>
           <div class="mb-3">
-            <input type="password" id="passwordInput" class="form-control" required placeholder="Password">
+            <input type="password" id="passwordInput" class="form-control"  placeholder="Password">
           </div>
 
           <div class="mb-3">
-            <input type="email" id="emailInput" class="form-control" required placeholder="Email">
+            <input type="email" id="emailInput" class="form-control"  placeholder="Email">
           </div>
 
           <div class="row g-2 mb-3">
@@ -111,14 +120,15 @@
             <div class="col-md-6">
               <select id="countryInput" class="form-select" onchange="populateCities()">
                 <option value="">Select Country</option>
+                <option value="EGY">EGY</option>
+                <option value="SAU">SAU</option>
+                <option value="GBR">GBR</option>
                 <option value="USA">USA</option>
-                <option value="Egypt">Egypt</option>
-                <option value="Canada">Canada</option>
-                <option value="India">India</option>
+                <option value="FRA">FRA</option>
               </select>
             </div>
             <div class="col-md-6">
-              <select id="cityInput" class="form-select">
+              <select id="cityInput" class="form-select"zz>
                 <option value="">Select City</option>
               </select>
             </div>
@@ -149,7 +159,9 @@
   <script src="../assets/js/bootstrap.bundle.min.js"></script>
   <script type="module" src="../assets/js/main.js"></script>
   <script src="../assets/js/user-profile.js"></script>
+  <script src="../assets/js/encrypt.js"></script>
   <script src="../data/data.js"></script>
+  
 </body>
 
 </html>

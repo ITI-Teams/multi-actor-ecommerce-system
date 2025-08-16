@@ -1,22 +1,9 @@
 function loadProfile() {
-
-    const customers = JSON.parse(localStorage.getItem("customers")) || [];
-
-  const currentCustomerEmail = customers[0].email;
-
-  if (!currentCustomerEmail) {
-    console.warn("No Customer is logged in.");
-    return;
-  }
-
-  const currentCustomer = customers.find(customer => customer.email === currentCustomerEmail);
-
-  if (!currentCustomer) {
-    console.warn("Customer not found in localStorage.");
-    return;
-  }
-
-  document.getElementById("profileName").textContent = currentCustomer.name || "Unknown Customer";
+  const displayName =
+    (currentCustomer.firstName || "") +
+    (currentCustomer.lastName ? " " + currentCustomer.lastName : "");
+  document.getElementById("profileImage").src = currentCustomer.profileImage || "../assets/img/defultUser.webp";
+  document.getElementById("profileName").textContent = displayName.trim() || currentCustomer.name || "Unknown Customer";
   document.getElementById("profileEmail").textContent = currentCustomer.email || "Not provided";
   document.getElementById("profileGender").textContent = "Gender: " + (currentCustomer.gender || "-");
   document.getElementById("profileDOB").textContent = "Date Of Birth: " + (currentCustomer.birthday || "-");
@@ -26,38 +13,62 @@ function loadProfile() {
   document.getElementById("profileAddress").textContent = "Address: " + (currentCustomer.address || "-");
   document.getElementById("profilePhone").textContent = "Phone: " + (currentCustomer.phone || "-");
 }
+
 function saveOrUpdateCustomer(email, birthday, phone, password) {
-  const name = document.getElementById("nameInput").value;
+  const firstName = document.getElementById("fnameInput").value;
+  const lastName = document.getElementById("lnameInput").value;
   const gender = document.getElementById("genderInput").value;
   const age = calculateAge(birthday);
   const country = document.getElementById("countryInput").value;
   const city = document.getElementById("cityInput").value;
   const address = document.getElementById("addressInput").value;
 
-  let customers = JSON.parse(localStorage.getItem("customers")) || [];
+  const currentCustomerId = localStorage.getItem("customerSession");
+  if (!currentCustomerId) {
+    alert("You must be logged in to update your profile.");
+    return;
+  }
 
-  const existingIndex = customers.findIndex(cust => cust.email === currentCustomerEmail);
+  let customers = JSON.parse(localStorage.getItem("customers")) || [];
+  const existingIndex = customers.findIndex(cust => String(cust.id) === String(currentCustomerId));
 
   if (existingIndex === -1) {
     console.warn("Cannot update: Customer not found.");
     return;
   }
 
-  customers[existingIndex] = {
-    name,
-    email,
-    gender,
-    birthday,
-    age,
-    country,
-    city,
-    address,
-    phone,
-    password
-  };
-
-  localStorage.setItem("customers", JSON.stringify(customers));
-
+  let profileImage = customers[existingIndex].profileImage || null;
+  const fileInput = document.querySelector("input[type='file']");
+  if (fileInput && fileInput.files[0]) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      profileImage = e.target.result;
+      updateCustomerData();
+    };
+    reader.readAsDataURL(fileInput.files[0]);
+  } else {
+    updateCustomerData();
+  }
+  function updateCustomerData() {
+    customers[existingIndex] = {
+      ...customers[existingIndex], 
+      profileImage,
+      firstName,
+      lastName,
+      email,
+      gender,
+      birthday,
+      age,
+      country,
+      city,
+      address,
+      phone,
+      password
+    };
+    localStorage.setItem("customers", JSON.stringify(customers));
+    localStorage.setItem("customerSession", String(customers[existingIndex].id)); 
+    loadProfile(); 
+  }
 }
 
 function showEditForm() {
@@ -94,14 +105,18 @@ function clearError(inputId) {
 function saveProfile(e) {
   e.preventDefault();
   let isValid = true;
-
+  const customers = JSON.parse(localStorage.getItem("customers")) || [];
   const email = document.getElementById("emailInput").value.trim();
   const birthday = document.getElementById("dobInput").value;
   const phone = document.getElementById("phoneInput").value.trim();
   const password = document.getElementById("passwordInput").value;
+  const emailExists = customers.some(customer => customer.email.toLowerCase() === email.toLowerCase());
 
   if (!/^[\w.%+-]+@gmail\.com$/i.test(email)) {
     showError("emailInput", "Email must be a valid Gmail address");
+    isValid = false;
+  } else if (emailExists) {
+    showError("emailInput", "This email is already registered.");
     isValid = false;
   } else {
     clearError("emailInput");
@@ -139,40 +154,7 @@ function saveProfile(e) {
 
   loadProfile();
   cancelEdit();
-}
 
-function saveOrUpdateCustomer(email, birthday, phone, password) {
-  const name = document.getElementById("nameInput").value;
-  const gender = document.getElementById("genderInput").value;
-  const age = calculateAge(birthday);
-  const country = document.getElementById("countryInput").value;
-  const city = document.getElementById("cityInput").value;
-  const address = document.getElementById("addressInput").value;
-
-  let customers = JSON.parse(localStorage.getItem("customers")) || [];
-
-  const existingIndex = customers.findIndex(cust => cust.email === customers[0].email);
-
-  if (existingIndex === -1) {
-    console.warn("Cannot update: Customer not found.");
-    return;
-  }
-
-  customers[existingIndex] = {
-    profileImage,
-    name,
-    email,
-    gender,
-    birthday,
-    age,
-    country,
-    city,
-    address,
-    phone,
-    password
-  };
-
-  localStorage.setItem("customers", JSON.stringify(customers));
 }
 
 function previewImage(event) {
@@ -180,7 +162,6 @@ function previewImage(event) {
   if (file) {
     const reader = new FileReader();
     reader.onload = function (e) {
-      // localStorage.setItem("profileImage", e.target.result);
       document.getElementById("profileImage").src = e.target.result;
     }
     reader.readAsDataURL(file);
@@ -189,16 +170,25 @@ function previewImage(event) {
 
 function calculateAge(birthday) {
   if (!birthday) return "-";
-  const diff = Date.now() - new Date(birthday).getTime();
-  const ageDate = new Date(diff);
-  return Math.abs(ageDate.getUTCFullYear() - 1970);
+  const today = new Date();
+  const birthDate = new Date(birthday);
+  let age = today.getFullYear() - birthDate.getFullYear();
+  const m = today.getMonth() - birthDate.getMonth();
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+    age--;
+  }
+  return age;
 }
 
 const countryCityMap = {
-  "USA": ["New York", "Los Angeles", "Chicago", "Houston", "Miami"],
-  "Egypt": ["Cairo", "Alex", "Mahala", "Tanta", "Mansoura"],
-  "Canada": ["Toronto", "Vancouver", "Montreal", "Calgary", "Ottawa"],
-  "India": ["Mumbai", "Delhi", "Bengaluru", "Chennai", "Kolkata"]
+  USA: ["New York", "Los Angeles", "Chicago"],
+  GBR: ["London", "Manchester", "Birmingham"],
+  EGY: ["Cairo", "Alexandria", "Giza", "Port Said", "Suez", "Luxor", "Aswan", "Ismailia",
+    "Beheira", "Dakahlia", "Damietta", "Sharqia", "Qalyubia", "Kafr El Sheikh", "Minya",
+    "Faiyum", "Beni Suef", "Qena", "Sohag", "Red Sea", "New Valley", "North Sinai",
+    "South Sinai", "Matrouh", "Ash Sharqiyah", "Gharbia", "Menoufia", "Assiut"],
+  SAU: ["Riyadh", "Jeddah", "Dammam"],
+  FRA: ["Paris", "Lyon", "Marseille"]
 };
 
 function populateCities() {
@@ -215,14 +205,14 @@ function populateCities() {
   }
 }
 
-// Orders Section
+// CustomerOrders Section
 const tbody = document.getElementById("orders-body");
 const paginationContainer = document.querySelector(".pagination");
-let orders = [];
+let CustomerOrders = [];
 let currentPage = 1;
-const ordersPerPage = 5;
+const CustomerOrdersPerPage = 5;
 
-async function loadOrders() {
+async function loadCustomerOrders() {
   const res = await fetch("https://dummyjson.com/products?limit=200");
   const data = await res.json();
 
@@ -230,34 +220,34 @@ async function loadOrders() {
     p => p.category.includes("mens") || p.category.includes("womens")
   );
 
-  const randomOrders = [];
-  const numOrders = Math.floor(Math.random() * 6) + 5;
+  const randomCustomerOrders = [];
+  const numCustomerOrders = Math.floor(Math.random() * 6) + 5;
   const used = new Set();
-  while (randomOrders.length < numOrders) {
+  while (randomCustomerOrders.length < numCustomerOrders) {
     const idx = Math.floor(Math.random() * filtered.length);
     if (!used.has(idx)) {
       used.add(idx);
-      randomOrders.push(filtered[idx]);
+      randomCustomerOrders.push(filtered[idx]);
     }
   }
 
-  orders = randomOrders.map(item => {
+  CustomerOrders = randomCustomerOrders.map(item => {
     const qty = Math.floor(Math.random() * 3) + 1;
     const total = item.price * qty;
     return { ...item, qty, total };
   });
 
-  displayOrders();
+  displayCustomerOrders();
   setupPagination();
 }
 
-function displayOrders() {
+function displayCustomerOrders() {
   tbody.innerHTML = "";
-  const start = (currentPage - 1) * ordersPerPage;
-  const end = start + ordersPerPage;
-  const pageOrders = orders.slice(start, end);
+  const start = (currentPage - 1) * CustomerOrdersPerPage;
+  const end = start + CustomerOrdersPerPage;
+  const pageCustomerOrders = CustomerOrders.slice(start, end);
 
-  pageOrders.forEach(item => {
+  pageCustomerOrders.forEach(item => {
     tbody.innerHTML += `
       <tr>
         <td>${item.id}</td>
@@ -275,7 +265,7 @@ function displayOrders() {
 
 function setupPagination() {
   paginationContainer.innerHTML = "";
-  const totalPages = Math.ceil(orders.length / ordersPerPage);
+  const totalPages = Math.ceil(CustomerOrders.length / CustomerOrdersPerPage);
 
   const prev = document.createElement("li");
   prev.className = `page-item ${currentPage === 1 ? "disabled" : ""}`;
@@ -283,7 +273,7 @@ function setupPagination() {
   prev.addEventListener("click", () => {
     if (currentPage > 1) {
       currentPage--;
-      displayOrders();
+      displayCustomerOrders();
       setupPagination();
     }
   });
@@ -295,7 +285,7 @@ function setupPagination() {
     li.innerHTML = `<a class="page-link text-dark" href="#">${i}</a>`;
     li.addEventListener("click", () => {
       currentPage = i;
-      displayOrders();
+      displayCustomerOrders();
       setupPagination();
     });
     paginationContainer.appendChild(li);
@@ -307,11 +297,16 @@ function setupPagination() {
   next.addEventListener("click", () => {
     if (currentPage < totalPages) {
       currentPage++;
-      displayOrders();
+      displayCustomerOrders();
       setupPagination();
     }
   });
   paginationContainer.appendChild(next);
+}
+
+function logoutCustomer() {
+  localStorage.removeItem("customerSession");
+  window.location.href = "../index.html";
 }
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -319,6 +314,7 @@ document.addEventListener("DOMContentLoaded", () => {
   if (birthdayInput) {
     birthdayInput.max = "2015-12-31";
   }
+
   loadProfile();
-  loadOrders();
+  loadCustomerOrders();
 });

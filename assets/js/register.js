@@ -54,7 +54,6 @@ function validateConfirmPassword() {
     return true;
 }
 
-// Validate live while typing
 nameInput.addEventListener("input", validateName);
 emailInput.addEventListener("input", validateEmail);
 passwordInput.addEventListener("input", () => {
@@ -63,7 +62,6 @@ passwordInput.addEventListener("input", () => {
 });
 confirmPasswordInput.addEventListener("input", validateConfirmPassword);
 
-// Handle submit
 form.addEventListener("submit", function (event) {
     event.preventDefault();
 
@@ -73,15 +71,28 @@ form.addEventListener("submit", function (event) {
     const confirmPasswordValid = validateConfirmPassword();
 
     if (nameValid && emailValid && passwordValid && confirmPasswordValid) {
-        // Save to localStorage
+        const customers = JSON.parse(localStorage.getItem("customers")) || [];
+        const newId = customers.length > 0 ? customers[customers.length - 1].id + 1 : 1;
+        const emailExists = customers.some(customer => customer.email.toLowerCase() === emailInput.value.trim().toLowerCase());
+        if (emailExists) {
+            setInvalid(emailInput, "This email is already registered.");
+            return;
+        }
+
+   
+        const encryptedPassword = encryptText(passwordInput.value);
+
         const userData = {
+            id: newId, 
             name: nameInput.value.trim(),
             email: emailInput.value.trim(),
-            password: passwordInput.value //only in test
+            password: encryptedPassword 
         };
-        let customers = JSON.parse(localStorage.getItem("customers")) || [];
+
         customers.push(userData);
         localStorage.setItem("customers", JSON.stringify(customers));
+
+        localStorage.setItem("customerSession", userData.id);
 
         window.location.href = "../index.html";
     }

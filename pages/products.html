@@ -10,7 +10,7 @@
     <link rel="stylesheet" href="/assets/css/styles.css">
     <link rel="stylesheet" href="/assets/css/products.css">
     <script type="module" src="/assets/js/main.js"></script>
-    <script src="/assets/js/products.js"></script>
+    <script type="module" src="/assets/js/products.js"></script>
 </head>
 
 <body>
@@ -21,6 +21,40 @@
     <main class="container products-mainSection">
         <section>
             <h4 class="text-uppercase fs-6 fw-semibold pb-3">Our Products</h4>
+
+            <div class="d-flex gap-2 mb-4 justify-content-end">
+                <div class="form-floating">
+                    <select id="category" class="form-select" aria-label="Floating label select example"
+                        name="category">
+                        <option value="all" selected>All</option>
+                        <option value="men">Men</option>
+                        <option value="women">Women</option>
+                        <option value="kids">Kids</option>
+                    </select>
+                    <label for="category">Category</label>
+                </div>
+                <div class="form-floating">
+                    <select class="form-select" aria-label="Floating label select example" name="price" id="price">
+                        <option value="all" selected>All</option>
+                        <option value="0-50">0$ - 50$</option>
+                        <option value="51-100">50$ - 100$</option>
+                        <option value="101-1000">100$ - 1000$</option>
+                    </select>
+                    <label for="price">Price</label>
+                </div>
+                <div class="form-floating">
+                    <select class="form-select" aria-label="Floating label select example" name="size" id="size">
+                        <option value="all" selected>All</option>
+                        <option value="XS">XS</option>
+                        <option value="S">S</option>
+                        <option value="M">M</option>
+                        <option value="L">L</option>
+                        <option value="XL">XL</option>
+                        <option value="XXL">XXL</option>
+                    </select>
+                    <label for="size">Size</label>
+                </div>
+            </div>
 
             <div id="productsWrapper"></div>
             <nav aria-label="Page navigation example" class="mt-3">

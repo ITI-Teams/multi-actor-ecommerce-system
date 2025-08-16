@@ -99,6 +99,12 @@ main.container.py-4{
     -webkit-text-fill-color: transparent;
     font-weight: bold;
 }
+#mobileSidebar .logo-text {
+    background: -webkit-linear-gradient(#ff8701, #dabd08);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    font-weight: bold;
+}
 /* Strart Dark Mode*/
 body.bg-dark header,
 body.bg-dark footer{

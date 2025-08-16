@@ -41,7 +41,7 @@ function renderStats() {
 
     if (session.role === "admin") {
         let ordersRows = "";
-        filteredOrders.forEach(order => {
+        filteredOrders.slice(0, 5).forEach(order => {
             const customer = customers.find(c => c.id === order.customer_id);
             const statusColors = {
                 "Pending": "badge bg-primary",
