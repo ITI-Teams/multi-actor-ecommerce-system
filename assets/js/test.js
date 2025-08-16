@@ -23,7 +23,7 @@ window.addEventListener("load", () => {
       }
 
       // adding products to best seller section
-      if (product.reviews > 8 && index2 < 12) { // getting the products with rating > 4 and 12 products only
+      if (product.reviews > 4 && index2 < 12) { // getting the products with rating > 4 and 12 products only
         ++index2
         const bestSellerProductsWrapper = document.getElementById("bestSellerProductsWrapper");
         if (bestSellerProductsWrapper) {
