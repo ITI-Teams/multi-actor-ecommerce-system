@@ -26,8 +26,8 @@ function validateName() {
 }
 
 function validateEmail() {
-    if (!emailInput.value.endsWith("@gmail.com")) {
-        setInvalid(emailInput, "Email must end with @gmail.com.");
+    if (!emailInput.value.endsWith(".com")) {
+        setInvalid(emailInput, "Email must end with .com.");
         return false;
     }
     setValid(emailInput);
