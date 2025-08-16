@@ -82,6 +82,7 @@
   #bestSellerProductsWrapper {
     flex-direction: row !important;
     flex-wrap: wrap;
+    justify-content: start;
 }
 }
 

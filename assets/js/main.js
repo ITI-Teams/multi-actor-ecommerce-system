@@ -1,8 +1,7 @@
- 
 import footer_content from "./include/footer.js";
 import nav_content from "./include/header.js";
 
-window.onload = function () {
+window.addEventListener('load', () => {
   const main_header = document.getElementById("main-header");
   const main_footer = document.getElementById("main-footer");
 
@@ -10,5 +9,5 @@ window.onload = function () {
   main_header.innerHTML = nav_content;
   // adding the footer
   main_footer.innerHTML = footer_content;
-};
+})
 

@@ -14,13 +14,10 @@ const nav_content = `<div class="container">
                 </div>
                 <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/">Home</a>
+                            <a class="nav-link" href="/pages/categories.html">Men</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Men</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">Women</a>
+                            <a class="nav-link" href="/pages/categories.html">Women</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#">Kids</a>

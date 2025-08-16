@@ -23,11 +23,11 @@ const footer_content = `<div class="container">
                 <div class="col-sm md pt-2 mb-4">
                     <h3>Account</h3>
                     <div class="account-info d-flex flex-column gap-1">
-                        <a href="/" class="nav-link">My Account</a>
-                        <a href="/" class="nav-link">Login / Register</a>
-                        <a href="/" class="nav-link">Cart</a>
+                        <a href="/pages/user-profile.html" class="nav-link">My Account</a>
+                        <a href="/pages/login.html" class="nav-link">Login</a>
+                        <a href="/pages/cart.html" class="nav-link">Cart</a>
                         <a href="/" class="nav-link">Wishlist</a>
-                        <a href="/" class="nav-link">Shop</a>
+                        <a href="/pages/products.html" class="nav-link">Shop All Products</a>
                     </div>
                 </div>
 
@@ -37,7 +37,8 @@ const footer_content = `<div class="container">
                         <a href="/" class="nav-link">Privacy Policy</a>
                         <a href="/" class="nav-link">Terms Of Use</a>
                         <a href="/" class="nav-link">FAQ</a>
-                        <a href="/" class="nav-link">Contact</a>
+                        <a href="/pages/contact-us-page.html" class="nav-link">Contact</a>
+                        <a href="/pages/about-us-page.html" class="nav-link">About</a>
                     </div>
                 </div>
             </div>
