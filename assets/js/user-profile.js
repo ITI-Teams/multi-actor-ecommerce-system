@@ -1,7 +1,23 @@
 function loadProfile() {
+  const currentID = localStorage.getItem("customerSession");
+  if (!currentID) {
+    alert("You must log in first.");
+    window.location.href = "login.html";
+    return;
+  }
+
+  const customers = JSON.parse(localStorage.getItem("customers")) || [];
+  const currentCustomer = customers.find(c => String(c.id) === String(currentID));
+
+  if (!currentCustomer) {
+    alert("Profile not found");
+    return;
+  }
+
   const displayName =
     (currentCustomer.firstName || "") +
     (currentCustomer.lastName ? " " + currentCustomer.lastName : "");
+
   document.getElementById("profileImage").src = currentCustomer.profileImage || "../assets/img/defultUser.webp";
   document.getElementById("profileName").textContent = displayName.trim() || currentCustomer.name || "Unknown Customer";
   document.getElementById("profileEmail").textContent = currentCustomer.email || "Not provided";
@@ -49,6 +65,7 @@ function saveOrUpdateCustomer(email, birthday, phone, password) {
   } else {
     updateCustomerData();
   }
+
   function updateCustomerData() {
     customers[existingIndex] = {
       ...customers[existingIndex], 
@@ -71,9 +88,32 @@ function saveOrUpdateCustomer(email, birthday, phone, password) {
   }
 }
 
+// NEW FUNCTION: Fill form with customer values
+function fillEditForm(currentCustomer) {
+  document.getElementById("fnameInput").value = currentCustomer.firstName || "";
+  document.getElementById("lnameInput").value = currentCustomer.lastName || "";
+  document.getElementById("emailInput").value = currentCustomer.email || "";
+  document.getElementById("genderInput").value = currentCustomer.gender || "";
+  document.getElementById("dobInput").value = currentCustomer.birthday || "";
+  document.getElementById("phoneInput").value = currentCustomer.phone || "";
+  document.getElementById("passwordInput").value = currentCustomer.password || "";
+  document.getElementById("countryInput").value = currentCustomer.country || "";
+  populateCities(); // repopulate cities dropdown
+  document.getElementById("cityInput").value = currentCustomer.city || "";
+  document.getElementById("addressInput").value = currentCustomer.address || "";
+}
+
 function showEditForm() {
   document.getElementById("ordersSection").style.display = "none";
   document.getElementById("editProfileForm").style.display = "block";
+
+  // get current customer and fill form
+  const currentID = localStorage.getItem("customerSession");
+  const customers = JSON.parse(localStorage.getItem("customers")) || [];
+  const currentCustomer = customers.find(c => String(c.id) === String(currentID));
+  if (currentCustomer) {
+    fillEditForm(currentCustomer);
+  }
 }
 
 function cancelEdit() {
@@ -110,15 +150,11 @@ function saveProfile(e) {
   const birthday = document.getElementById("dobInput").value;
   const phone = document.getElementById("phoneInput").value.trim();
   const password = document.getElementById("passwordInput").value;
-  const emailExists = customers.some(customer => customer.email.toLowerCase() === email.toLowerCase());
 
-  if (!/^[\w.%+-]+@gmail\.com$/i.test(email)) {
+  if (!/^[\w.%+-]/i.test(email)) {
     showError("emailInput", "Email must be a valid Gmail address");
     isValid = false;
-  } else if (emailExists) {
-    showError("emailInput", "This email is already registered.");
-    isValid = false;
-  } else {
+  }  else {
     clearError("emailInput");
   }
 
@@ -154,19 +190,9 @@ function saveProfile(e) {
 
   loadProfile();
   cancelEdit();
-
 }
 
-function previewImage(event) {
-  const file = event.target.files[0];
-  if (file) {
-    const reader = new FileReader();
-    reader.onload = function (e) {
-      document.getElementById("profileImage").src = e.target.result;
-    }
-    reader.readAsDataURL(file);
-  }
-}
+
 
 function calculateAge(birthday) {
   if (!birthday) return "-";
@@ -204,117 +230,4 @@ function populateCities() {
     });
   }
 }
-
-// CustomerOrders Section
-const tbody = document.getElementById("orders-body");
-const paginationContainer = document.querySelector(".pagination");
-let CustomerOrders = [];
-let currentPage = 1;
-const CustomerOrdersPerPage = 5;
-
-async function loadCustomerOrders() {
-  const res = await fetch("https://dummyjson.com/products?limit=200");
-  const data = await res.json();
-
-  const filtered = data.products.filter(
-    p => p.category.includes("mens") || p.category.includes("womens")
-  );
-
-  const randomCustomerOrders = [];
-  const numCustomerOrders = Math.floor(Math.random() * 6) + 5;
-  const used = new Set();
-  while (randomCustomerOrders.length < numCustomerOrders) {
-    const idx = Math.floor(Math.random() * filtered.length);
-    if (!used.has(idx)) {
-      used.add(idx);
-      randomCustomerOrders.push(filtered[idx]);
-    }
-  }
-
-  CustomerOrders = randomCustomerOrders.map(item => {
-    const qty = Math.floor(Math.random() * 3) + 1;
-    const total = item.price * qty;
-    return { ...item, qty, total };
-  });
-
-  displayCustomerOrders();
-  setupPagination();
-}
-
-function displayCustomerOrders() {
-  tbody.innerHTML = "";
-  const start = (currentPage - 1) * CustomerOrdersPerPage;
-  const end = start + CustomerOrdersPerPage;
-  const pageCustomerOrders = CustomerOrders.slice(start, end);
-
-  pageCustomerOrders.forEach(item => {
-    tbody.innerHTML += `
-      <tr>
-        <td>${item.id}</td>
-        <td><img src="${item.thumbnail}" width="50" height="50"></td>
-        <td>${item.category}</td>
-        <td>${item.title}</td>
-        <td>${item.description.slice(0, 40)}...</td>
-        <td>$${item.price}</td>
-        <td>${item.qty}</td>
-        <td>$${item.total}</td>
-      </tr>
-    `;
-  });
-}
-
-function setupPagination() {
-  paginationContainer.innerHTML = "";
-  const totalPages = Math.ceil(CustomerOrders.length / CustomerOrdersPerPage);
-
-  const prev = document.createElement("li");
-  prev.className = `page-item ${currentPage === 1 ? "disabled" : ""}`;
-  prev.innerHTML = `<a class="page-link text-dark" href="#">&laquo;</a>`;
-  prev.addEventListener("click", () => {
-    if (currentPage > 1) {
-      currentPage--;
-      displayCustomerOrders();
-      setupPagination();
-    }
-  });
-  paginationContainer.appendChild(prev);
-
-  for (let i = 1; i <= totalPages; i++) {
-    const li = document.createElement("li");
-    li.className = `page-item ${currentPage === i ? "active" : ""}`;
-    li.innerHTML = `<a class="page-link text-dark" href="#">${i}</a>`;
-    li.addEventListener("click", () => {
-      currentPage = i;
-      displayCustomerOrders();
-      setupPagination();
-    });
-    paginationContainer.appendChild(li);
-  }
-
-  const next = document.createElement("li");
-  next.className = `page-item ${currentPage === totalPages ? "disabled" : ""}`;
-  next.innerHTML = `<a class="page-link text-dark" href="#">&raquo;</a>`;
-  next.addEventListener("click", () => {
-    if (currentPage < totalPages) {
-      currentPage++;
-      displayCustomerOrders();
-      setupPagination();
-    }
-  });
-  paginationContainer.appendChild(next);
-}
-
-function logoutCustomer() {
-  localStorage.removeItem("customerSession");
-  window.location.href = "../index.html";
-}
-
-document.addEventListener("DOMContentLoaded", () => {
-  const birthdayInput = document.getElementById("dobInput");
-  if (birthdayInput) {
-    birthdayInput.max = "2015-12-31";
-  }
-
   loadProfile();
-  loadCustomerOrders();
-});
