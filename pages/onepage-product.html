@@ -2,17 +2,18 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Trendora</title>
-    <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../assets/css/bootstrap.min.css" />
     <script src="https://kit.fontawesome.com/4f91921791.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/styles.css" />
     <script type="module" src="../assets/js/main.js"></script>
-    <script src="../assets/js/test.js"></script>
+    <script type="module" src="../assets/js/test.js"></script>
+    <script type="module" src="../assets/js/onepage-product.js"></script>
 
     <!-- link css -->
-    <link rel="stylesheet" href="../assets/css/onepage-product.css">
+    <link rel="stylesheet" href="../assets/css/onepage-product.css" />
 </head>
 
 <body>
@@ -20,33 +21,22 @@
         <nav id="main-header" class="navbar navbar-expand-lg bg-body-tertiary bg-nav-transparent fixed-top"></nav>
     </header>
 
-    <main class="container">
-        <div class="product-grid">
-
+    <main id="mainWrapper" class="container">
+        <div id="product-grid" class="product-grid">
             <!-- LEFT: Gallery -->
             <section class="gallery">
                 <!-- main img product -->
                 <div class="main-image text-center">
-                    <img id="main-Img" src="../assets/img/product01.jpg" alt="Product image">
+                    <img id="main-Img" src="" alt="Product image" />
                 </div>
 
                 <!-- thumbs imgs -->
-                <div class="thumbs mt-2">
-                    <img class="thumb active" src="../assets/img/product01.jpg" data-src="../assets/img/product01.jpg"
-                        alt="thumb1">
-                    <img class="thumb" src="../assets/img/product01.jpg" data-src="../assets/img/product01.jpg"
-                        alt="thumb2">
-                    <img class="thumb" src="../assets/img/product01.jpg" data-src="../assets/img/product01.jpg"
-                        alt="thumb3">
-                    <img class="thumb" src="../assets/img/product01.jpg" data-src="../assets/img/product01.jpg"
-                        alt="thumb4">
-                </div>
+                <div id="thumbsWrapper" class="thumbs mt-2"></div>
             </section>
 
             <!-- RIGHT: Details -->
             <aside>
-
-                <h1 class="product-title">Paige Cotton Blend Tweed Jacket</h1>
+                <h1 id="product-title" class="product-title"></h1>
 
                 <!-- Interactive Rating -->
                 <div class="rating" id="ratingStars">
@@ -56,36 +46,37 @@
                     <i class="fa fa-star star" data-value="4"></i>
                     <i class="fa fa-star star" data-value="5"></i>
                     <span id="ratingValue" class="ms-2">0 / 5</span>
-                    <span class="reviews-link" onclick="scrollToReviews()">4 Reviews</span>
+                    <span id="product-reviews" class="reviews-link"></span>
                 </div>
 
-
-                <div class="price">$199.00</div>
+                <div id="product-price" class="price"></div>
                 <!-- Colors -->
                 <div class="mt-3">
                     <div class="small muted mb-2">Color</div>
                     <div class="color-swatches">
-                        <div class="swatch" data-color="white" title="White" style="background:brown"></div>
-                        <div class="swatch" data-color="beige" title="Beige" style="background:#fbfbfb"></div>
-                        <div class="swatch" data-color="gray" title="Gray" style="background:#bdbdbd"></div>
-                        <div class="swatch" data-color="black" title="Black" style="background:#111"></div>
+                        <div class="swatch" data-color="white" title="White" style="background: brown"></div>
+                        <div class="swatch" data-color="beige" title="Beige" style="background: #fbfbfb"></div>
+                        <div class="swatch" data-color="gray" title="Gray" style="background: #bdbdbd"></div>
+                        <div class="swatch" data-color="black" title="Black" style="background: #111"></div>
                     </div>
                 </div>
                 <!-- Sizes -->
                 <div class="mt-3">
                     <div class="small muted mb-2">Sizes</div>
-                    <div class="sizes">
+                    <div id="product-size" class="sizes">
                         <button class="size-btn">XS</button>
                         <button class="size-btn">S</button>
-                        <button class="size-btn selected">M</button>
+                        <button class="size-btn">M</button>
                         <button class="size-btn">L</button>
                         <button class="size-btn">XL</button>
-                        <button class="size-btn disabled" disabled>XXL</button>
+                        <button class="size-btn">XXL</button>
                     </div>
                 </div>
                 <!-- BTN ADD to cart -->
                 <div class="add-row">
-                    <button id="addtocartBtn" class="btn btn-dark btn-lg btn-add">Add to cart</button>
+                    <button id="addtocartBtn" class="btn btn-dark btn-lg btn-add" disabled>
+                        Add to cart
+                    </button>
                 </div>
                 <!-- free delivery -->
                 <div class="info-line">
@@ -94,7 +85,6 @@
                 </div>
                 <!-- Accordion  -->
                 <div class="accordion mt-6" id="productAccordion">
-
                     <div class="accordion-item">
                         <h2 class="accordion-header">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -104,14 +94,8 @@
                         </h2>
                         <div id="collapseOne" class="accordion-collapse collapse show"
                             data-bs-parent="#productAccordion">
-                            <div class="accordion-body">
-                                Relaxed-fit sheer shirt made from breathable 80-GSM cotton for a comfortable and airy
-                                feel. Featuring shirring at the shoulders and cuffs, a back yoke, and two chest pockets
-                                with button closures. Finished with mother of pearl buttons, button-through cuffs, and
-                                felled seams. Garment washed for a soft, worn-in feel.
-                            </div>
+                            <div id="product-description" class="accordion-body"></div>
                         </div>
-
                     </div>
 
                     <div class="accordion-item">
@@ -126,7 +110,6 @@
                                 Relaxed fit, slightly oversized for comfort.
                             </div>
                         </div>
-
                     </div>
 
                     <div class="accordion-item">
@@ -137,28 +120,21 @@
                             </button>
                         </h2>
                         <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#productAccordion">
-                            <div class="accordion-body">
-                                100% breathable cotton dobby.
-                            </div>
+                            <div class="accordion-body">100% breathable cotton dobby.</div>
                         </div>
-
                     </div>
-
                 </div>
-
             </aside>
-
         </div>
 
+        <div class="pt-5">
+            <h4 class="text-uppercase fs-6 fw-semibold pb-3">related products</h4>
+
+            <div id="relatedProductsWrapper"></div>
+        </div>
     </main>
-
-
-
-
-
     <footer id="main-footer" class="footer bg-black text-light mt-5"></footer>
     <script src="../assets/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets/js/onepage-product.js"></script>
 </body>
 
 </html>
