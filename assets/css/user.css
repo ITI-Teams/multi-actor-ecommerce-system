@@ -22,6 +22,9 @@ body {
 .sidebar>p{
     text-align: left;
 }
+.sidebar .sidBtn button{
+    width: 150px;
+}
 
 .profile-img {
     width: 120px;
@@ -39,10 +42,10 @@ body {
     display: none;
     text-align: center;
 }
-#editProfileForm button {
-    min-width: 100px;
+#layout button {
+    min-width: 10%;
 }
-#editProfileForm button:hover {
+#layout button:hover {
     background-color: rgba(176, 176, 175, 0.76) !important;
     color: black !important;
 }
@@ -69,17 +72,20 @@ table {
 
 
 /* Responsive layout */
-@media (min-width: 992px) {
-    .layout {
+
+@media (min-width: 990px) {
+    #layout {
     display: flex;
     margin-top: 110px;
+    padding-bottom: 70px;
     }
 
     .sidebar {
-    position: sticky;
+    position:sticky;
     top: 0;
     width: 25%;
-    height: 100vh;
+    height: 110vh;
+
     }
 
     .content {
@@ -88,7 +94,7 @@ table {
 }
 
 @media (max-width: 991px) {
-    .layout{
+    #layout{
         margin-top: 110px;
     }
     .sidebar {
@@ -104,7 +110,7 @@ table {
     }
 }
 @media (max-width: 425px) {
-    .layout{
+    #layout{
         margin-top: 170px;
     }
     

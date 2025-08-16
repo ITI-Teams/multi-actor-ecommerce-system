@@ -16,17 +16,27 @@ document.addEventListener('DOMContentLoaded', () => {
             form.classList.add('was-validated');
             return;
         }
+
         const enteredEmail = emailInput.value.trim();
         const enteredPassword = passwordInput.value.trim();
 
-        const storedUser = JSON.parse(localStorage.getItem("registeredUser"));
-        const savedEmail = storedUser?.email || "";
-        const savedPassword = storedUser?.password || "";
+        const storedCustomers = JSON.parse(localStorage.getItem("customers")) || [];
 
+        const matchedCustomer = storedCustomers.find(Customer => {
+            if (Customer.email === enteredEmail) {
+                const decryptedPassword = decryptText(Customer.password); 
+                return decryptedPassword === enteredPassword;
+            }
+            return false;
+        });
 
-        if (enteredEmail === savedEmail && enteredPassword === savedPassword) {
+        if (matchedCustomer) {
             errorDiv.style.display = "none";
             form.classList.add('was-validated');
+
+            localStorage.setItem("customerSession", matchedCustomer.id);
+            // localStorage.setItem("isLoggedIn", "true");
+
         } else {
             event.preventDefault();
             errorDiv.textContent = "Invalid email or password.";
