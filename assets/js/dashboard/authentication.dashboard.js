@@ -68,9 +68,16 @@ function login(emailOrPhone, password, rememberMe) {
     localStorage.setItem("session", JSON.stringify(sessionData));
 
     alert(`Hi ${user.name}, welcome back!`);
-    window.location.href = "../../../pages/dashboard/dashboard.html";
+    window.location.href = "/pages/dashboard/dashboard.html";
 }
 
 document.getElementById('back').addEventListener('click', function(){
-    window.location.href = "../../../index.html";
+    window.location.href = "/index.html";
 });
+(function checkSession() {
+    const session = JSON.parse(localStorage.getItem("session"));
+
+    if (session && session.expiresAt > Date.now()) {
+        window.location.href = "/pages/dashboard/dashboard.html";
+    }
+})();

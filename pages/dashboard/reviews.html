@@ -44,19 +44,23 @@
                     <div class="d-flex justify-content-between mb-3">
                         <input type="text" id="searchReview" class="form-control w-25" placeholder="Search Review Number (0-5)...">
                     </div>
-                    <table class="table table-bordered table-hover">
-                        <thead class="table-light">
-                            <tr class="text-center">
-                                <th>Product</th>
-                                <th>Customer</th>
-                                <th>reviews</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="reviewTableBody"></tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead class="table-light">
+                                <tr class="text-center">
+                                    <th>Product</th>
+                                    <th>Customer</th>
+                                    <th>reviews</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="reviewTableBody"></tbody>
+                        </table>
+
+                    </div>
+                    
                     <nav>
-                        <ul class="pagination" id="pagination"></ul>
+                        <ul class="pagination flex-wrap" id="pagination"></ul>
                     </nav>
                 </main>
                 <!--End Main Section-->
