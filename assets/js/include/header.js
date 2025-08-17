@@ -4,15 +4,15 @@ const nav_content = `<div class="container">
                     aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                    <a class="navbar-brand fw-bold fs-4" href="/">
-                    <img src="/assets/img/Black White Minimalist Simple Monogram Typography Logo.svg" alt="Logo" width="75">
-                        Trendora
-                    </a>
+                <a class="navbar-brand fw-bold fs-4" href="/">
+                <img src="/assets/img/Black White Minimalist Simple Monogram Typography Logo.svg" alt="Logo" width="75">
+                    Trendora
+                </a>
                 <div class="offcanvas offcanvas-start ps-3 pt-2" id="navbarNav">
-                <div class="offcanvas-header">
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-                </div>
-                <ul class="navbar-nav">
+                    <div class="offcanvas-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                    </div>
+                    <ul class="navbar-nav" id="TrendoraMenu">
                         <li class="nav-item">
                             <a class="nav-link" href="/pages/categories.html">Men</a>
                         </li>
@@ -32,9 +32,8 @@ const nav_content = `<div class="container">
                             id="profileDropdown" data-bs-toggle="dropdown" aria-expanded="false">
                             <i class="fas fa-user"></i>
                         </button>
-                        <ul class="dropdown-menu dropdown-menu-end profile" aria-labelledby="profileDropdown">
-                            <li><a class="dropdown-item" href="/pages/register.html">Sign Up</a></li>
-                            <li><a class="dropdown-item" href="/pages/login.html">Login</a></li>
+                        <ul class="dropdown-menu dropdown-menu-end profile" aria-labelledby="profileDropdown" id="mydropdwenProfile">
+                            
                         </ul>
                     </div>
                 </div>

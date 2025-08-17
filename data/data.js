@@ -90,7 +90,19 @@ let messages = JSON.parse(localStorage.getItem("messages")) || Array.from({ leng
     message: `This is message number ${i + 1}`,
     date: `2025-08-${(i % 28) + 1}`
 }));
+// ========== cards ==========
+let cards = JSON.parse(localStorage.getItem("cards")) || Array.from({ length: 10 }, (_, i) => ({
+    id: i + 1,
+    number: `4871 0499 9999 9${i}10`,
+    exp: "09/35",
+    cvc: 123,
+    name: "customer"+i,
+    balance: 30000*i,
+}));
 
+if (!localStorage.getItem("cards")) {
+    localStorage.setItem("cards", JSON.stringify(cards));
+}
 if (!localStorage.getItem("carts")) {
     localStorage.setItem("carts", JSON.stringify(carts));
 }
