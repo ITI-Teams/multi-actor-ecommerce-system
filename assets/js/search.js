@@ -5,6 +5,25 @@ const rowsPerPage = 12;
 
 const totalPages = Math.ceil(filteredProducts.length / rowsPerPage);
 
+
+const urlParams = new URLSearchParams(location.search);
+const searchQuery = urlParams.get("search");
+if (searchQuery) {
+    const searchInput = document.getElementById("searchInput");
+    searchInput.value = searchQuery;
+    filteredProducts = products.filter(p => 
+        p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        p.description.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+    currentPage = 1;
+    displayTable();
+} else {
+    filteredProducts = [...products]; 
+    displayTable();
+}
+
+
+
 document.getElementById("searchInput").addEventListener("input", function (e) {
     const term = e.target.value.toLowerCase();
 

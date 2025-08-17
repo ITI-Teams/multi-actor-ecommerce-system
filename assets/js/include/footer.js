@@ -7,7 +7,6 @@ const footer_content = `<div class="container">
                     </a>
                     <h3>Subscribe</h3>
                     <p>Get 10% off your first order</p>
-                    <input type="email" class="subscribe-input" placeholder="Enter your email">
                 </div>
 
                 <div class="col-sm md pt-2 mb-4">
@@ -35,6 +34,7 @@ const footer_content = `<div class="container">
                         <a href="/pages/contact-us-page.html" class="nav-link">Contact</a>
                         <a href="/pages/about-us-page.html" class="nav-link">About</a>
                         <a href="/pages/products.html" class="nav-link">Shop All Products</a>
+                        <a href="/pages/dashboard/dashboard.html" class="nav-link">Dashboard of Seller</a>
                     </div>
                 </div>
             </div>

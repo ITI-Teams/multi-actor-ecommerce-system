@@ -156,7 +156,7 @@ document.getElementById('addtocartBtn').addEventListener('click',function(){
         const newCart = {
             id: carts.length ? Math.max(...carts.map(c => c.id)) + 1 : 1,
             customer_id: customerId,
-            product_id: productId,
+            product_id: product.id,
             seller_id: product.seller_id,
             quantity: 1
         };

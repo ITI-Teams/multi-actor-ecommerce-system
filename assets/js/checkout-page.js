@@ -79,6 +79,7 @@ document.getElementById('phone').value = currentCustomer.phone || '';
 
 
 function renderCart() {
+    loadCart();
     cartList.innerHTML = '';
     cart.forEach(item => {
         const product = products.find(p => p.id === item.product_id);
@@ -296,26 +297,34 @@ form.addEventListener("submit", function (e) {
             seller_id: product.seller_id || "", // لو عندك seller
             customer_id: currentCustomer.id,
             status: "Delivery",
-            quntity: i.quntity,
+            quntity: i.quantity,
             totalPrice: product.price * i.quantity + (shipping / cart.length), // توزيع الشحن
             date: new Date().toLocaleString()
         };
-
         orders.push(order);
     });
 
     // حفظ الطلبات
     localStorage.setItem("orders", JSON.stringify(orders));
 
-    alert(`✅ Order #${newId} تم حفظه بنجاح!`);
+    alert(`Order #${newId} set successfully!`);
     form.reset();
-    cart = [];
-    carts = carts.filter(c => c.customer_id !== currentCustomer.id); // نفرغ كارت العميل بعد الشراء
+    carts = carts.filter(c => String(c.customer_id) !== String(currentCustomer.id));
     localStorage.setItem("carts", JSON.stringify(carts));
+    cart = [];
     renderCart();
     citySelect.innerHTML = `<option value="" disabled selected>Select city</option>`;
-    window.location.href = "/index.html";
+    if (history.length > 1) {
+        history.back();
+    } else {
+        location.href = '../index.html';
+    }
+
 });
+function loadCart() {
+    const allCarts = JSON.parse(localStorage.getItem("carts")) || [];
+    cart = allCarts.filter(c => String(c.customer_id) === String(currentID));
+}
 
 function validateInput(input) {
     const value = input.value.trim();
