@@ -16,7 +16,7 @@
   }
 
   const displayName =
-    (currentCustomer.firstName || "") +
+    (currentCustomer.FirstName || "") +
     (currentCustomer.lastName ? " " + currentCustomer.lastName : "");
 
   document.getElementById("profileImage").src = currentCustomer.profileImage || "../assets/img/defultUser.webp";
@@ -32,7 +32,7 @@
 }
 
 function saveOrUpdateCustomer(email, birthday, phone, password) {
-  const firstName = document.getElementById("fnameInput").value;
+  const FirstName = document.getElementById("fnameInput").value;
   const lastName = document.getElementById("lnameInput").value;
   const gender = document.getElementById("genderInput").value;
   const age = calculateAge(birthday);
@@ -71,7 +71,7 @@ function saveOrUpdateCustomer(email, birthday, phone, password) {
     customers[existingIndex] = {
       ...customers[existingIndex], 
       profileImage,
-      firstName,
+      FirstName,
       lastName,
       email,
       gender,
@@ -91,7 +91,7 @@ function saveOrUpdateCustomer(email, birthday, phone, password) {
 }
 
 function fillEditForm(currentCustomer) {
-  document.getElementById("fnameInput").value = currentCustomer.firstName || "";
+  document.getElementById("fnameInput").value = currentCustomer.FirstName || "";
   document.getElementById("lnameInput").value = currentCustomer.lastName || "";
   document.getElementById("emailInput").value = currentCustomer.email || "";
   document.getElementById("genderInput").value = currentCustomer.gender || "";
