@@ -46,14 +46,14 @@ let products = JSON.parse(localStorage.getItem("products")) || Array.from({ leng
 }));
 // ========== ORDERS ==========
 let statuses = ["Pending", "Processing", "Delivery", "Completed", "Cancelled"];
-let orders = JSON.parse(localStorage.getItem("orders")) || Array.from({ length: 50 }, (_, i) => ({
+let orders = JSON.parse(localStorage.getItem("orders")) || Array.from({ length: 10 }, (_, i) => ({
     id: i + 1,
     product_id: (i % 100) + 1,
     seller_id: (i % 5) + 2,
     customer_id: (i % 100) + 1,
     status: statuses[i % statuses.length],
     quntity: Math.floor(Math.random() * 5) + 1,
-    totalPrice: (Math.random() * 500 + 50).toFixed(2),
+    totalPrice: (Math.random() * 5 + 50).toFixed(2),
     date: `2025-08-${(i % 28) + 1}`
 }));
 // ========== CARTS ==========
