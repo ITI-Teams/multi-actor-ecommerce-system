@@ -42,7 +42,7 @@ if (!Array.isArray(storedMenu) || storedMenu.length === 0) {
             <a class="nav-link" href="/pages/categories.html">Women</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="#">Kids</a>
+            <a class="nav-link" href="/pages/categories.html">Kids</a>
         </li>
     `;
 }else{

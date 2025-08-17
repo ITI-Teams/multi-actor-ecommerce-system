@@ -20,7 +20,7 @@ const nav_content = `<div class="container">
                             <a class="nav-link" href="/pages/categories.html">Women</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">Kids</a>
+                            <a class="nav-link" href="/pages/categories.html">Kids</a>
                         </li>
                     </ul>
                 </div>

@@ -23,8 +23,8 @@ export default function prodcutCard({id, name, images, price,description,seller_
     const { avg: rating, count } = getAverageRating(id);
     const stars = renderStars(rating);
     return `
-      <div class="card" style="max-width: 320px;">
-          <img src="/assets/img/products/${images[1] || images[0]}" class="card-img-top" alt="${name}">
+      <div class="card" style="min-width: auto;">
+          <img src="/assets/img/products/${images[1] || images[0]}" class="card-img-top prodcut-img" alt="${name}">
           <div class="card-body">
               <a href="/pages/onepage-product.html?product=${id}" class="text-dark link-offset-1-hover text-uppercase" />
                 <h5 class="card-title">${name}</h5>

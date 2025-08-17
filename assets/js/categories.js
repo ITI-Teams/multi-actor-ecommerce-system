@@ -1,5 +1,5 @@
- 
-const categories=JSON.parse(localStorage.getItem('categories'))|| [];
+
+const categories = JSON.parse(localStorage.getItem('categories')) || [];
 let products = JSON.parse(localStorage.getItem('products')) || [];
 const categoriesRow = document.querySelector('#categoriesRow');
 
@@ -7,13 +7,13 @@ let productsContainer = document.querySelector("#productsContainer .card-body");
 let collapseEl = document.getElementById("productsContainer");
 let bsCollapse = new bootstrap.Collapse(collapseEl, { toggle: false });
 
-let activeCategory = null; 
+let activeCategory = null;
 
- 
 
-categories.forEach((category)=>{
-  
-categoriesRow.innerHTML+=`
+
+categories.forEach((category) => {
+
+  categoriesRow.innerHTML += `
   <div class="col ">
   <div class='category  '>
   <img src="/assets/img/logo_category.webp" class="card-img-top" alt="Category">
@@ -27,8 +27,8 @@ categoriesRow.innerHTML+=`
 </div>
  
 `
- 
- 
+
+
 
 
 })
