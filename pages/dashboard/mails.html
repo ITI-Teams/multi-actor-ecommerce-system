@@ -48,21 +48,25 @@
                             <i class="fas fa-paper-plane"></i> Send Mail
                         </button>
                     </div>
-                    <table class="table table-bordered table-hover">
-                        <thead class="table-light">
-                            <tr>
-                                <th>From</th>
-                                <th>To</th>
-                                <th>subject</th>
-                                <th>mail</th>
-                                <th>Date</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="mailTableBody"></tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>From</th>
+                                    <th>To</th>
+                                    <th>subject</th>
+                                    <th>mail</th>
+                                    <th>Date</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="mailTableBody"></tbody>
+                        </table>
+                        
+                    </div>
+                    
                     <nav>
-                        <ul class="pagination" id="pagination"></ul>
+                        <ul class="pagination flex-wrap" id="pagination"></ul>
                     </nav>
                 </main>
                 <div class="modal fade" id="mailModal" tabindex="-1">
