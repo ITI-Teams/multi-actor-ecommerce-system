@@ -252,3 +252,8 @@ div#formMessage .alert{
   background-size: 200% 200%;
   cursor: none;
 }
+
+input#headerSearch:focus{
+  color: #000 !important;
+
+}

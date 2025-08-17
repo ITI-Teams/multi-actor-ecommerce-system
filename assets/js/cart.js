@@ -4,7 +4,11 @@ close.addEventListener('click', () => {
     cartBox.classList.add('fade-out');
     setTimeout(() => {
         cartBox.remove();
-        location.href = '../index.html';
+        if (window.history.length > 1) {
+            history.back();
+        } else {
+            location.href = '../index.html';
+        }
     }, 500);  
 });
 

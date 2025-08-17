@@ -39,17 +39,19 @@ const nav_content = `<div class="container">
                 </div>
 
                 <!-- search -->
-                <div class="collapse align-content-center me-2" id="searchIcon">
-                    <div class="input-group">
-                        <input class="form-control bg-transparent text-white border-light" type="search"
-                            placeholder="Search" aria-label="Search">
+                <form method="get" action="/pages/search.html" class="d-flex">
+                    <div class="collapse align-content-center me-2" id="searchIcon">
+                        <div class="input-group">
+                            <input class="form-control bg-transparent text-white border-light" type="search" id="headerSearch"
+                                placeholder="Search" aria-label="Search" name="search">
+                        </div>
                     </div>
-                </div>
-                <p class="mt-3">
-                    <i class="fa fa-search" type="button" data-bs-toggle="collapse" data-bs-target="#searchIcon"
-                        aria-expanded="false" aria-controls="searchIcon" aria-hidden="true">
-                    </i>
-                </p>
+                    <p class="mt-3">
+                        <i class="fa fa-search" type="button" data-bs-toggle="collapse" data-bs-target="#searchIcon"
+                            aria-expanded="false" aria-controls="searchIcon" aria-hidden="true">
+                        </i>
+                    </p>
+                </form>
 
                 <!-- cart -->
                 <div class="dropdown">
