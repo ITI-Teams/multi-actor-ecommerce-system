@@ -13,6 +13,8 @@
     <script type="module" src="../assets/js/main.js"></script>
     <script type="module" src="../assets/js/test.js"></script>
     <script src="../assets/js/authorization.js"></script>
+    
+    <script src="../assets/js/include/nav.js" defer></script>
 </head>
 
 <body>
@@ -62,7 +64,6 @@
                                     <option value="EGY">Egypt</option>
                                     <option value="USA">United States</option>
                                     <option value="GBR">United Kingdom</option>
-                                    <option value="FRA">France</option>
                                     <option value="SAU">Saudi Arabia</option>
                                 </select>
 
@@ -166,28 +167,17 @@
                         <div style="font-weight:400">Order summary</div>
                         <div class="small text-muted">Shipping and taxes calculated at checkout</div>
                     </div>
-
                     <div class="items-scroll" id="cart-list">
                         <!-- JS will render items here -->
                     </div>
-
-                    <!-- <div class="mb-2">
-                        <div class="input-group">
-                            <input id="giftCode" class="form-control" placeholder="Gift card or store credit">
-                            <button id="applyGift" class="btn btn-outline-secondary">APPLY</button>
-                        </div>
-                    </div> -->
-
                     <div class="summary-row">
                         <div id="subtotal-text">Subtotal • <span id="item-count">0</span> items</div>
                         <div id="subtotal-price">$0.00</div>
                     </div>
-
                     <div class="summary-row">
                         <div>Shipping</div>
                         <div id="shipping-text" class="text-muted">Enter shipping address</div>
                     </div>
-
                     <div class="summary-row summary-total">
                         <div>Total</div>
                         <div id="total-price">USD $0.00</div>
@@ -198,7 +188,13 @@
     </main>
     <footer id="main-footer" class="footer bg-black text-light mt-5"></footer>
     <script src="../assets/js/bootstrap.bundle.min.js"></script>
-    <script src="../assets/js/checkout-page.js"></script>  
+    <script src="../assets/js/checkout-page.js"></script> 
+    <script src="../assets/js/add.cart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            updateCartBadge(); 
+        });
+    </script> 
 </body>
 
 </html>

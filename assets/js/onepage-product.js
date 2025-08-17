@@ -1,139 +1,205 @@
 import prodcutCard from "./include/productCard.js";
 
-const productIdParams = new URLSearchParams(location.search).get('product');
+const productIdParams = new URLSearchParams(location.search).get("product");
 if (!productIdParams) {
-    // redirect to home page
-    const newUrl = new URL(location);
-    location.pathname = '/';
-    history.push(newUrl);
+    location.pathname = "/";
 }
 
-
-// color selection (highlight only)
-document.querySelectorAll('.swatch').forEach(s => {
-    s.addEventListener('click', function () {
-        document.querySelectorAll('.swatch').forEach(x => x.classList.remove('selected'));
-        this.classList.add('selected');
-    })
-})
-
-
-// Rating Logic
-const stars = document.querySelectorAll('.star');
-const ratingValue = document.getElementById('ratingValue');
-let currentRating = 0;
-
-// Handle mouse hover
-stars.forEach(star => {
-    star.addEventListener('mouseover', () => {
-        const value = parseInt(star.dataset.value);
-        highlightStars(value);
-    });
-
-    star.addEventListener('mouseout', () => {
-        highlightStars(currentRating);
-    });
-
-    // Handle click (selection)
-    star.addEventListener('click', () => {
-        currentRating = parseInt(star.dataset.value);
-        highlightStars(currentRating);
-        ratingValue.textContent = `${currentRating} / 5`;
-    });
-
-    // Mobile tap simulation (touch)
-    star.addEventListener('touchstart', (e) => {
-        e.preventDefault(); // Prevent click delay
-        const value = parseInt(star.dataset.value);
-        currentRating = value;
-        highlightStars(currentRating);
-        ratingValue.textContent = `${currentRating} / 5`;
+/* ----------------------------
+   Color Selection (highlight only)
+----------------------------- */
+document.querySelectorAll(".swatch").forEach((s) => {
+    s.addEventListener("click", function () {
+        document.querySelectorAll(".swatch").forEach((x) =>
+            x.classList.remove("selected")
+        );
+        this.classList.add("selected");
     });
 });
 
-function highlightStars(rating) {
-    stars.forEach(star => {
-        star.classList.toggle('selected', parseInt(star.dataset.value) <= rating);
+/* ----------------------------
+   Product Details + Reviews
+----------------------------- */
+const products = JSON.parse(localStorage.getItem("products")) || [];
+const product = products.find((p) => p.id == productIdParams);
+
+if (!product) {
+    const mainWrapper = document.getElementById("mainWrapper");
+    mainWrapper.innerHTML = `
+        <div class="text-center py-5 my-5 w-50 mx-auto">
+            <p class="alert alert-danger fs-6 fw-semibold text-capitalize">No Product Found!</p>
+        </div>
+    `;
+} else {
+    // استرجاع الريفيوز الخاصة بالمنتج
+    const allReviews = JSON.parse(localStorage.getItem("reviews")) || [];
+    const productReviews = allReviews.filter((r) => r.product_id == product.id);
+
+    // حساب متوسط التقييم
+    let avgRating = 0;
+    if (productReviews.length > 0) {
+        const sum = productReviews.reduce(
+            (acc, r) => acc + Number(r.review),
+            0
+        );
+        avgRating = sum / productReviews.length;
+    }
+
+    // عرض التقييم
+    document.getElementById("ratingValue").textContent =
+        avgRating.toFixed(1) + " / 5";
+
+    document.getElementById("product-reviews").textContent =
+        productReviews.length > 0
+            ? productReviews.length + " Reviews"
+            : "No Reviews Yet";
+
+    // تلوين النجوم
+    const ratingStars = document.querySelectorAll("#ratingStars .star");
+    ratingStars.forEach((star) => {
+        const value = parseInt(star.getAttribute("data-value"));
+        if (value <= Math.round(avgRating)) {
+            star.style.color = "gold";
+        } else {
+            star.style.color = "#ccc";
+        }
+    });
+
+    document.getElementById("product-title").textContent = product.name;
+    document.getElementById("product-price").textContent =
+        "$" + product.price;
+    document.getElementById("product-description").textContent =
+        product.description;
+
+    document.getElementById("main-Img").src =
+        "/assets/img/products/" + product.images[0];
+
+    const thumbsWrapper = document.getElementById("thumbsWrapper");
+    thumbsWrapper.innerHTML = "";
+    product.images.forEach((image, index) => {
+        const thumb = document.createElement("img");
+        thumb.classList.add("thumb");
+        thumb.src = "/assets/img/products/" + image;
+        thumb.dataset.src = "/assets/img/products/" + image;
+        thumb.alt = "thumb" + (index + 1);
+        thumbsWrapper.appendChild(thumb);
+    });
+
+    document.querySelectorAll(".thumb").forEach((t) => {
+        t.addEventListener("click", function () {
+            document
+                .querySelectorAll(".thumb")
+                .forEach((x) => x.classList.remove("active"));
+            this.classList.add("active");
+            const src = this.dataset.src || this.src;
+            const main = document.getElementById("main-Img");
+            main.style.opacity = 0;
+            setTimeout(() => {
+                main.src = src;
+                main.style.opacity = 1;
+            }, 150);
+        });
+    });
+
+    // المقاسات
+    const productSizeWrapper = document.getElementById("product-size");
+    const sizes = ["S", "M", "L", "XL"];
+    productSizeWrapper.innerHTML = "";
+
+    sizes.forEach((size) => {
+        const button = document.createElement("button");
+        button.classList = "size-btn text-uppercase";
+        button.textContent = size;
+        if (!product.size.includes(size)) {
+            button.disabled = true;
+            button.classList.add("disabled");
+        }
+        productSizeWrapper.appendChild(button);
+    });
+
+    // اختيار المقاس
+    const addtocartBtn = document.getElementById("addtocartBtn");
+    document.querySelectorAll(".size-btn").forEach((b) => {
+        if (b.classList.contains("disabled")) return;
+        b.addEventListener("click", function () {
+            document
+                .querySelectorAll(".size-btn")
+                .forEach((x) => x.classList.remove("selected"));
+            this.classList.add("selected");
+            addtocartBtn.disabled = false;
+        });
+    });
+
+    // منتجات مرتبطة (بنفس الكاتيجوري)
+    const relatedProductsWrapper =
+        document.getElementById("relatedProductsWrapper");
+    const relatedProducts = products.filter(
+        (p) => p.category === product.category && p.id !== product.id
+    );
+    relatedProductsWrapper.innerHTML = "";
+    relatedProducts.forEach((p) => {
+        relatedProductsWrapper.innerHTML += prodcutCard(p);
     });
 }
-
-window.addEventListener('load', () => {
-    const products = localStorage.getItem('products');
-    if (products) {
-        const parsedProducts = JSON.parse(products);
-        const product = parsedProducts.filter(product => product.id == productIdParams)[0]
-        console.log(product);
-
-        if (!product) {
-            const mainWrapper = document.getElementById('mainWrapper');
-            mainWrapper.innerHTML = '';
-            const div = document.createElement('div');
-            div.className = 'text-center py-5 my-5 w-50 mx-auto';
-            div.innerHTML = '<p class="alert alert-danger fs-6 fw-semibold text-capitalize">No Product Found!</p>';
-            mainWrapper.append(div);
-        }
-        // handle product data to the page
-        document.getElementById('product-title').innerHTML = product.name;
-        document.getElementById('product-price').innerHTML = '$' + product.price;
-        document.getElementById('product-description').innerHTML = product.description;
-        document.getElementById('product-reviews').innerHTML = product.reviews + ' Reviews';
-        document.getElementById('main-Img').src = '/assets/img/' + product.images[0];
-        const thumbsWrapper = document.getElementById('thumbsWrapper');
-        product.images.forEach((image, index) => {
-            const thumb = document.createElement('img');
-            thumb.classList.add('thumb');
-            thumb.src = '/assets/img/' + image;
-            thumb.dataset.src = '/assets/img/' + image;
-            thumb.alt = 'thumb' + ++index;
-
-            thumbsWrapper.innerHTML += thumb.outerHTML;
-        })
-
-        // thumbnail -> main image
-        document.querySelectorAll('.thumb').forEach(t => {
-            t.addEventListener('click', function () {
-                document.querySelectorAll('.thumb').forEach(x => x.classList.remove('active'));
-                this.classList.add('active');
-                const src = this.dataset.src || this.src;
-                const main = document.getElementById('main-Img');
-                // smooth fade
-                main.style.opacity = 0; setTimeout(() => { main.src = src; main.style.opacity = 1 }, 150);
-            })
-        })
-
-        // sizes
-        const productSizeWrapper = document.getElementById('product-size');
-        const sizes = ['S', 'M', 'L', 'XL']
-
-        productSizeWrapper.innerHTML = '';
-        sizes.forEach(size => {
-            const button = document.createElement('button');
-            button.classList = 'size-btn text-uppercase';
-            button.textContent = size.toUpperCase();
-            if (!product.size.includes(size)) {
-                button.disabled = 'true';
-                button.classList.add('disabled');
-            }
-            productSizeWrapper.appendChild(button);
-        });
-
-        // sizes
-        const addtocartBtn = document.getElementById('addtocartBtn')
-        document.querySelectorAll('.size-btn').forEach(b => {
-            if (b.classList.contains('disabled')) return;
-            b.addEventListener('click', function () {
-                document.querySelectorAll('.size-btn').forEach(x => x.classList.remove('selected'));
-                this.classList.add('selected');
-                addtocartBtn.disabled = false;
-            })
-        })
-
-        // add to related wrapper the products filtered by category of the product without the product itself
-        const productCategory = product.category;
-        const relatedProductsWrapper = document.getElementById('relatedProductsWrapper');
-        const relatedProducts = JSON.parse(products).filter(p => p.category === productCategory && p.id !== product.id);
-        relatedProducts.forEach(product => {
-            relatedProductsWrapper.innerHTML += prodcutCard(product);
-        });
+document.getElementById('addtocartBtn').addEventListener('click',function(){
+    const customerId = localStorage.getItem("customerSession");
+    if (!customerId) {
+        alert("Please log in first");
+        window.location.href = "/pages/login.html";
+        return;
     }
-})
+    const carts = JSON.parse(localStorage.getItem("carts")) || [];
+    const existing = carts.find(c => c.product_id == product.id && c.customer_id == customerId);
+    if (existing) {
+        existing.quantity += 1;
+    } else {
+        const newCart = {
+            id: carts.length ? Math.max(...carts.map(c => c.id)) + 1 : 1,
+            customer_id: customerId,
+            product_id: productId,
+            seller_id: product.seller_id,
+            quantity: 1
+        };
+        carts.push(newCart);
+    }
+    localStorage.setItem("carts", JSON.stringify(carts));
+    showFormMessage("The product has been added to the cart!");
+    updateCartBadge();
+});
+const mainImg = document.getElementById("main-Img");
+const lens = document.createElement("div");
+lens.classList.add("lens");
+mainImg.parentElement.style.position = "relative";
+mainImg.parentElement.appendChild(lens);
+
+mainImg.addEventListener("mousemove", moveLens);
+lens.addEventListener("mousemove", moveLens);
+mainImg.addEventListener("mouseleave", () => {
+  lens.style.display = "none";
+});
+mainImg.addEventListener("mouseenter", () => {
+  lens.style.display = "block";
+});
+
+function moveLens(e) {
+  const rect = mainImg.getBoundingClientRect();
+  const x = e.clientX - rect.left;
+  const y = e.clientY - rect.top;
+
+  const lensSize = lens.offsetWidth / 2;
+
+  let lensX = x - lensSize;
+  let lensY = y - lensSize;
+
+  if (lensX < 0) lensX = 0;
+  if (lensY < 0) lensY = 0;
+  if (lensX > rect.width - lens.offsetWidth) lensX = rect.width - lens.offsetWidth;
+  if (lensY > rect.height - lens.offsetHeight) lensY = rect.height - lens.offsetHeight;
+
+  lens.style.left = lensX + "px";
+  lens.style.top = lensY + "px";
+
+  lens.style.backgroundImage = `url(${mainImg.src})`;
+  lens.style.backgroundSize = rect.width * 2 + "px " + rect.height * 2 + "px";
+  lens.style.backgroundPosition = `-${x * 2 - lensSize}px -${y * 2 - lensSize}px`;
+}

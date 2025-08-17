@@ -4,10 +4,6 @@ if (!dropdownMenu) {
     console.error("Failed to find #mydropdwen after insertion");
 }
 
-const currentID = localStorage.getItem("customerSession");
-const mycustomers = JSON.parse(localStorage.getItem("customers")) || [];
-const currentCustomer = mycustomers.find(c => String(c.id) === String(currentID));
-
 if (!currentID) {
     dropdownMenu.innerHTML = `
         <li><a class="dropdown-item" href="/pages/register.html">Sign Up</a></li>

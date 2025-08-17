@@ -230,3 +230,23 @@
   cursor: pointer;
   transform: scale(1.05);
 }
+div#formMessage .alert{
+    position: fixed;
+    top: 125px;
+    left: 20px;
+    z-index: 10000000000000000000000000;
+}
+
+.lens {
+  position: absolute;
+  border: 3px solid #f1c40f;
+  border-radius: 50%;
+  width: 250px;
+  height: 250px;
+  overflow: hidden;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  background-repeat: no-repeat;
+  background-size: 200% 200%;
+  cursor: none;
+}
