@@ -146,7 +146,7 @@ function renderStats() {
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-hover">
+                                <table class="table table-hover table-responsive overflow-auto">
                                     <thead>
                                         <tr>
                                             <th>Order ID</th>
@@ -290,7 +290,7 @@ function renderStats() {
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-hover">
+                                <table class="table table-hover table-responsive overflow-auto">
                                     <thead>
                                         <tr>
                                             <th>Order ID</th>
@@ -404,7 +404,6 @@ document.addEventListener('DOMContentLoaded', function() {
             ? `${countriesMap[code]}: $${salesData[code].toLocaleString()}`
             : `${countriesMap[code]}: No sales data`
     );
-    console.log(locations,zValues,textValues);
 
     const countryData = [{
         type: 'choropleth',
@@ -479,15 +478,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 datasets: [{
                     data: Object.values(statusCounts),
                     backgroundColor: [
-                        'rgba(40, 167, 69, 0.8)',   // Completed
-                        'rgba(255, 193, 7, 0.8)',   // Processing
-                        'rgba(23, 162, 184, 0.8)',  // Shipped
-                        'rgba(220, 53, 69, 0.8)'    // Cancelled
+                        'rgba(6, 27, 51, 0.8)',
+                        'rgba(255, 193, 7, 0.8)',   
+                        'rgba(23, 162, 184, 0.8)', 
+                        'rgba(40, 167, 69, 1)',  
+                        'rgba(220, 53, 69, 0.8)' , 
                     ],
                     borderColor: [
-                        'rgba(40, 167, 69, 1)',
+                        'rgba(6, 27, 51, 0.8)',
                         'rgba(255, 193, 7, 1)',
                         'rgba(23, 162, 184, 1)',
+                        'rgba(40, 167, 69, 1)',
                         'rgba(220, 53, 69, 1)'
                     ],
                     borderWidth: 1

@@ -55,7 +55,7 @@ function renderTable() {
                     <button class="btn btn-warning btn-sm" onclick="editCustomer(${customer.id})">
                         <i class="fas fa-edit"></i>
                     </button>
-                    <button class="btn btn-danger btn-sm" onclick="deleteCustomerr(${customer.id})">
+                    <button class="btn btn-danger btn-sm" onclick="deleteCustomer(${customer.id})">
                         <i class="fas fa-trash"></i>
                     </button>
                 </td>
