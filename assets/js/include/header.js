@@ -53,18 +53,15 @@ const nav_content = `<div class="container">
 
                 <!-- cart -->
                 <div class="dropdown">
-                    <button class="btn btn-link text-black text-decoration-none position-relative" type="button"
-                        id="cartDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="btn btn-link text-black text-decoration-none position-relative" type="button"
+                        id="cartDropdown"
+                        href="/pages/cart.html"
+                        >
                         <i class="fas fa-shopping-cart"></i>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger">
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger" id="CartCount">
                             0
                         </span>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-end p-3 mycart" style="min-width: 300px;"
-                        aria-labelledby="cartDropdown">
-                        <p class="fs-4 fw-bold text-dark">Your Cart</p>
-                        <p class="text-secondary mb-0">Your cart is empty</p>
-                    </div>
+                    </a>
                 </div>
             </div>`;
 

@@ -1,3 +1,38 @@
+const citiesByCountry = {
+    USA: ["New York", "Los Angeles", "Chicago"],
+    GBR: ["London", "Manchester", "Birmingham"],
+    EGY: [  "Cairo",
+            "Alexandria",
+            "Giza",
+            "Port Said",
+            "Suez",
+            "Luxor",
+            "Aswan",
+            "Ismailia",
+            "Beheira",
+            "Dakahlia",
+            "Damietta",
+            "Sharqia",
+            "Qalyubia",
+            "Kafr El Sheikh",
+            "Minya",
+            "Faiyum",
+            "Beni Suef",
+            "Qena",
+            "Sohag",
+            "Red Sea",
+            "New Valley",
+            "North Sinai",
+            "South Sinai",
+            "Matrouh",
+            "Ash Sharqiyah",
+            "Gharbia",
+            "Menoufia",
+            "Assiut"
+        ],
+    SAU: ["Riyadh", "Jeddah", "Dammam"],
+
+};
 /* Demo cart data (dynamic)*/
 const currentID = localStorage.getItem("customerSession");
 let cards = JSON.parse(localStorage.getItem("cards")) || [];
@@ -32,7 +67,12 @@ document.getElementById('firstName').value = currentCustomer.FirstName;
 document.getElementById('lastName').value = currentCustomer.lastName;
 document.getElementById('address').value = currentCustomer.address;
 document.getElementById('country').value = currentCustomer.country;
-document.getElementById('city').value = currentCustomer.city;
+
+// const option = document.createElement("option");
+// option.value = currentCustomer.city;
+// option.textContent = currentCustomer.city;
+// option.selected = true;
+
 document.getElementById('zip').value = currentCustomer.zip;
 document.getElementById('phone').value = currentCustomer.phone;
 
@@ -46,7 +86,7 @@ function renderCart() {
         const imgStr = String(product?.images?.src || product?.images || '').trim();
         const finalSrc = (/^data:|^https?:\/\/|^\/\//i.test(imgStr))
         ? imgStr
-        : (imgStr ? `../../assets/img/abdullah/${imgStr}` : `../../assets/img/abdullah/`+product.images[0]);
+        : (imgStr ? `../../assets/img/products/${imgStr}` : `../../assets/img/products/`+product.images[0]);
         const row = document.createElement('div'); row.className = 'item-row';
         row.innerHTML = `
       <img src="${finalSrc}" alt="">
@@ -135,41 +175,7 @@ cartList.addEventListener('click', (e) => {
 
 
 // === Cities by Country ===
-const citiesByCountry = {
-    USA: ["New York", "Los Angeles", "Chicago"],
-    GBR: ["London", "Manchester", "Birmingham"],
-    EGY: [  "Cairo",
-            "Alexandria",
-            "Giza",
-            "Port Said",
-            "Suez",
-            "Luxor",
-            "Aswan",
-            "Ismailia",
-            "Beheira",
-            "Dakahlia",
-            "Damietta",
-            "Sharqia",
-            "Qalyubia",
-            "Kafr El Sheikh",
-            "Minya",
-            "Faiyum",
-            "Beni Suef",
-            "Qena",
-            "Sohag",
-            "Red Sea",
-            "New Valley",
-            "North Sinai",
-            "South Sinai",
-            "Matrouh",
-            "Ash Sharqiyah",
-            "Gharbia",
-            "Menoufia",
-            "Assiut"
-        ],
-    SAU: ["Riyadh", "Jeddah", "Dammam"],
 
-};
 
 // === Elements ===
 const form = document.getElementById("checkout-form");
@@ -178,15 +184,34 @@ const citySelect = document.getElementById("city");
 
 // === Populate cities dynamically ===
 countrySelect.addEventListener("change", () => {
+    const selectedCountry = countrySelect.value;
+    const cities = citiesByCountry[selectedCountry] || [];
     citySelect.innerHTML = `<option value="" disabled selected>Select city</option>`;
-    (citiesByCountry[countrySelect.value] || []).forEach(city => {
-        const opt = document.createElement("option");
-        opt.value = city;
-        opt.textContent = city;
-        citySelect.appendChild(opt);
-    });
+    if (cities.length > 0) {
+      cities.forEach(city => {
+        const option = document.createElement("option");
+        option.value = city;
+        option.textContent = city;
+        citySelect.appendChild(option);
+      });
+      citySelect.disabled = false;
+    } else {
+      citySelect.disabled = true;
+    }
 });
-
+country.value = currentCustomer.country;
+citySelect.innerHTML = "";
+if (citiesByCountry[currentCustomer.country]) {
+    citiesByCountry[currentCustomer.country].forEach(city => {
+        const option = document.createElement("option");
+        option.value = city;
+        option.textContent = city;
+        if (city === currentCustomer.city) {
+            option.selected = true; 
+        }
+        citySelect.appendChild(option);
+    });
+}
 function updateCustomerData() {
     const customers = JSON.parse(localStorage.getItem("customers")) || [];
     const currentIndex = customers.findIndex(c => String(c.id) === String(currentID));
