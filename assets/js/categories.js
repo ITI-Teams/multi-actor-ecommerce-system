@@ -9,10 +9,7 @@ let bsCollapse = new bootstrap.Collapse(collapseEl, { toggle: false });
 
 let activeCategory = null; 
 
-
-  
-
-   
+ 
 
 categories.forEach((category)=>{
   
