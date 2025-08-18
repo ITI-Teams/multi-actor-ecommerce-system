@@ -1,4 +1,4 @@
-import prodcutCard from "./include/productCard.js";
+import productCard from "./include/productCard.js";
 
 let filteredProducts = [];
 const products = JSON.parse(localStorage.getItem("products")) || []; // get products from local storage
@@ -9,207 +9,169 @@ const pageNumber = urlParams.get("page"); // get page number
 const categoryParam = urlParams.get("category"); // get category from URL
 const priceParam = urlParams.get("price");
 const sizeParams = urlParams.get("size");
-const prodcutPage = pageNumber ? parseInt(pageNumber) : 1; // convert page number to integer set 1 if not found
+let productPage = pageNumber ? parseInt(pageNumber) : 1; // convert page number to integer set 1 if not found
 const productsPerPage = 12; // set products per page
 
-// Function to filter products by category
-function filterByCategory(category) {
-  if (!category || category === "all") {
-    return [...products]; // return all products if no category selected
-  }
+// Load categories dynamically
+const categories = JSON.parse(localStorage.getItem("categories")) || [];
+const categorySelect = document.getElementById("category");
+categorySelect.innerHTML =
+  '<option value="all">All</option>' +
+  categories.map((c) => `<option value="${c.name}">${c.name}</option>`).join("");
 
-  return products.filter((product) => product.category.startsWith(category));
+// Filter by category
+function filterByCategory(category, list) {
+  if (!category || category === "all") return [...list];
+  return list.filter(
+    (product) => product.category.toLowerCase() === category.toLowerCase()
+  );
 }
 
-// Function to update URL without reloading
+// Filter by price
+function filterByPrice(price, list) {
+  if (!price || price === "all") return [...list];
+  const [min, max] = price.split("-").map(Number);
+  return list.filter(
+    (product) => product.price >= min && product.price <= max
+  );
+}
+
+// Filter by size
+function filterBySize(size, list) {
+  if (!size || size === "all") return list;
+  return list.filter((product) => {
+    if (Array.isArray(product.size)) {
+      return product.size.map((s) => s.toLowerCase()).includes(size.toLowerCase());
+    }
+    return product.size.toLowerCase() === size.toLowerCase();
+  });
+}
+
+// Update URL without reload
 function updateUrlParams(params) {
   const newUrl = new URL(window.location);
   Object.entries(params).forEach(([key, value]) => {
-    if (value) {
-      newUrl.searchParams.set(key, value);
-    } else {
-      newUrl.searchParams.delete(key);
-    }
+    if (value) newUrl.searchParams.set(key, value);
+    else newUrl.searchParams.delete(key);
   });
-  window.history.pushState({}, "", newUrl);
-  location.reload();
+  window.history.pushState({}, "", newUrl); // ✅ تحديث الرابط فقط بدون reload
 }
 
-// Function to filter products by price
-function filterByPrice(price, productsToFilter) {
-  const myprice = price.split("-").map((e) => {
-    return Number(e);
-  });
-
-  if (!price || price === "all") {
-    return [...productsToFilter];
-  } else {
-    return productsToFilter.filter(
-      (product) => product.price < myprice[1] && product.price > myprice[0]
-    );
-  }
-}
-
-// Function to filter products by size
-function filterBySize(size, productsToFilter) {
-  if (size === "all") {
-    return productsToFilter;
-  } else {
-    return productsToFilter.filter((product) =>
-      product.size.includes(size.toLowerCase())
-    );
-  }
-}
-
+// Render products
 function renderProducts(productsToRender, container) {
   const containerWrapper = document.getElementById(container);
   containerWrapper.innerHTML = "";
 
   if (!productsToRender.length) {
     containerWrapper.innerHTML =
-      '<p class="alert alert-danger fs-5 fw-semibold text-capitalize">No Products Found With this category</p>';
+      '<p class="alert alert-danger fs-5 fw-semibold text-capitalize">No Products Found</p>';
     return;
   }
 
-  // Calculate pagination for the current filtered products
+  // Pagination
   const totalFilteredProducts = productsToRender.length;
   const paginatedProducts = productsToRender.slice(
-    (prodcutPage - 1) * productsPerPage,
-    prodcutPage * productsPerPage
+    (productPage - 1) * productsPerPage,
+    productPage * productsPerPage
   );
 
   // Render products
   paginatedProducts.forEach((product) => {
-    containerWrapper.innerHTML += prodcutCard(product);
+    containerWrapper.innerHTML += productCard(product);
   });
 
-  renderPagination(totalFilteredProducts, prodcutPage);
+  renderPagination(totalFilteredProducts, productPage);
 }
 
+// Render pagination
 function renderPagination(totalProductsCount, currentPage) {
   const paginationCount = Math.ceil(totalProductsCount / productsPerPage);
   const paginationWrapper = document.getElementById("paginationWrapper");
   paginationWrapper.innerHTML = "";
 
-  // Add Prev button
+  // Prev button
   paginationWrapper.innerHTML += `
     <li class="page-item">
-      <a class="page-link ${currentPage === 1 ? "disabled" : ""}" 
-         href="/pages/products.html?${getCurrentQueryString({
-           page: currentPage - 1,
-         })}">
-         Prev
-      </a>
+      <button class="page-link" ${currentPage === 1 ? "disabled" : ""} data-page="${
+    currentPage - 1
+  }">Prev</button>
     </li>
   `;
 
-  // Add page numbers
+  // Page numbers
   for (let i = 1; i <= paginationCount; i++) {
     paginationWrapper.innerHTML += `
       <li class="page-item">
-        <a class="page-link ${
-          currentPage === i ? "active disabled text-white" : ""
-        }" 
-           href="/pages/products.html?${getCurrentQueryString({ page: i })}">
-           ${i}
-        </a>
+        <button class="page-link ${currentPage === i ? "active text-white" : ""}" data-page="${i}">
+          ${i}
+        </button>
       </li>
     `;
   }
 
-  // Add Next button
+  // Next button
   paginationWrapper.innerHTML += `
     <li class="page-item">
-      <a class="page-link ${currentPage === paginationCount ? "disabled" : ""}" 
-         href="/pages/products.html?${getCurrentQueryString({
-           page: currentPage + 1,
-         })}">
-         Next
-      </a>
+      <button class="page-link" ${
+        currentPage === paginationCount ? "disabled" : ""
+      } data-page="${currentPage + 1}">Next</button>
     </li>
   `;
+
+  // Handle clicks
+  paginationWrapper.querySelectorAll("button[data-page]").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      productPage = parseInt(btn.dataset.page);
+      updateUrlParams({ page: productPage });
+      renderProducts(filteredProducts, "productsWrapper");
+    });
+  });
 }
 
-// Helper function to maintain current query parameters
-function getCurrentQueryString(updates = {}) {
-  const params = new URLSearchParams(window.location.search);
-  Object.entries(updates).forEach(([key, value]) => {
-    if (value) {
-      params.set(key, value);
-    } else {
-      params.delete(key);
-    }
+// ✅ Apply all filters together
+function applyFilters() {
+  const selectedCategory = document.getElementById("category").value || "all";
+  const selectedPrice = document.getElementById("price").value || "all";
+  const selectedSize = document.getElementById("size").value || "all";
+
+  let temp = [...products];
+  temp = filterByCategory(selectedCategory, temp);
+  temp = filterByPrice(selectedPrice, temp);
+  temp = filterBySize(selectedSize, temp);
+
+  filteredProducts = temp;
+
+  updateUrlParams({
+    category: selectedCategory !== "all" ? selectedCategory : null,
+    price: selectedPrice !== "all" ? selectedPrice : null,
+    size: selectedSize !== "all" ? selectedSize : null,
+    page: productPage,
   });
-  return params.toString();
+
+  renderProducts(filteredProducts, "productsWrapper");
 }
 
 window.addEventListener("load", () => {
-  // Apply filters in sequence
-  filteredProducts = [...products];
-  // Apply initial params filter if present in URL
-  if (categoryParam) {
-    filteredProducts = filterByCategory(categoryParam);
-    document.getElementById("category").value = categoryParam;
-  }
-  if (priceParam) {
-    filteredProducts = filterByPrice(priceParam, filteredProducts);
-    document.getElementById("price").value = priceParam;
-  }
-  if (sizeParams) {
-    filteredProducts = filterBySize(sizeParams, filteredProducts);
-    document.getElementById("size").value = sizeParams;
-  }
+  // اضبط dropdowns من URL لو موجودة
+  if (categoryParam) document.getElementById("category").value = categoryParam;
+  if (priceParam) document.getElementById("price").value = priceParam;
+  if (sizeParams) document.getElementById("size").value = sizeParams;
 
-  renderProducts(filteredProducts, "productsWrapper");
+  applyFilters();
 
-  // Handle category dropdown change
-  const selectCategory = document.getElementById("category");
-  selectCategory.addEventListener("change", function () {
-    const selectedCategory = this.value;
-
-    // Update URL with new category
-    updateUrlParams({
-      category: selectedCategory !== "all" ? selectedCategory : null,
-      size: null,
-      price: null,
-      page: 1, // Reset to first page when changing category
-    });
-
-    // Filter products
-    filteredProducts = filterByCategory(selectedCategory);
-
-    // Render products with new filter
-    renderProducts(filteredProducts, "productsWrapper");
+  // Listen for changes
+  document.getElementById("category").addEventListener("change", () => {
+    productPage = 1;
+    applyFilters();
   });
 
-  // Handle size dropdown change
-  const selectPrice = document.getElementById("price");
-  selectPrice.addEventListener("change", function () {
-    const selectedPrice = this.value;
-    let tempProducts = filterByCategory(categoryParam || "all");
-    tempProducts = filterByPrice(selectedPrice, tempProducts);
-    updateUrlParams({
-      category: categoryParam,
-      size: sizeParams,
-      price: selectedPrice !== "all" ? selectedPrice : null,
-      page: 1, // Reset to first page when changing price
-    });
-    filteredProducts = tempProducts;
-    renderProducts(filteredProducts, "productsWrapper");
+  document.getElementById("price").addEventListener("change", () => {
+    productPage = 1;
+    applyFilters();
   });
 
-  // Handle size dropdown change
-  const selectSize = document.getElementById("size");
-  selectSize.addEventListener("change", function () {
-    const selectedSize = this.value;
-    let tempProducts = filterByCategory(categoryParam || "all");
-    tempProducts = filterByPrice(priceParam || "all", tempProducts);
-    tempProducts = filterBySize(selectedSize, tempProducts);
-    updateUrlParams({
-      category: categoryParam,
-      price: priceParam,
-      size: selectedSize !== "all" ? selectedSize : null,
-      page: 1,
-    });
+  document.getElementById("size").addEventListener("change", () => {
+    productPage = 1;
+    applyFilters();
   });
 });

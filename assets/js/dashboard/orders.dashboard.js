@@ -77,11 +77,26 @@ function renderTable() {
 
 function updateOrderStatus(orderId, newStatus) {
     const orderIndex = orders.findIndex(o => o.id === orderId);
-    if (orderIndex !== -1) {
-        orders[orderIndex].status = newStatus;
-        saveOrders();
-        renderTable();
+    if (orderIndex === -1) return;
+    if (orders[orderIndex].status === "Completed") {
+        alert("This order is already completed and cannot be changed.");
+        renderTable(); 
+        return;
     }
+    orders[orderIndex].status = newStatus;
+    if (newStatus === "Completed") {
+        let products = JSON.parse(localStorage.getItem("products")) || [];
+        const productIndex = products.findIndex(p => p.id === orders[orderIndex].product_id);
+        if (productIndex !== -1) {
+            products[productIndex].stock = Math.max(
+                0, 
+                products[productIndex].stock - orders[orderIndex].quntity
+            );
+            localStorage.setItem("products", JSON.stringify(products));
+        }
+    }
+    saveOrders();
+    renderTable();
 }
 
 function renderPagination(totalRows) {

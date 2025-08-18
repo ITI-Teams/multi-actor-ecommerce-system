@@ -11,6 +11,7 @@
     <script>
         checkAuthorization(["admin"]);
     </script>
+    <link rel="icon" type="image/x-icon" href="/Trendora.ico">
 </head>
 <body class="min-vh-100 d-flex flex-column">
     <!--Start Splash Screen -->
@@ -47,24 +48,28 @@
                             <i class="fas fa-plus"></i> Create Customer
                         </button>
                     </div>
-                    <table class="table table-bordered table-hover">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th>gender</th>
-                                <th>country</th>
-                                <th>city</th>
-                                <th>Address</th>
-                                <th>age</th>
-                                <th>Phone</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="customerTableBody"></tbody>
-                    </table>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>gender</th>
+                                    <th>country</th>
+                                    <th>city</th>
+                                    <th>Address</th>
+                                    <th>age</th>
+                                    <th>Phone</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="customerTableBody"></tbody>
+                        </table>
+
+                    </div>
+                    
                     <nav>
-                        <ul class="pagination" id="pagination"></ul>
+                        <ul class="pagination flex-wrap" id="pagination"></ul>
                     </nav>
                 </main>
                 <div class="modal fade" id="customerModal" tabindex="-1">
@@ -109,11 +114,11 @@
                                                 <label for="country">country</label>
                                                 <select id="country" class="form-select">
                                                     <option value="">-- Select Country --</option>
-                                                    <option value="US">United States</option>
-                                                    <option value="UK">United Kingdom</option>
-                                                    <option value="EG">Egypt</option>
-                                                    <option value="SA">Saudi Arabia</option>
-                                                    <option value="FR">France</option>
+                                                    <option value="USA">United States</option>
+                                                    <option value="GBR">United Kingdom</option>
+                                                    <option value="EGY">Egypt</option>
+                                                    <option value="SAU">Saudi Arabia</option>
+                                                    <option value="FRA">France</option>
                                                 </select>
                                             </div>
                                         </div>

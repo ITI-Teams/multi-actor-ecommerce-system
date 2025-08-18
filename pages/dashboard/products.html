@@ -11,6 +11,7 @@
     <script>
         checkAuthorization(["admin", "seller"]);
     </script>
+    <link rel="icon" type="image/x-icon" href="/Trendora.ico">
 </head>
 <body class="min-vh-100 d-flex flex-column">
     <!--Start Splash Screen -->
@@ -47,24 +48,27 @@
                             <i class="fas fa-plus"></i> Create Product
                         </button>
                     </div>
-                    <table class="table table-bordered table-hover">
-                        <thead class="table-light">
-                            <tr>
-                                <th>Name</th>
-                                <th>Description</th>
-                                <th>Category</th>
-                                <th>Review</th>
-                                <th>Price</th>
-                                <th>Stock</th>
-                                <th>Size</th>
-                                <th>Color</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody id="productTableBody"></tbody>
-                    </table>
-                    <nav>
-                        <ul class="pagination" id="pagination"></ul>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped table-hover table-responsive-sm">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Description</th>
+                                    <th>Category</th>
+                                    <th>Review</th>
+                                    <th>Price</th>
+                                    <th>Stock</th>
+                                    <th>Size</th>
+                                    <th>Color</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="productTableBody"></tbody>
+                        </table>
+                    </div>
+                    
+                    <nav class="container">
+                        <ul class="pagination flex-wrap" id="pagination"></ul>
                     </nav>
                 </main>
                 <div class="modal fade" id="productModal" tabindex="-1">
@@ -114,11 +118,10 @@
                                             <div class="mb-3">
                                                 <label for="price">size</label>
                                                 <select id="size" class="form-select form-control" multiple aria-label="Multiple select example">
-                                                    <option value="xs">xs</option>
                                                     <option value="s">s</option>
                                                     <option value="m">m</option>
                                                     <option value="l">l</option>
-                                                    <option value="XL">l</option>
+                                                    <option value="XL">XL</option>
                                                     <option value="XXL">XXL</option>
                                                     <option value="XXXL">XXXL</option>
                                                 </select>

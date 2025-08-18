@@ -120,7 +120,7 @@ document.getElementById("productForm").addEventListener("submit", function(e) {
     const images =  imagesArray;
 
     // Validation
-    const allowedSizes = ["xs", "s", "m", "l", "XL", "XXL", "XXXL"];
+    const allowedSizes = ["s", "m", "l", "XL", "XXL", "XXXL"];
     const allowedImageExtensions = /\.(png|jpg|jpeg|jpe|webp|svg)$/i;
     const colorRegex = /^#([0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/;
     const invalidChars = /<.*?>|[{}[\]<>]/;
@@ -132,19 +132,11 @@ document.getElementById("productForm").addEventListener("submit", function(e) {
         showFormMessage("All fields are required!");
         return;
     }
-    if (!/^[\p{L}\s]+$/u.test(name)) {
-        showFormMessage("The name must contain only letters, no numbers.");
-        return;
-    }
     if (name.length > 50) {
         showFormMessage("Name is too long, maximum 50 characters.");
         return;
     }
-    if (!/^[\p{L}\s.,-]+$/u.test(description)) {
-        showFormMessage("Description can only contain letters, spaces, commas, hyphens, and periods.");
-        return;
-    }
-    if (description.length > 500) {
+    if (description.length > 1200) {
         showFormMessage("Description is too long, maximum 500 characters.");
         return;
     }
@@ -168,10 +160,13 @@ document.getElementById("productForm").addEventListener("submit", function(e) {
         showFormMessage("Invalid color format. Use valid hex color codes like #FFF, #FFFFFF.");
         return;
     }
-    // if (!images.every(img => allowedImageExtensions.test(img))) {
-    //     showFormMessage("All images must end with .png, .jpg, .jpeg, .jpe, .webp, or .svg");
-    //     return;
-    // }
+    const nameExists = products.some(p => 
+        p.name.toLowerCase() === name.toLowerCase() && p.id != id
+    );
+    if (nameExists) {
+        showFormMessage("A product with this name already exists!");
+        return;
+    }
 
     const session = JSON.parse(localStorage.getItem("session")) || null;
 
@@ -268,7 +263,6 @@ addColorBtn.addEventListener("click", () => {
         renderColors();
     }
 });
-/// Add URL Images
 let imagesArray = [];
 const fileInput = document.getElementById("imageFileInput");
 const imageList = document.getElementById("imageList");
@@ -277,12 +271,16 @@ fileInput.addEventListener("change", () => {
     const files = fileInput.files;
     if (files.length) {
         Array.from(files).forEach(file => {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                imagesArray.push(e.target.result);
-                renderImages();
-            };
-            reader.readAsDataURL(file);
+            if (file.type.startsWith("image/")) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    imagesArray.push(e.target.result);
+                    renderImages();
+                };
+                reader.readAsDataURL(file);
+            } else {
+                alert("Only image files are allowed!");
+            }
         });
     }
 });
@@ -294,15 +292,17 @@ function renderImages() {
         imgWrapper.style.display = "inline-block";
         imgWrapper.style.position = "relative";
         imgWrapper.style.marginRight = "10px";
-
         const img = document.createElement("img");
-        img.src = imgSrc;
+        if (imgSrc.startsWith("data:")) {
+            img.src = imgSrc;
+        } else {
+            img.src = "/assets/img/products/"+imgSrc;
+        }
         img.style.width = "60px";
         img.style.height = "60px";
         img.style.objectFit = "cover";
         img.style.border = "1px solid #ccc";
         img.style.borderRadius = "4px";
-
         const removeBtn = document.createElement("span");
         removeBtn.innerHTML = "✖";
         removeBtn.style.position = "absolute";

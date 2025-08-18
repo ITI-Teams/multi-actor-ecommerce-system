@@ -8,7 +8,20 @@
   <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
   <link rel="stylesheet" href="../assets/css/styles.css">
   <link rel="stylesheet" href="../assets/css/user.css">
+  <script type="module" src="../assets/js/main.js"></script>
   <script src="../assets/js/authorization.js"></script>
+  
+  <script src="../data/data.js"></script>
+  <script>
+    let currentID = localStorage.getItem("customerSession");
+    const currentCustomer = customers.find(c => String(c.id) === String(currentID));
+    if (!currentID) {
+      alert("You must log in first.");
+      window.location.href = "login.html";
+    }
+  </script>
+  <script src="../assets/js/include/nav.js" defer></script>
+  <link rel="icon" type="image/x-icon" href="../Trendora.ico">
 </head>
 
 <body>
@@ -48,17 +61,40 @@
             <thead class="table-dark text-center">
               <tr>
                 <th>ID</th>
-                <th>Image</th>
-                <th>Category</th>
-                <th>Title</th>
-                <th>Description</th>
+                <th>Status</th>
                 <th>Price</th>
-                <th>Qty</th>
+                <th>Quantity</th>
                 <th>Total</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody id="orders-body"></tbody>
           </table>
+          <div class="modal fade" id="reviewModal" tabindex="-1" aria-hidden="true" style="z-index: 1000000000000000000000;">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Write a Review</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="mb-3 text-center" id="starRating">
+                    <i class="fa fa-star star" data-value="1"></i>
+                    <i class="fa fa-star star" data-value="2"></i>
+                    <i class="fa fa-star star" data-value="3"></i>
+                    <i class="fa fa-star star" data-value="4"></i>
+                    <i class="fa fa-star star" data-value="5"></i>
+                  </div>
+                  <input type="hidden" id="reviewProductId">
+                  <input type="hidden" id="reviewOrderId">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" onclick="submitReview()">Submit</button>
+                </div>
+              </div>
+            </div>
+          </div>
           <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center flex-wrap">
               <li class="page-item">
@@ -106,8 +142,8 @@
             <div class="col-md-6">
               <select id="genderInput" class="form-select">
                 <option value="">Select Gender</option>
-                <option>Male</option>
-                <option>Female</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
               </select>
             </div>
             <div class="col-md-6">
@@ -152,16 +188,17 @@
     </main>
   </div>
 
-
-
   <footer id="main-footer" class="footer bg-black text-light "></footer>
   <script src="https://kit.fontawesome.com/4f91921791.js" crossorigin="anonymous"></script>
   <script src="../assets/js/bootstrap.bundle.min.js"></script>
-  <script type="module" src="../assets/js/main.js"></script>
   <script src="../assets/js/user-profile.js"></script>
   <script src="../assets/js/encrypt.js"></script>
-  <script src="../data/data.js"></script>
-  
+  <script src="../assets/js/add.cart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            updateCartBadge(); 
+        });
+    </script>
 </body>
 
 </html>

@@ -6,12 +6,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trendora</title>
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
-    <script src="../assets/js/test.js"></script>
+    <script type="module" src="../assets/js/test.js"></script>
     <script src="https://kit.fontawesome.com/4f91921791.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../assets/css/styles.css">
     <script type="module" src="../assets/js/main.js"></script>
-
+    <script src="../assets/js/include/nav.js" defer></script>
     <link href="../assets/css/about-us-page.css" rel="stylesheet">
+    <script>
+        let currentID = localStorage.getItem("customerSession");
+        const customers = JSON.parse(localStorage.getItem("customers")) || [];
+        const currentCustomer = customers.find(c => String(c.id) === String(currentID));
+        if (!currentID) {
+        alert("You must log in first.");
+        window.location.href = "login.html";
+        }
+    </script>
+    <link rel="icon" type="image/x-icon" href="../Trendora.ico">
 </head>
 
 <body>
@@ -216,6 +226,12 @@
 
     <footer id="main-footer" class="footer bg-black text-light mt-5"></footer>
     <script src="../assets/js/bootstrap.bundle.min.js"></script>
+    <script src="../assets/js/add.cart.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            updateCartBadge(); 
+        });
+    </script>
 
 </body>
 
