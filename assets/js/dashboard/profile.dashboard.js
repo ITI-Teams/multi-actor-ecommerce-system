@@ -66,7 +66,7 @@ function displayProfile() {
     document.getElementById("userEmail").textContent = currentUser.email;
     document.getElementById("userPhone").textContent = currentUser.phone;
 
-
+    document.getElementById("userId").value = currentUser.id;
     document.getElementById("name").value = currentUser.name;
     document.getElementById("email").value = currentUser.email;
     document.getElementById("phone").value = currentUser.phone;
@@ -77,10 +77,19 @@ function displayProfile() {
 
     
 }
-
+function showFormMessage(message, type = "danger") {
+    const msgDiv = document.getElementById("formMessage");
+    msgDiv.innerHTML = `
+        <div class="alert alert-${type} py-2 px-3" role="alert">
+            ${message}
+        </div>
+    `;
+    msgDiv.style.display = "block";
+}
 document.querySelector("#editModal form").addEventListener("submit", function(e) {
     e.preventDefault();
 
+    const id = document.getElementById("userId").value;
     const newName = document.getElementById("name").value.trim();
     const newEmail = document.getElementById("email").value.trim();
     const newPhone = document.getElementById("phone").value.trim();
@@ -120,6 +129,24 @@ document.querySelector("#editModal form").addEventListener("submit", function(e)
             }
         }
         currentUser.password = encryptText(newPassword);
+    }
+
+    const meId = Number(id);
+    const nameTaken = users.find(u => u.id !== meId && u.name.toLowerCase() === newName.toLowerCase());
+    const emailTaken = users.find(u => u.id !== meId && u.email.toLowerCase() === newEmail.toLowerCase());
+    const phoneTaken = users.find(u => u.id !== meId && u.phone === newPhone);
+
+    if (emailTaken) {
+        showFormMessage("This email is already registered. Please use a different email.");
+        return;
+    }
+    if (currentUser.name.toLowerCase() != newName.toLowerCase()) {
+        showFormMessage("This name is already registered. Please use a different name.");
+        return;
+    }
+    if (phoneTaken) {
+        showFormMessage("This phone number is already registered. Please use a different phone number.");
+        return;
     }
 
     currentUser.name = newName;

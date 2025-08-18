@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,40 +8,60 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha512-DxV+EoADOkOygM4IR9yXP8Sb2qwgidEmeqAEmDKIOfPRQZOWbXCzLC6vjbZyy0vPisbH2SyW27+ddLVCN+OMzQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script src="../../data/data.js"></script>
     <title>Login</title>
+    <link rel="icon" type="image/x-icon" href="/Trendora.ico">
 </head>
+
 <body>
   <form id="loginForm" class="form_login">
+
     <div>
       <button class="back" id="back"><i class="fa-solid fa-angle-left"></i> Back</button>
     </div>
+
     <div class="container">
-      <img src="../../assets/img/Dashboard-logo.png" alt="Logo" width="160" height="160">
+      <img src="../../assets/img/Dashboard-logo.png" alt="Logo" width="170" height="170">
       <div class="box">
         <h1>Welcome back!</h1>
-        <p>Login to your dashboard</p>
-      <div>
-      <div class="box2">
-        <div class="input-group">
-          <input type="text" id="emailOrPhone" required>
-          <label for="emailOrPhone">Email or Phone</label>
-        </div>
-        <div class="input2-group">
-          <input type="password" id="password" required>
-          <label for="password">password</label>
-        </div>
-      </div>
-      <div class="box3">
-        <input type="checkbox" id="rememberMe"><label for="rememberMe">Remember Me</label>
-        <span class="register"><a href="../dashboard/register.html">Create New Account as Seller</a></span>
-      </div>
-      <div class="box4">
+        <p><small>to your dashboard</small></p>
         <div>
-          <button class="one" id="submit">Submit</button>
+
+          <div class="box2">
+
+            <div class="input-group">
+              <input type="text" id="emailOrPhone" required>
+              <label for="emailOrPhone">Email or Phone</label>
+            </div>
+
+            <div class="input2-group">
+              <input type="password" id="password" required>
+              <label for="password">password</label>
+            </div>
+
+          </div>
+
+          <div class="box3">
+            <div>
+              <input type="checkbox" id="rememberMe">
+              <label for="rememberMe">Remember Me</label>
+            </div>
+            <div class="register">
+              <a href="#">Create New Account as Seller</a>
+            </div>
+          </div>
+
+          <div class="box4">
+            <div>
+              <button class="one" id="submit">Submit</button>
+            </div>
+
+          </div>
+
         </div>
-      </div>
-    </div>      
+
   </form>
+
   <script src="../../assets/js/dashboard/authentication.dashboard.js"></script>
-  
+
 </body>
+
 </html>

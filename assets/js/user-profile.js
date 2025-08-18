@@ -245,12 +245,31 @@ function loadOrders() {
 
   customerOrders.forEach(order => {
     const tr = document.createElement("tr");
+    let actionBtn = "";
+
+    if (order.status === "Cancelled") {
+      actionBtn = `<button class="btn btn-danger btn-sm disabled" disabled>Cancelled</button>`;   
+    } else if ( order.status !== "Completed"){
+      actionBtn = `<button class="btn btn-danger btn-sm" onclick="cancelOrder(${order.id})">Cancel</button>`;
+      
+    }else {
+      actionBtn = `
+                <button class="btn btn-success btn-sm" 
+                  data-bs-toggle="modal" 
+                  data-bs-target="#reviewModal"
+                  onclick="window.pendingReviewData={productId: ${order.product_id}, orderId: ${order.id}}">
+              Review
+          </button>
+      
+      `;
+    }
     tr.innerHTML = `
       <td class="text-center">${order.id}</td>
       <td class="text-center">${order.status}</td>
       <td class="text-center">${order.totalPrice} EGP</td>
       <td class="text-center">${order.quntity}</td>
       <td class="text-center">${order.totalPrice * order.quntity} EGP</td>
+      <td class="text-center">${actionBtn}</td>
     `;
     tbody.appendChild(tr);
   });
@@ -305,8 +324,92 @@ function logoutCustomer() {
   localStorage.removeItem("customerSession");
   window.location.href = "../index.html";
 }
+/////////////
+function cancelOrder(orderId) {
+  if (!confirm("Are you sure you want to cancel this order?")) {
+    return;
+  }
+  let orders = JSON.parse(localStorage.getItem("orders")) || [];
+  orders = orders.map(o => {
+    if (o.id === orderId && o.status != "Completed") {
+      o.status = "Cancelled";
+    }
+    return o;
+  });
+  localStorage.setItem("orders", JSON.stringify(orders));
+  loadOrders();
+}
 
 
-  
 
- 
+let selectedRating = 0;
+document.querySelectorAll("#starRating .star").forEach(star => {
+  star.addEventListener("click", function () {
+    selectedRating = this.getAttribute("data-value");
+    document.querySelectorAll("#starRating .star").forEach(s => {
+      s.classList.remove("text-warning");
+    });
+    for (let i = 0; i < selectedRating; i++) {
+      document.querySelectorAll("#starRating .star")[i].classList.add("text-warning");
+    }
+  });
+});
+
+function openReviewModal(productId,orderId) {
+  document.getElementById("reviewOrderId").value = orderId;
+  const customerId = localStorage.getItem("customerSession");
+  selectedRating = 0;
+  document.querySelectorAll("#starRating .star").forEach(s => s.classList.remove("text-warning"));
+  let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+  let existingReview = reviews.find(r => r.product_id == productId && r.customer_id == customerId);
+  if (existingReview) {
+    selectedRating = existingReview.review; 
+    for (let i = 0; i < selectedRating; i++) {
+      document.querySelectorAll("#starRating .star")[i].classList.add("text-warning");
+    }
+  }
+  document.getElementById("reviewProductId").value = productId;
+  let modal = new bootstrap.Modal(document.getElementById("reviewModal"));
+  modal.show();
+}
+
+function submitReview() {
+  const customerId = localStorage.getItem("customerSession");
+  const productId = document.getElementById("reviewProductId").value;
+  if (selectedRating === 0) {
+    alert("Please select a star rating!");
+    return;
+  }
+
+  let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+  let existingReviewIndex = reviews.findIndex(r => r.product_id == productId && r.customer_id == customerId);
+  if (existingReviewIndex !== -1) {
+    reviews[existingReviewIndex].review = selectedRating;
+    alert("✏️ Your review has been updated!");
+  }else{
+    let newReview = {
+      id: reviews.length + 1,
+      product_id: productId,
+      customer_id: customerId,
+      review: selectedRating
+    };
+    reviews.push(newReview);
+    alert("✅ Review submitted successfully!");
+  }
+  localStorage.setItem("reviews", JSON.stringify(reviews));
+  let reviewModal = bootstrap.Modal.getInstance(document.getElementById('reviewModal'));
+  reviewModal.hide();
+  document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+}
+
+document.getElementById('reviewModal').addEventListener('shown.bs.modal', function () {
+    if (window.pendingReviewData) {
+        openReviewModal(window.pendingReviewData.productId, window.pendingReviewData.orderId);
+        window.pendingReviewData = null; // reset
+    }
+});
+document.getElementById('reviewModal').addEventListener('hidden.bs.modal', function () {
+    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+    document.body.classList.remove('modal-open');
+    document.body.style = ""; // إزالة أي overflow أو padding
+});

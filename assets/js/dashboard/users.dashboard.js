@@ -143,12 +143,17 @@ document.getElementById("userForm").addEventListener("submit", function(e) {
     }
     const existingUser = users.find(u => 
         (u.email === email && u.id != id) || 
-        (u.phone === phone && u.id != id)
+        (u.phone === phone && u.id != id)|| 
+        (u.name === name && u.id != id)
     );
 
     if (existingUser) {
         if (existingUser.email === email) {
             showFormMessage("This email is already registered. Please use a different email.");
+            return;
+        }
+        if (existingUser.name === name) {
+            showFormMessage("This name is already registered. Please use a different name.");
             return;
         }
         if (existingUser.phone === phone) {

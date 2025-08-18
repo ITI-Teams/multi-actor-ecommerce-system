@@ -75,7 +75,8 @@ function displayTable() {
       const stars = renderStars(rating);
       Container.innerHTML += `
               <div class="card" style="max-width: 320px;margin: 3px">
-                <img src="/assets/img/products/${product.images[1] || product.images[0]}" class="card-img-top" alt="${product.name}">
+                <img src="${product.images && product.images[0] ? (product.images[0].startsWith('data:') ? product.images[0] : '/assets/img/products/' + product.images[0]) : '/assets/img/women.png'}" 
+                class="card-img-top prodcut-img" alt="${product.name}">
                 <div class="card-body">
                     <a href="/pages/onepage-product.html?product=${product.id}" class="text-dark link-offset-1-hover text-uppercase">
                         <h5 class="card-title">${product.name}</h5>

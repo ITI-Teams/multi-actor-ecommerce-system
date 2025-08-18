@@ -72,15 +72,18 @@ if (!product) {
         product.description;
 
     document.getElementById("main-Img").src =
-        "/assets/img/products/" + product.images[0];
+        product.images[0].startsWith("data:")
+            ? product.images[0]
+            : "/assets/img/products/" + product.images[0];
 
     const thumbsWrapper = document.getElementById("thumbsWrapper");
     thumbsWrapper.innerHTML = "";
     product.images.forEach((image, index) => {
         const thumb = document.createElement("img");
         thumb.classList.add("thumb");
-        thumb.src = "/assets/img/products/" + image;
-        thumb.dataset.src = "/assets/img/products/" + image;
+        const imgSrc = image.startsWith("data:") ? image : "/assets/img/products/" + image;
+        thumb.src = imgSrc;
+        thumb.dataset.src = imgSrc;
         thumb.alt = "thumb" + (index + 1);
         thumbsWrapper.appendChild(thumb);
     });
@@ -103,7 +106,7 @@ if (!product) {
 
     // المقاسات
     const productSizeWrapper = document.getElementById("product-size");
-    const sizes = ["S", "M", "L", "XL"];
+    const sizes = ["s", "m", "l", "XL","XXL", "XXXL"];
     productSizeWrapper.innerHTML = "";
 
     sizes.forEach((size) => {
@@ -135,7 +138,7 @@ if (!product) {
         document.getElementById("relatedProductsWrapper");
     const relatedProducts = products.filter(
         (p) => p.category === product.category && p.id !== product.id
-    );
+    ).slice(0, 12);
     relatedProductsWrapper.innerHTML = "";
     relatedProducts.forEach((p) => {
         relatedProductsWrapper.innerHTML += prodcutCard(p);

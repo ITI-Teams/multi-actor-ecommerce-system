@@ -65,10 +65,36 @@
                 <th>Price</th>
                 <th>Quantity</th>
                 <th>Total</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody id="orders-body"></tbody>
           </table>
+          <div class="modal fade" id="reviewModal" tabindex="-1" aria-hidden="true" style="z-index: 1000000000000000000000;">
+            <div class="modal-dialog">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title">Write a Review</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                  <div class="mb-3 text-center" id="starRating">
+                    <i class="fa fa-star star" data-value="1"></i>
+                    <i class="fa fa-star star" data-value="2"></i>
+                    <i class="fa fa-star star" data-value="3"></i>
+                    <i class="fa fa-star star" data-value="4"></i>
+                    <i class="fa fa-star star" data-value="5"></i>
+                  </div>
+                  <input type="hidden" id="reviewProductId">
+                  <input type="hidden" id="reviewOrderId">
+                </div>
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary" onclick="submitReview()">Submit</button>
+                </div>
+              </div>
+            </div>
+          </div>
           <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center flex-wrap">
               <li class="page-item">
@@ -173,8 +199,6 @@
             updateCartBadge(); 
         });
     </script>
-  
-  
 </body>
 
 </html>

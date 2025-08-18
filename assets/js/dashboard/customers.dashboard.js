@@ -136,10 +136,6 @@ document.getElementById("customerForm").addEventListener("submit", function(e) {
         showFormMessage("All fields are required!");
         return;
     }
-    if (!/^[\p{L}\s]+$/u.test(name)) {
-        showFormMessage("The name must contain only letters, no numbers.");
-        return;
-    }
     if (name.length > 50) {
         showFormMessage("Name is too long, maximum 50 characters.");
         return;
@@ -195,12 +191,17 @@ document.getElementById("customerForm").addEventListener("submit", function(e) {
     }
     const existingCustomer = customers.find(u => 
         (u.email === email && u.id != id) || 
-        (u.phone === phone && u.id != id)
+        (u.phone === phone && u.id != id)|| 
+        (u.name === name && u.id != id)
     );
 
     if (existingCustomer) {
         if (existingCustomer.email === email) {
             showFormMessage("This email is already registered. Please use a different email.");
+            return;
+        }
+        if (existingCustomer.name === name) {
+            showFormMessage("This name is already registered. Please use a different user name.");
             return;
         }
         if (existingCustomer.phone === phone) {
@@ -243,7 +244,17 @@ function editCustomer(id) {
     document.getElementById("email").value = customer.email;
     document.getElementById("gender").value = customer.gender;
     document.getElementById("country").value = customer.country;
-    document.getElementById("city").value = customer.city;
+    citySelect.innerHTML = `<option value="${customer.city}">${customer.city}</option>`;
+    if (customer.country && countryCities[customer.country]) {
+        countryCities[customer.country].forEach(city => {
+            const option = document.createElement("option");
+            option.value = city;
+            option.textContent = city;
+            citySelect.appendChild(option);
+        });
+    }
+
+    document.getElementById("city").option = customer.city;
     document.getElementById("address").value = customer.address;
     document.getElementById("birthday").value = customer.birthday;
     document.getElementById("password").value = "";
