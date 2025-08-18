@@ -55,6 +55,9 @@ export function renderHeader(pageName,currentPage) {
             </button>
             <span class="navbar-brand mb-0 h1">${pageName}</span>
             <div class="dropdown">
+                <a href="/index.html" class="btn btn-light me-2" id="toggleHomePage">
+                    <i class="fas fa-home"></i>
+                </a>
                 <button class="btn btn-light me-2" id="toggleDarkMode">
                     <i class="fas fa-moon" id="darkIcon"></i>
                 </button>

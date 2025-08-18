@@ -86,7 +86,8 @@ document.querySelectorAll(".category-btn").forEach(btn => {
           row.innerHTML += `
             <div class="col-md-3 mb-4">
               <div class="card h-100">
-                <img src="/assets/img/products/${prod.images[1] || prod.images[0]}" class="card-img-top" alt="${prod.name}">
+                <img src="${prod.images && prod.images[0] ? (prod.images[0].startsWith('data:') ? prod.images[0] : '/assets/img/products/' + prod.images[0]) : '/assets/img/women.png'}" 
+                class="card-img-top prodcut-img" alt="${prod.name}">
                 <div class="card-body">
                   <a href="/pages/onepage-product.html?product=${prod.id}" class="text-dark link-offset-1-hover text-uppercase">
                     <h5 class="card-title">${prod.name}</h5>
