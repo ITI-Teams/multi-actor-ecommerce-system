@@ -32,11 +32,20 @@ function renderCart() {
   cart.forEach(item => {
     const product = products.find(p => p.id === item.product_id);
     if (!product) return;
-    const imgStr = String(product?.images?.src || product?.images || '').trim();
+    const imgStr = String(
+      product?.images?.src || 
+      (Array.isArray(product?.images) ? product.images[0] : product?.images) || ''
+    ).trim();
+
     const finalSrc = (/^data:|^https?:\/\/|^\/\//i.test(imgStr))
       ? imgStr
-      : (imgStr ? `../../assets/img/products/${imgStr}` : `../../assets/img/products/`+product.images[0]);
+      : (imgStr
+          ? `/assets/img/products/${imgStr}`
+          : '/assets/img/products/women.png');
 
+
+
+      
     const col = document.createElement('div');
     col.className = 'col';
 

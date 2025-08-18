@@ -41,7 +41,7 @@ let products = JSON.parse(localStorage.getItem("products")) || Array.from({ leng
     size: ['S','M','L','XL'],
     color: ["#000000", "#FFFFFF", "#FF0000"],
     images: [`product${(i % 10) + 1}.jpg`],
-    seller_id: (i % 5) + 2, // sellers start from id=2
+    seller_id: (i % 5) + 2,
     stock: Math.floor(Math.random() * 50) + 1
 }));
 // ========== ORDERS ==========
