@@ -1,4 +1,5 @@
-function loadProfile() {
+
+  function loadProfile() {
   const currentID = localStorage.getItem("customerSession");
   if (!currentID) {
     alert("You must log in first.");
@@ -15,7 +16,7 @@ function loadProfile() {
   }
 
   const displayName =
-    (currentCustomer.firstName || "") +
+    (currentCustomer.FirstName || "") +
     (currentCustomer.lastName ? " " + currentCustomer.lastName : "");
 
   document.getElementById("profileImage").src = currentCustomer.profileImage || "../assets/img/defultUser.webp";
@@ -31,7 +32,7 @@ function loadProfile() {
 }
 
 function saveOrUpdateCustomer(email, birthday, phone, password) {
-  const firstName = document.getElementById("fnameInput").value;
+  const FirstName = document.getElementById("fnameInput").value;
   const lastName = document.getElementById("lnameInput").value;
   const gender = document.getElementById("genderInput").value;
   const age = calculateAge(birthday);
@@ -70,7 +71,7 @@ function saveOrUpdateCustomer(email, birthday, phone, password) {
     customers[existingIndex] = {
       ...customers[existingIndex], 
       profileImage,
-      firstName,
+      FirstName,
       lastName,
       email,
       gender,
@@ -85,17 +86,18 @@ function saveOrUpdateCustomer(email, birthday, phone, password) {
     localStorage.setItem("customers", JSON.stringify(customers));
     localStorage.setItem("customerSession", String(customers[existingIndex].id)); 
     loadProfile(); 
+     
   }
 }
 
 function fillEditForm(currentCustomer) {
-  document.getElementById("fnameInput").value = currentCustomer.firstName || "";
+  document.getElementById("fnameInput").value = currentCustomer.FirstName || "";
   document.getElementById("lnameInput").value = currentCustomer.lastName || "";
   document.getElementById("emailInput").value = currentCustomer.email || "";
   document.getElementById("genderInput").value = currentCustomer.gender || "";
   document.getElementById("dobInput").value = currentCustomer.birthday || "";
   document.getElementById("phoneInput").value = currentCustomer.phone || "";
-  document.getElementById("passwordInput").value = currentCustomer.password || "";
+  document.getElementById("passwordInput").value = currentCustomer.password || "";``
   document.getElementById("countryInput").value = currentCustomer.country || "";
   populateCities(); 
   document.getElementById("cityInput").value = currentCustomer.city || "";
@@ -149,8 +151,8 @@ function saveProfile(e) {
   const phone = document.getElementById("phoneInput").value.trim();
   const password = document.getElementById("passwordInput").value;
 
-  if (!/^[\w.%+-]/i.test(email)) {
-    showError("emailInput", "Email must be a valid Gmail address");
+  if (!/^[\w.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+    showError("emailInput", "Enter a valid email address");
     isValid = false;
   }  else {
     clearError("emailInput");
@@ -228,4 +230,186 @@ function populateCities() {
     });
   }
 }
+
+function loadOrders() {
+  const currentID = localStorage.getItem("customerSession");
+  const orders = JSON.parse(localStorage.getItem("orders")) || [];
+  const customerOrders = orders.filter(o => String(o.customer_id) === String(currentID));
+  const tbody = document.getElementById("orders-body");
+  tbody.innerHTML = "";
+
+  if (customerOrders.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="5" class="text-center">No orders found</td></tr>`;
+    return;
+  }
+
+  customerOrders.forEach(order => {
+    const tr = document.createElement("tr");
+    let actionBtn = "";
+
+    if (order.status === "Cancelled") {
+      actionBtn = `<button class="btn btn-danger btn-sm disabled" disabled>Cancelled</button>`;   
+    } else if ( order.status !== "Completed"){
+      actionBtn = `<button class="btn btn-danger btn-sm" onclick="cancelOrder(${order.id})">Cancel</button>`;
+      
+    }else {
+      actionBtn = `
+                <button class="btn btn-success btn-sm" 
+                  data-bs-toggle="modal" 
+                  data-bs-target="#reviewModal"
+                  onclick="window.pendingReviewData={productId: ${order.product_id}, orderId: ${order.id}}">
+              Review
+          </button>
+      
+      `;
+    }
+    tr.innerHTML = `
+      <td class="text-center">${order.id}</td>
+      <td class="text-center">${order.status}</td>
+      <td class="text-center">${order.totalPrice} EGP</td>
+      <td class="text-center">${order.quntity}</td>
+      <td class="text-center">${order.totalPrice * order.quntity} EGP</td>
+      <td class="text-center">${actionBtn}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
   loadProfile();
+  loadOrders();
+
+
+
+function setupPagination() {
+  paginationContainer.innerHTML = "";
+  const totalPages = Math.ceil(CustomerOrders.length / CustomerOrdersPerPage);
+
+  const prev = document.createElement("li");
+  prev.className = `page-item text-dark ${currentPage === 1 ? "disabled" : ""}`;
+  prev.innerHTML = `<a class="page-link text-dark" href="#">&laquo;</a>`;
+  prev.addEventListener("click", () => {
+    if (currentPage > 1) {
+      currentPage--;
+      displayCustomerOrders();
+      setupPagination();
+    }
+  });
+  paginationContainer.appendChild(prev);
+
+  for (let i = 1; i <= totalPages; i++) {
+    const li = document.createElement("li");
+    li.className = `page-item ${currentPage === i ? "active" : ""}`;
+    li.innerHTML = `<a class="page-link text-dark" href="#">${i}</a>`;
+    li.addEventListener("click", () => {
+      currentPage = i;
+      displayCustomerOrders();
+      setupPagination();
+    });
+    paginationContainer.appendChild(li);
+  }
+
+  const next = document.createElement("li");
+  next.className = `page-item ${currentPage === totalPages ? "disabled" : ""}`;
+  next.innerHTML = `<a class="page-link text-dark" href="#">&raquo;</a>`;
+  next.addEventListener("click", () => {
+    if (currentPage < totalPages) {
+      currentPage++;
+      displayCustomerOrders();
+      setupPagination();
+    }
+  });
+  paginationContainer.appendChild(next);
+}
+function logoutCustomer() {
+  localStorage.removeItem("customerSession");
+  window.location.href = "../index.html";
+}
+/////////////
+function cancelOrder(orderId) {
+  if (!confirm("Are you sure you want to cancel this order?")) {
+    return;
+  }
+  let orders = JSON.parse(localStorage.getItem("orders")) || [];
+  orders = orders.map(o => {
+    if (o.id === orderId && o.status != "Completed") {
+      o.status = "Cancelled";
+    }
+    return o;
+  });
+  localStorage.setItem("orders", JSON.stringify(orders));
+  loadOrders();
+}
+
+
+
+let selectedRating = 0;
+document.querySelectorAll("#starRating .star").forEach(star => {
+  star.addEventListener("click", function () {
+    selectedRating = this.getAttribute("data-value");
+    document.querySelectorAll("#starRating .star").forEach(s => {
+      s.classList.remove("text-warning");
+    });
+    for (let i = 0; i < selectedRating; i++) {
+      document.querySelectorAll("#starRating .star")[i].classList.add("text-warning");
+    }
+  });
+});
+
+function openReviewModal(productId,orderId) {
+  document.getElementById("reviewOrderId").value = orderId;
+  const customerId = localStorage.getItem("customerSession");
+  selectedRating = 0;
+  document.querySelectorAll("#starRating .star").forEach(s => s.classList.remove("text-warning"));
+  let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+  let existingReview = reviews.find(r => r.product_id == productId && r.customer_id == customerId);
+  if (existingReview) {
+    selectedRating = existingReview.review; 
+    for (let i = 0; i < selectedRating; i++) {
+      document.querySelectorAll("#starRating .star")[i].classList.add("text-warning");
+    }
+  }
+  document.getElementById("reviewProductId").value = productId;
+  let modal = new bootstrap.Modal(document.getElementById("reviewModal"));
+  modal.show();
+}
+
+function submitReview() {
+  const customerId = localStorage.getItem("customerSession");
+  const productId = document.getElementById("reviewProductId").value;
+  if (selectedRating === 0) {
+    alert("Please select a star rating!");
+    return;
+  }
+
+  let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+  let existingReviewIndex = reviews.findIndex(r => r.product_id == productId && r.customer_id == customerId);
+  if (existingReviewIndex !== -1) {
+    reviews[existingReviewIndex].review = selectedRating;
+    alert("✏️ Your review has been updated!");
+  }else{
+    let newReview = {
+      id: reviews.length + 1,
+      product_id: productId,
+      customer_id: customerId,
+      review: selectedRating
+    };
+    reviews.push(newReview);
+    alert("✅ Review submitted successfully!");
+  }
+  localStorage.setItem("reviews", JSON.stringify(reviews));
+  let reviewModal = bootstrap.Modal.getInstance(document.getElementById('reviewModal'));
+  reviewModal.hide();
+  document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+}
+
+document.getElementById('reviewModal').addEventListener('shown.bs.modal', function () {
+    if (window.pendingReviewData) {
+        openReviewModal(window.pendingReviewData.productId, window.pendingReviewData.orderId);
+        window.pendingReviewData = null; // reset
+    }
+});
+document.getElementById('reviewModal').addEventListener('hidden.bs.modal', function () {
+    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+    document.body.classList.remove('modal-open');
+    document.body.style = ""; // إزالة أي overflow أو padding
+});

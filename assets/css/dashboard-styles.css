@@ -72,7 +72,7 @@ main.container.py-4{
 #menu {
     width: 100%;
 }
-@media (max-width: 768px) {
+@media (max-width: 769px) {
     #sidebar {
         display: none !important;
     }
