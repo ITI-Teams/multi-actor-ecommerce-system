@@ -8,9 +8,8 @@ window.addEventListener("load", () => {
     let index = 0;
     let index2 = 0;
 
-    productsArray.forEach((product) => {
-
-      // if the category is men or women
+    const newArrivalsArr = productsArray.reverse();
+    newArrivalsArr.forEach((product) => {
       if (index < 10) {
         // get 10 products only
         ++index;

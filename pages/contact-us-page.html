@@ -17,10 +17,6 @@
         let currentID = localStorage.getItem("customerSession");
         const customers = JSON.parse(localStorage.getItem("customers")) || [];
         const currentCustomer = customers.find(c => String(c.id) === String(currentID));
-        if (!currentID) {
-        alert("You must log in first.");
-        window.location.href = "login.html";
-        }
     </script>
     <link rel="icon" type="image/x-icon" href="../Trendora.ico">
 </head>

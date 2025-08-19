@@ -1,9 +1,9 @@
+import prodcutCard from "./include/productCard.js";
+
 let products = JSON.parse(localStorage.getItem("products")) || [];
 let filteredProducts = [...products];
 let currentPage = 1;
 const rowsPerPage = 12;
-
-const totalPages = Math.ceil(filteredProducts.length / rowsPerPage);
 
 
 const urlParams = new URLSearchParams(location.search);
@@ -62,47 +62,17 @@ function renderStars(rating) {
 }
 // دالة عرض الجدول مع pagination
 function displayTable() {
-    const Container = document.getElementById("productContainer");
+    const Container = document.getElementById("productsWrapper");
     Container.innerHTML = "";     
     const start = (currentPage - 1) * rowsPerPage;
     const end = start + rowsPerPage;
     const pageItems = filteredProducts.slice(start, end);
-    console.log(pageItems);
     
 
     pageItems.forEach(product => {
       const { avg: rating, count } = getAverageRating(product.id);
       const stars = renderStars(rating);
-      Container.innerHTML += `
-              <div class="card" style="max-width: 320px;margin: 3px">
-                <img src="${product.images && product.images[0] ? (product.images[0].startsWith('data:') ? product.images[0] : '/assets/img/products/' + product.images[0]) : '/assets/img/women.png'}" 
-                class="card-img-top prodcut-img" alt="${product.name}">
-                <div class="card-body">
-                    <a href="/pages/onepage-product.html?product=${product.id}" class="text-dark link-offset-1-hover text-uppercase">
-                        <h5 class="card-title">${product.name}</h5>
-                    </a>
-                    <p class="card-text">${product.description.trim().split(/\s+/).slice(0, 5).join(' ') + '...'}</p>
-                    <div class="d-flex justify-content-between align-items-center">
-                        <span class="h5 mb-0">${product.price}$</span>
-                        <div>
-                            ${stars}
-                            <small class="text-muted">(${product.count || 0})</small>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-footer d-flex flex-column bg-light">
-                    <div class="mb-2 p-2 text-center text-white fw-bold rounded 
-                        ${product.stock > 0 ? 'bg-success' : 'bg-danger'}">
-                        ${product.stock > 0 ? `In Stock: ${product.stock}` : 'Out of Stock'}
-                    </div>
-                    <button class="btn btn-primary btn-sm w-100" 
-                            onclick="addToCart(${product.id}, ${product.seller_id})" 
-                            ${product.stock === 0 ? 'disabled' : ''}>
-                        Add to Cart
-                    </button>
-                </div>
-            </div>
-        `;
+      Container.innerHTML += prodcutCard(product);
 
     });
 
@@ -110,7 +80,16 @@ function displayTable() {
 }
 
 function renderPagination() {
+    const totalPages = Math.ceil(filteredProducts.length / rowsPerPage);
     const pagination = document.getElementById("pagination");
+    
+    if (!totalPages) {
+        pagination.innerHTML = `<div class="text-center py-5 my-5 w-50 mx-auto">
+            <p class="alert alert-danger fs-6 fw-semibold text-capitalize">No Product Found with this name!</p>
+        </div>`;
+        return;
+    }
+    pagination.classList.add('mt-5')
     pagination.innerHTML = "";
     pagination.innerHTML += `
         <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">

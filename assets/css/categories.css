@@ -142,3 +142,12 @@
   animation: swing 1s ease forwards;
   transform: scale(1.1);
 }
+
+.page-item.active .page-link {
+  background-color: #212529;
+  border-color: #212529;
+  color: #fff;
+}
+.page-link {
+  color: #212529;
+}
