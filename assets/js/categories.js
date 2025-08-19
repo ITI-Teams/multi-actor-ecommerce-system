@@ -103,10 +103,10 @@ document.querySelectorAll(".category-btn").forEach(btn => {
                 </div>
                 <div class="card-footer d-flex flex-column bg-light">
                   <div class="mb-2 p-2 text-center text-white fw-bold rounded 
-                    ${prod.stock > 0 ? 'bg-success' : 'bg-danger'}">
+                    ${prod.stock > 0 ? 'bg-secondary' : 'bg-danger'}">
                     ${prod.stock > 0 ? `In Stock: ${prod.stock}` : 'Out of Stock'}
                   </div>
-                  <button class="btn btn-primary btn-sm w-100" 
+                  <button class="btn btn-dark btn-sm w-100" 
                           onclick="addToCart(${prod.id}, ${prod.seller_id})" 
                           ${prod.stock === 0 ? 'disabled' : ''}>
                       Add to Cart

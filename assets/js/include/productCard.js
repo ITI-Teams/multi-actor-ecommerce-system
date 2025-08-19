@@ -41,10 +41,10 @@ export default function prodcutCard({id, name, images, price,description,seller_
           </div>
           <div class="card-footer d-flex flex-column bg-light">
               <div class="mb-2 p-2 text-center text-white fw-bold rounded 
-                  ${stock > 0 ? 'bg-success' : 'bg-danger'}">
+                  ${stock > 0 ? 'bg-secondary' : 'bg-danger'}">
                   ${stock > 0 ? `In Stock: ${stock}` : 'Out of Stock'}
               </div>
-              <button class="btn btn-primary btn-sm w-100" 
+              <button class="btn btn-dark btn-sm w-100" 
                       onclick="addToCart(${id}, ${seller_id})" 
                       ${stock === 0 ? 'disabled' : ''}>
                   Add to Cart
