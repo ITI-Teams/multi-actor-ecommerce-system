@@ -3,13 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-     <title>Trendora</title>
+        <title>Trendora</title>
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
     <script src="https://kit.fontawesome.com/4f91921791.js" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="../assets/css/styles.css">
     <script type="module" src="../assets/js/main.js"></script>
     <link rel="stylesheet" href="../assets/css/cart.css">
     <link rel="icon" type="image/x-icon" href="../Trendora.ico">
+    
+    <script src="../assets/js/include/nav.js" defer></script>
+    <script>
+        let currentID = localStorage.getItem("customerSession");
+        const customers = JSON.parse(localStorage.getItem("customers")) || [];
+        const currentCustomer = customers.find(c => String(c.id) === String(currentID));
+    </script>
 </head>
 <body style="background-color: black">
      <header id="header-wrapper">

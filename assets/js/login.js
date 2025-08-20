@@ -36,6 +36,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
             localStorage.setItem("customerSession", matchedCustomer.id);
             // localStorage.setItem("isLoggedIn", "true");
+            let guestCart = JSON.parse(localStorage.getItem("guestCart")) || [];
+            let carts = JSON.parse(localStorage.getItem("carts")) || [];
+            guestCart = guestCart.map(item => ({
+                ...item,
+                customer_id: matchedCustomer.id
+            }));
+            carts = [...carts, ...guestCart];
+            localStorage.setItem("carts", JSON.stringify(carts));
+            localStorage.removeItem("guestCart");
 
         } else {
             event.preventDefault();

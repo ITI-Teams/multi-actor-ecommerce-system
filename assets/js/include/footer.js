@@ -42,6 +42,13 @@ const footer_content = `<div class="container">
             <div class="copyright text-secondary">
                 <p>© Copyright Rimel 2022. All right reserved.</p>
             </div>
-        </div>`;
+        </div>
+        <section class="progress-wrap">
+            <svg  class="progress-circle svg-content" width="100%" height="100%" viewBox="-1 -1 102 102">
+                <path d="M50,1 a49,49 0 0,1 0,98 a49,49 0 0,1 0,-98"/>
+            </svg>
+        </section>
+        
+        `;
 
 export default footer_content;
