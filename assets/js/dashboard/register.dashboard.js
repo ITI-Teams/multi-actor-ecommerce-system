@@ -56,8 +56,6 @@ function saveUsers(users) {
 document.getElementById("registerForm").addEventListener("submit", function (e) {
     e.preventDefault();
     clearMessage();
-    console.log('test');
-    
 
     const email = document.getElementById("email").value.trim();
     const phone = document.getElementById("phone").value.trim();
