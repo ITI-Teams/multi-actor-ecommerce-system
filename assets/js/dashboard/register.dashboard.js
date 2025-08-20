@@ -53,7 +53,7 @@ function saveUsers(users) {
     localStorage.setItem("users", JSON.stringify(users));
 }
 
-document.getElementById("loginForm").addEventListener("submit", function (e) {
+document.getElementById("registerForm").addEventListener("submit", function (e) {
     e.preventDefault();
     clearMessage();
 

@@ -2,7 +2,7 @@ const footer_content = `<div class="container">
             <div class="row justify-content-center">
                 <div class="col-sm mb-4 d-flex flex-column gap-1">
                     <a class="logo-a" href="/">
-                        <img src="/assets/img/Black White Minimalist Simple Monogram Typography Logo.svg" alt="Logo" width="75">
+                        <img src="/assets/img/Black White Minimalist Simple Monogram Typography Logo.svg" alt="Logo" class="rounded-circle px-2 py-2 bg-light" width="75">
                         Trendora
                     </a>
                     <h3>Subscribe</h3>

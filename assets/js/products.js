@@ -92,9 +92,9 @@ function renderPagination(totalProductsCount, currentPage) {
   // Prev button
   paginationWrapper.innerHTML += `
     <li class="page-item">
-      <button class="page-link" ${currentPage === 1 ? "disabled" : ""} data-page="${
+      <button class="page-link ${currentPage === 1 && "disabled"}" ${currentPage === 1 ? "disabled" : ""} data-page="${
     currentPage - 1
-  }">Prev</button>
+  }" >&laquo;</button>
     </li>
   `;
 
@@ -112,9 +112,9 @@ function renderPagination(totalProductsCount, currentPage) {
   // Next button
   paginationWrapper.innerHTML += `
     <li class="page-item">
-      <button class="page-link" ${
+      <button class="page-link ${currentPage === paginationCount && 'disabled'}" ${
         currentPage === paginationCount ? "disabled" : ""
-      } data-page="${currentPage + 1}">Next</button>
+      } data-page="${currentPage + 1}">&raquo;</button>
     </li>
   `;
 
