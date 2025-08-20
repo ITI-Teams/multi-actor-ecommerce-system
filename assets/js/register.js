@@ -93,6 +93,18 @@ form.addEventListener("submit", function (event) {
         localStorage.setItem("customers", JSON.stringify(customers));
 
         localStorage.setItem("customerSession", userData.id);
+        let guestCart = JSON.parse(localStorage.getItem("guestCart")) || [];
+        let carts = JSON.parse(localStorage.getItem("carts")) || [];
+
+        if (guestCart.length > 0) {
+            guestCart = guestCart.map(item => ({
+                ...item,
+                customer_id: userData.id
+            }));
+            carts = [...carts, ...guestCart];
+            localStorage.setItem("carts", JSON.stringify(carts));
+            localStorage.removeItem("guestCart");
+        }
 
         window.location.href = "../index.html";
     }

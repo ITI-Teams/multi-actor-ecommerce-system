@@ -1,7 +1,25 @@
 function addToCart(productId, sellerId, customerId = localStorage.getItem("customerSession")) {
     if (!customerId) {
-        alert("Please log in first");
-        window.location.href = "/pages/login.html";
+        let guestCart = JSON.parse(localStorage.getItem("guestCart")) || [];
+        const existing = guestCart.find(item => item.product_id === productId);
+        
+        console.log(existing);
+        const products = JSON.parse(localStorage.getItem("products")) || [];
+        const product = products.find(item => item.id === productId);
+        console.log(product);
+        if (existing) {
+            existing.quantity += 1;
+        } else {
+            const newProduct = {
+                id: guestCart.length ? Math.max(...guestCart.map(c => c.id)) + 1 : 1,
+                product_id: productId,
+                seller_id: sellerId,
+                quantity: 1
+            };
+            guestCart.push(newProduct);
+        }
+        localStorage.setItem("guestCart", JSON.stringify(guestCart));
+        updateCartBadge(); 
         return;
     }
     const carts = JSON.parse(localStorage.getItem("carts")) || [];
@@ -25,7 +43,13 @@ function addToCart(productId, sellerId, customerId = localStorage.getItem("custo
 
 function updateCartBadge() {
     const customerId = localStorage.getItem("customerSession");
-    if (!customerId) return;
+    if (!customerId) {
+        let guestCart = JSON.parse(localStorage.getItem("guestCart")) || [];
+        const count = guestCart.filter(c => c.customer_id == customerId).reduce((sum, c) => sum + c.quantity, 0);
+        const badge = document.getElementById('CartCount');
+        if (badge) badge.textContent = count;
+        return;
+    }
 
     const carts = JSON.parse(localStorage.getItem("carts")) || [];
     const count = carts.filter(c => c.customer_id == customerId).reduce((sum, c) => sum + c.quantity, 0);
