@@ -16,7 +16,7 @@ if (!currentID) {
         <li><a class="dropdown-item text-danger" href="#" id="logoutBtn">Logout</a></li>
     `;
 
-    document.getElementById('logoutBtn').addEventListener('click', function(e) {
+    document.getElementById('logoutBtn').addEventListener('click', function (e) {
         e.preventDefault();
         localStorage.removeItem("customerSession");
         alert("Successful logout");
@@ -34,7 +34,7 @@ if (!menuContainer) {
 const storedMenu = JSON.parse(localStorage.getItem("menuData")) || [];
 
 if (!Array.isArray(storedMenu) || storedMenu.length === 0) {
-    menuContainer.innerHTML =`
+    menuContainer.innerHTML = `
         <li class="nav-item">
             <a class="nav-link" href="/pages/categories.html">Men</a>
         </li>
@@ -45,33 +45,28 @@ if (!Array.isArray(storedMenu) || storedMenu.length === 0) {
             <a class="nav-link" href="/pages/categories.html">Kids</a>
         </li>
     `;
-}else{
+} else {
     menuContainer.innerHTML = '';
-    storedMenu.forEach(item => {
+    storedMenu.forEach((item, idx) => {
         const li = document.createElement('li');
-        li.classList.add('nav-item');
+
         if (item.children && item.children.length > 0) {
+            li.className = 'nav-item dropdown';
+
+            const toggleId = `navDropdown-${idx}`;
+
             li.innerHTML = `
-                <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    ${item.name}
-                </a>
-                <ul class="dropdown-menu">
-                    ${item.children.map(child => `
-                        <li>
-                            <a class="dropdown-item" href="${child.link}">
-                                ${child.name}
-                            </a>
-                        </li>
-                    `).join('')}
-                </ul>
-            `;
+                <a class="nav-link dropdown-toggle" href="#" id="${toggleId}"
+                role="button" data-bs-toggle="dropdown" aria-expanded="false" >
+                ${item.name}</a>
+                <ul class="dropdown-menu" aria-labelledby="${toggleId}">${item.children.map(child => `<li><a class="dropdown-item" href="${child.link}">${child.name}</a></li>
+                `).join('')}
+                </ul>`;
         } else {
-            li.innerHTML = `
-                <a class="nav-link" href="${item.link}">
-                    ${item.name}
-                </a>
-            `;
+            li.className = 'nav-item';
+            li.innerHTML = `<a class="nav-link" href="${item.link}">${item.name}</a>`;
         }
+
         menuContainer.appendChild(li);
     });
 }

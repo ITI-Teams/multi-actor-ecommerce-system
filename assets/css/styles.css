@@ -257,3 +257,195 @@ input#headerSearch:focus{
   color: #000 !important;
 
 }
+/* #Progress
+================================================== */
+@font-face {
+    font-family: 'unicons';
+    src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/unicons.eot');
+    src: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/unicons.eot') format('embedded-opentype'),
+    url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/unicons.woff2') format('woff2'),
+    url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/unicons.woff') format('woff'),
+    url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/unicons.ttf') format('truetype'),
+    url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1462889/unicons.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+[class^="uil-"]:before, [class*=" uil-"]:before {
+    font-family: "unicons";
+    font-style: normal;
+    font-weight: normal;
+    speak: none;
+    display: inline-block;
+    text-decoration: inherit;
+    text-align: center;
+    /* opacity: .8; */
+    /* For safety - reset parent styles, that can break glyph codes*/
+    font-variant: normal;
+    text-transform: none;
+    /* fix buttons height, for twitter bootstrap */
+    line-height: 1em;
+    /* you can be more comfortable with increased icons size */
+    /* Font smoothing. That was taken from TWBS */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+
+    /* Uncomment for 3D effect */
+    /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+}
+.uil-arrow-up:before { content: '\e84b'; } /* '' */   /*Ued This*/
+/*this end of icons*/
+/* #Progress
+================================================== */
+.progress-wrap {
+    position: fixed;
+    right: 18px;
+    bottom: 20px;
+    height: 46px;
+    width: 46px;
+    cursor: pointer;
+    display: block;
+    border-radius: 50px;
+    box-shadow: inset  0 0 0 2px rgba(255,255,255,0.2);
+    z-index: 10000;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(15px);
+    -webkit-transition: all 200ms linear;
+    transition: all 200ms linear;
+}
+.progress-wrap.active-progress {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+.progress-wrap::after {
+    position: absolute;
+    font-family: 'unicons';
+    content: '\e84b';
+    text-align: center;
+    line-height: 46px;
+    font-size: 24px;
+    color: var(--grey);
+    left: 0;
+    top: 0;
+    height: 46px;
+    width: 46px;
+    cursor: pointer;
+    display: block;
+    z-index: 1;
+    -webkit-transition: all 200ms linear;
+    transition: all 200ms linear;
+}
+.progress-wrap:hover::after {
+    opacity: .5;
+    color: #f0a315;
+}
+.progress-wrap::before {
+    position: absolute;
+    font-family: 'unicons';
+    content: '\e84b';
+    text-align: center;
+    line-height: 46px;
+    font-size: 24px;
+    opacity: 0;
+    background-image: linear-gradient(298deg, #f0a315, #f71c1c);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    left: 0;
+    top: 0;
+    height: 46px;
+    width: 46px;
+    cursor: pointer;
+    display: block;
+    z-index: 2;
+    -webkit-transition: all 200ms linear;
+    transition: all 200ms linear;
+}
+.progress-wrap:hover::before {
+    opacity: 1;
+}
+.progress-wrap svg path {
+    fill: none;
+}
+.progress-wrap svg.progress-circle path {
+    stroke: #F3E53D;
+    stroke-width: 4;
+    box-sizing:border-box;
+    -webkit-transition: all 200ms linear;
+    transition: all 200ms linear;
+}
+.progress-wrap svg.progress-circle path:hover {
+    stroke: #e73e3e;
+}
+.progress-wrap {
+    box-shadow: inset  0 0 0 2px rgba(0,0,0,0.2);
+}
+.progress-wrap::after {
+    color: #F3E53D;
+}
+.progress-wrap svg.progress-circle path {
+    stroke: #0F7FD9;
+}
+
+@keyframes shaker {
+    0% {
+        transform:rotate(0deg);
+    }
+    29% {
+        transform:rotate(0deg);
+    }
+    30% {
+        transform:rotate(1deg);
+    }
+    31% {
+        transform:rotate(2deg);
+    }
+    33% {
+        transform:rotate(1deg);
+    }
+    35% {
+        transform:rotate(0deg);
+    }
+    37% {
+        transform:rotate(-1deg);
+    }
+    39% {
+        transform:rotate(-2deg);
+    }
+    41% {
+        transform:rotate(-1deg);
+    }
+    43% {
+        transform:rotate(0deg);
+    }
+    45% {
+        transform:rotate(1deg);
+    }
+    47% {
+        transform:rotate(2deg);
+    }
+    49% {
+        transform:rotate(1deg);
+    }
+    51% {
+        transform:rotate(0deg);
+    }
+    53% {
+        transform:rotate(-1deg);
+    }
+    55% {
+        transform:rotate(-2deg);
+    }
+    57% {
+        transform:rotate(-1deg);
+    }
+    59% {
+        transform:rotate(0deg);
+    }
+    100%{
+        transform:rotate(0deg);
+    }
+}
+/*ُEnd  #Progress
+================================================== */
