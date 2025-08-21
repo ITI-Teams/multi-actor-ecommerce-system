@@ -24,7 +24,7 @@
   document.getElementById("profileEmail").textContent = currentCustomer.email || "Not provided";
   document.getElementById("profileGender").textContent = "Gender: " + (currentCustomer.gender || "-");
   document.getElementById("profileDOB").textContent = "Date Of Birth: " + (currentCustomer.birthday || "-");
-  document.getElementById("profileAge").textContent = "Age: " + (currentCustomer.age || "-");
+  document.getElementById("profileAge").textContent = "Age: " + ( Math.floor((new Date() - new Date(currentCustomer.birthday).getTime()) / (365.25 * 24 * 60 * 60 * 1000)) || "-");
   document.getElementById("profileCountry").textContent = "Country: " + (currentCustomer.country || "-");
   document.getElementById("profileCity").textContent = "City: " + (currentCustomer.city || "-");
   document.getElementById("profileAddress").textContent = "Address: " + (currentCustomer.address || "-");
@@ -236,6 +236,8 @@ function loadOrders() {
   const orders = JSON.parse(localStorage.getItem("orders")) || [];
   const customerOrders = orders.filter(o => String(o.customer_id) === String(currentID));
   const tbody = document.getElementById("orders-body");
+  const products = JSON.parse(localStorage.getItem("products")) || [];
+
   tbody.innerHTML = "";
 
   if (customerOrders.length === 0) {
@@ -265,6 +267,7 @@ function loadOrders() {
     }
     tr.innerHTML = `
       <td class="text-center">${order.id}</td>
+      <td class="text-center">${ products[order.product_id-1].name }</td>
       <td class="text-center">${order.status}</td>
       <td class="text-center">${order.totalPrice} EGP</td>
       <td class="text-center">${order.quntity}</td>

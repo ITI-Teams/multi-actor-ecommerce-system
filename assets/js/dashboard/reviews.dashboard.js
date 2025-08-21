@@ -11,35 +11,54 @@ function renderTable() {
     if (!session) return [];
     const products = JSON.parse(localStorage.getItem("products")) || [];
     const customers = JSON.parse(localStorage.getItem("customers")) || [];
+
+    let filteredReviews = [...reviews];
+
     if (session.role === "seller") {
         const sellerProductsIds = products
             .filter(p => p.seller_id === session.id)
             .map(p => p.id);
-        reviews = reviews.filter(r => sellerProductsIds.includes(r.product_id));
+        filteredReviews = filteredReviews.filter(r => sellerProductsIds.includes(r.product_id));
     }
 
     const searchValue = document.getElementById("searchReview").value.toLowerCase();
-    const filteredReviews = reviews.filter(u =>
+    filteredReviews = filteredReviews.filter(u =>
         String(u.review).toLowerCase().includes(searchValue)
     );
 
+    const productRatings = {};
+    filteredReviews.forEach(r => {
+        if (!productRatings[r.product_id]) {
+            productRatings[r.product_id] = [];
+        }
+        productRatings[r.product_id].push(Number(r.review));
+    });
+
+    const productAverages = Object.keys(productRatings).map(pid => {
+        const ratings = productRatings[pid];
+        const avg = ratings.reduce((a, b) => a + b, 0) / ratings.length;
+        const product = products.find(p => p.id == pid);
+        return {
+            product_id: pid,
+            product_name: product ? product.name : "Unknown Product",
+            avg_rating: avg,
+            count: ratings.length
+        };
+    });
+
     const start = (currentPagePagination - 1) * rowsPerPage;
-    const paginatedReviews = filteredReviews.slice(start, start + rowsPerPage);
+    const paginatedProducts = productAverages.slice(start, start + rowsPerPage);
 
     const tbody = document.getElementById("reviewTableBody");
     tbody.innerHTML = "";
-
-    paginatedReviews.forEach(review => {
-        const product = products.find(p => p.id === review.product_id);
-        const customer = customers.find(c => c.id === review.customer_id);
+    paginatedProducts.forEach(item => {
         tbody.innerHTML += `
             <tr>
-                <td>${product ? product.name : "Unknown Product"}</td>
-                <td>${customer ? customer.name : "Unknown Customer"}</td>
-                <td class="text-center">${review ? getStarsHTML(review.review) : "Unknown Review"}</td>
-                
+                <td>${item.product_name}</td>
+                <td class="text-center">${getStarsHTML(Math.round(item.avg_rating))} (${item.avg_rating.toFixed(1)})</td>
+                <td class="text-center">${item.count} reviews</td>
                 <td class="text-center">
-                    <button class="btn btn-danger btn-sm" onclick="deleteReview(${review.id})">
+                    <button class="btn btn-danger btn-sm" onclick="deleteReview(${item.product_id})">
                         <i class="fas fa-trash"></i>
                     </button>
                 </td>
@@ -47,7 +66,7 @@ function renderTable() {
         `;
     });
 
-    renderPagination(filteredReviews.length);
+    renderPagination(productAverages.length);
 }
 function getStarsHTML(rating) {
     let starsHTML = '';

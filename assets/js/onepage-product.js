@@ -5,17 +5,7 @@ if (!productIdParams) {
     location.pathname = "/";
 }
 
-/* ----------------------------
-   Color Selection (highlight only)
------------------------------ */
-document.querySelectorAll(".swatch").forEach((s) => {
-    s.addEventListener("click", function () {
-        document.querySelectorAll(".swatch").forEach((x) =>
-            x.classList.remove("selected")
-        );
-        this.classList.add("selected");
-    });
-});
+
 
 /* ----------------------------
    Product Details + Reviews
@@ -126,6 +116,24 @@ if (!product) {
             addtocartBtn.disabled = false;
         });
     });
+    /* ----------------------------
+    Color Selection (highlight only)
+    ----------------------------- */
+    const productColor = document.getElementById("color-swatches");
+        productColor.innerHTML = "";
+        product.color.forEach((color) => {
+            productColor.innerHTML +=`
+            <div class="swatch" data-color="${color}" title="${color}" style="background: ${color}"></div>
+            `;
+    });
+    document.querySelectorAll(".swatch").forEach((s) => {
+        s.addEventListener("click", function () {
+            document.querySelectorAll(".swatch").forEach((x) =>
+                x.classList.remove("selected")
+            );
+            this.classList.add("selected");
+        });
+    });
 
     // منتجات مرتبطة (بنفس الكاتيجوري)
     const relatedProductsWrapper =
@@ -141,27 +149,42 @@ if (!product) {
 document.getElementById('addtocartBtn').addEventListener('click',function(){
     const customerId = localStorage.getItem("customerSession");
     if (!customerId) {
-        alert("Please log in first");
-        window.location.href = "/pages/login.html";
-        return;
+        let guestCart = JSON.parse(localStorage.getItem("guestCart")) || [];
+        const existing = guestCart.find(c => c.product_id == product.id);
+        if (existing) {
+            existing.quantity += 1;
+        } else {
+            const newCart = {
+                id: guestCart.length ? Math.max(...carts.map(c => c.id)) + 1 : 1,
+                product_id: product.id,
+                seller_id: product.seller_id,
+                quantity: 1
+            };
+            guestCart.push(newCart);
+        }
+        localStorage.setItem("guestCart", JSON.stringify(guestCart));
+        showFormMessage("The product has been added to the cart!");
+        updateCartBadge();
+    }else{
+        const carts = JSON.parse(localStorage.getItem("carts")) || [];
+        const existing = carts.find(c => c.product_id == product.id && c.customer_id == customerId);
+        if (existing) {
+            existing.quantity += 1;
+        } else {
+            const newCart = {
+                id: carts.length ? Math.max(...carts.map(c => c.id)) + 1 : 1,
+                customer_id: customerId,
+                product_id: product.id,
+                seller_id: product.seller_id,
+                quantity: 1
+            };
+            carts.push(newCart);
+        }
+        localStorage.setItem("carts", JSON.stringify(carts));
+        showFormMessage("The product has been added to the cart!");
+        updateCartBadge();
     }
-    const carts = JSON.parse(localStorage.getItem("carts")) || [];
-    const existing = carts.find(c => c.product_id == product.id && c.customer_id == customerId);
-    if (existing) {
-        existing.quantity += 1;
-    } else {
-        const newCart = {
-            id: carts.length ? Math.max(...carts.map(c => c.id)) + 1 : 1,
-            customer_id: customerId,
-            product_id: product.id,
-            seller_id: product.seller_id,
-            quantity: 1
-        };
-        carts.push(newCart);
-    }
-    localStorage.setItem("carts", JSON.stringify(carts));
-    showFormMessage("The product has been added to the cart!");
-    updateCartBadge();
+    
 });
 const mainImg = document.getElementById("main-Img");
 const lens = document.createElement("div");

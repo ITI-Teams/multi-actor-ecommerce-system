@@ -106,9 +106,9 @@ document.querySelector("#editModal form").addEventListener("submit", function(e)
         alert("Invalid email address.");
         return;
     }
-    const phonePattern = /^(010|011|012|013|015)\d{8}$/;
+    const phonePattern = /^(010|011|012|015)\d{8}$/;
     if (!phonePattern.test(newPhone)) {
-        alert("Phone must start with 010, 011, 012, 013, or 015 and be 11 digits.");
+        alert("Phone must start with 010, 011, 012 or 015 and be 11 digits.");
         return;
     }
     if (newPassword) {

@@ -1,31 +1,56 @@
+// Define forbidden characters — includes @, but we'll allow it in email field
+const forbiddenCharsRe = /[#\$%\^&*<>{}|\\"]/; // Removed @ from here so it's only blocked in non-email fields
+
 // Bootstrap validation
 (function () {
     const form = document.getElementById('contactForm');
     const overlay = document.getElementById('successOverlay');
     const inputs = form.querySelectorAll('input, textarea');
 
-    // mark fields as "dirty" once user interacts
+    // Regular expressions for validation
+    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;  // Proper email format
+    const phoneRe = /^(010|011|012|015)\d{8}$/;
+
+    // Mark fields as "dirty" on interaction
     inputs.forEach(el => {
-        el.addEventListener('input', () => el.dataset.dirty = 'true');
+        el.addEventListener('input', function () {
+            el.dataset.dirty = 'true';
+
+            // Only filter forbidden characters in non-email fields
+            if (this.name !== 'email' && forbiddenCharsRe.test(this.value)) {
+                this.value = this.value.replace(forbiddenCharsRe, '');
+            }
+        });
+
         el.addEventListener('blur', () => el.dataset.dirty = 'true');
     });
 
-    // validators
-    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const phoneRe = /^(010|011|012|015)\d{8}$/;
-
+    // Validation logic
     function isValidField(input) {
         const v = input.value.trim();
-        switch (input.name) {
-            case 'name': return v.length >= 2;
-            case 'email': return emailRe.test(v);
-            case 'phone': return phoneRe.test(v);
-            case 'subject': return v.length >= 2;
-            case 'message': return v.length >= 2;
-            default: return true;
+        const name = input.name;
+
+        // Apply forbidden character check to non-email fields
+        if (name !== 'email' && forbiddenCharsRe.test(v)) {
+            return false;
+        }
+
+        // Field-specific validation
+        switch (name) {
+            case 'name':
+            case 'subject':
+            case 'message':
+                return v.length >= 2;
+            case 'email':
+                return emailRe.test(v); // This allows @ and . in correct format
+            case 'phone':
+                return phoneRe.test(v);
+            default:
+                return true;
         }
     }
 
+    // Form submission handler
     form.addEventListener('submit', function (e) {
         e.preventDefault();
 
@@ -35,20 +60,24 @@
         inputs.forEach(input => {
             const valid = isValidField(input);
 
-            // Only show red for inputs the user touched
+            // Show/hide error styles only if field was touched
             if (input.dataset.dirty === 'true') {
                 if (!valid) {
                     input.classList.add('is-invalid');
                     const fb = input.nextElementSibling;
-                    if (fb && fb.classList.contains('invalid-feedback')) fb.style.display = 'block';
+                    if (fb && fb.classList.contains('invalid-feedback')) {
+                        fb.style.display = 'block';
+                    }
                 } else {
                     input.classList.remove('is-invalid');
                     const fb = input.nextElementSibling;
-                    if (fb && fb.classList.contains('invalid-feedback')) fb.style.display = 'none';
+                    if (fb && fb.classList.contains('invalid-feedback')) {
+                        fb.style.display = 'none';
+                    }
                 }
             }
 
-            // We still check all fields for actual submission
+            // Check validity for submission
             if (!valid) {
                 allValid = false;
                 if (!firstInvalid) firstInvalid = input;
@@ -56,12 +85,11 @@
         });
 
         if (!allValid) {
-            // focus the first invalid field (optional)
             if (firstInvalid) firstInvalid.focus();
             return;
         }
 
-        // save to localStorage (array of objects)
+        // Save to localStorage
         const messages = JSON.parse(localStorage.getItem('messages')) || [];
         const newId = messages.length ? messages[messages.length - 1].id + 1 : 1;
 
@@ -78,23 +106,24 @@
         messages.push(payload);
         localStorage.setItem('messages', JSON.stringify(messages));
 
-        // success overlay
+        // Show success overlay
         overlay.style.display = 'flex';
-        setTimeout(() => { overlay.style.display = 'none'; }, 400);
+        setTimeout(() => {
+            overlay.style.display = 'none';
+        }, 400);
 
-        // reset form and clear states/dirty flags
+        // Reset form and clear states
         form.reset();
         inputs.forEach(el => {
             el.classList.remove('is-invalid');
             el.dataset.dirty = '';
             const fb = el.nextElementSibling;
-            if (fb && fb.classList.contains('invalid-feedback')) fb.style.display = 'none';
+            if (fb && fb.classList.contains('invalid-feedback')) {
+                fb.style.display = 'none';
+            }
         });
     });
 })();
-
-
-
 
 // Google Maps with current location
 function initMap() {
@@ -122,5 +151,5 @@ function initMap() {
     }
 }
 
-// Ensure the DOM is ready before running
+// Run after DOM is ready
 document.addEventListener("DOMContentLoaded", initMap);

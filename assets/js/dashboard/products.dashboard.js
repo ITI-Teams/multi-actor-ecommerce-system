@@ -2,7 +2,7 @@ let categoriesList = JSON.parse(localStorage.getItem("categories")) || [];
 const categorySelect = document.getElementById("category");
 categorySelect.innerHTML = "";
 categoriesList.forEach(cat => {
-    categorySelect.innerHTML += `<option value="${cat.name}">${cat.name}</option>`;
+    categorySelect.innerHTML += `<option value="${cat.id}">${cat.name}</option>`;
 });
 let products = JSON.parse(localStorage.getItem("products")) || [];
 let currentPagePagination = 1;
@@ -37,13 +37,14 @@ function renderTable() {
 
     const tbody = document.getElementById("productTableBody");
     tbody.innerHTML = "";
+    
 
     paginatedProducts.forEach(product => {
         tbody.innerHTML += `
             <tr>
                 <td>${product.name}</td>
                 <td>${product.description.split(" ").slice(0, 3).join(" ") + "..."}</td>
-                <td>${product.category}</td>
+                <td>${categoriesList[product.category].name}</td>
                 <td>${product.reviews}</td>
                 <td>${product.price}</td>
                 <td class="${product.stock == 0 ? 'bg-danger text-white' : ''}">${product.stock}</td>
@@ -102,6 +103,11 @@ document.getElementById("createProductBtn").addEventListener("click", () => {
     document.getElementById("productId").value = "";
     clearFormMessage();
     document.getElementById("productModalTitle").textContent = "Create Product";
+    document.getElementById("colorInput").value = '';
+    document.getElementById("colorList").innerHTML = "";
+    document.getElementById("imageFileInput").value = '';
+    document.getElementById("imageList").innerHTML = "";
+    document.getElementById("productForm").reset();
     new bootstrap.Modal(document.getElementById("productModal")).show();
 });
 
@@ -124,6 +130,7 @@ document.getElementById("productForm").addEventListener("submit", function(e) {
     const allowedImageExtensions = /\.(png|jpg|jpeg|jpe|webp|svg)$/i;
     const colorRegex = /^#([0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/;
     const invalidChars = /<.*?>|[{}[\]<>]/;
+    const acceptNumber = /^(0|[1-9]\d*)(\.\d{1,2})?$/;
     if ([name, description, category, price,stock, ...size, ...color].some(field => invalidChars.test(field))) {
         showFormMessage("Entries must not contain HTML codes or prohibited symbols.");
         return;
@@ -140,12 +147,12 @@ document.getElementById("productForm").addEventListener("submit", function(e) {
         showFormMessage("Description is too long, maximum 500 characters.");
         return;
     }
-    if (isNaN(price) || Number(price) <= 0) {
+    if (isNaN(price) || Number(price) <= 0 || !acceptNumber.test(price)) {
         showFormMessage("Price must be a positive number greater than 0.");
         return;
     }
-    if (isNaN(stock) || Number(stock) < 0) {
-        showFormMessage("Stock must be a positive number or = 0.");
+    if (isNaN(stock) || Number(stock) <= 0 || !acceptNumber.test(stock)) {
+        showFormMessage("Stock must be a positive number or = 0");
         return;
     }
     if (!category.trim()) {
@@ -167,6 +174,10 @@ document.getElementById("productForm").addEventListener("submit", function(e) {
         showFormMessage("A product with this name already exists!");
         return;
     }
+    if (imagesArray.length > 6) {
+        showFormMessage("You can just upload 5 images!");
+        return;
+    }
 
     const session = JSON.parse(localStorage.getItem("session")) || null;
 
@@ -186,8 +197,10 @@ document.getElementById("productForm").addEventListener("submit", function(e) {
 
     if (id) {
         const index = products.findIndex(u => u.id == id);
-        products[index] = productData;
+        productData.seller_id = products[index].seller_id;  
+        products[index] = { ...products[index], ...productData };
     } else {
+        productData.seller_id = session ? session.id : 1;
         products.push(productData);
     }
 
