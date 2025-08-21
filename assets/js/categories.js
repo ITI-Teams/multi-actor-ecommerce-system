@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const row = productsContainer.querySelector("#productsRow");
 
     if (filteredProducts.length === 0) {
-      productsContainer.innerHTML = `<p class="text-muted">لا توجد منتجات لهذه الفئة.</p>`;
+      productsContainer.innerHTML = `<p class="text-muted">There are no products in this category.</p>`;
       return;
     }
 

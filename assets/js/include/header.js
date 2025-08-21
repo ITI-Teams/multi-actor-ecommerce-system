@@ -19,9 +19,6 @@ const nav_content = `<div class="container">
                           <li class="nav-item">
                             <a class="nav-link" href="/pages/categories.html">Women</a>
                         </li>
-                          <li class="nav-item">
-                            <a class="nav-link" href="/pages/categories.html">Kids</a>
-                        </li>
                             <li class="nav-item">
                             <a class="nav-link" href="/pages/categories.html">Proudcts</a>
                         </li>

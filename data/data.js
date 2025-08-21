@@ -3,7 +3,6 @@
 let categories = JSON.parse(localStorage.getItem("categories")) || [
     { id: 1, name: "Men", description: "Clothing and accessories for men" },
     { id: 2, name: "Women", description: "Clothing and accessories for women" },
-    { id: 3, name: "Kids", description: "Clothing and accessories for kids" },
 ];
 // ========== USERS ==========
 let users = JSON.parse(localStorage.getItem("users")) || [
@@ -38,9 +37,9 @@ let products = JSON.parse(localStorage.getItem("products")) || Array.from({ leng
     category:  (i % 2) + 1,
     reviews: Math.floor(Math.random() * 5) + 1,
     price: Math.floor(Math.random() * 500 + 50) ,
-    size: ['S','M','L','XL'],
+    size: ['S','M','L','XL','XXL'],
     color: ["#000000", "#FFFFFF", "#FF0000"],
-    images: [`product${(i % 10) + 1}.jpg`],
+    images: [`product${(i % 100) + 1}.jpg`],
     seller_id: (i % 5) + 2,
     stock: Math.floor(Math.random() * 50) + 1
 }));

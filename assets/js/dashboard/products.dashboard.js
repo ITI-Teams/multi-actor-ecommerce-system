@@ -40,11 +40,12 @@ function renderTable() {
     
 
     paginatedProducts.forEach(product => {
+        const categoryObj = categoriesList.find(cat => cat.id == product.category);
         tbody.innerHTML += `
             <tr>
                 <td>${product.name}</td>
                 <td>${product.description.split(" ").slice(0, 3).join(" ") + "..."}</td>
-                <td>${categoriesList[product.category].name}</td>
+                <td>${categoryObj ? categoryObj.name : "Unknown"}</td>
                 <td>${product.reviews}</td>
                 <td>${product.price}</td>
                 <td class="${product.stock == 0 ? 'bg-danger text-white' : ''}">${product.stock}</td>
