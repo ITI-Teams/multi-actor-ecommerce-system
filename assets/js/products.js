@@ -8,9 +8,12 @@ const urlParams = new URLSearchParams(location.search); // get query parameters 
 const pageNumber = urlParams.get("page"); // get page number
 const categoryParam = urlParams.get("category"); // get category from URL
 const priceParam = urlParams.get("price");
-const sizeParams = urlParams.get("size");
+const sizeParam = urlParams.get("size");
+
 let productPage = pageNumber ? parseInt(pageNumber) : 1; // convert page number to integer set 1 if not found
 const productsPerPage = 12; // set products per page
+
+// ===================== Load Filters =====================
 
 // Load categories dynamically
 const categories = JSON.parse(localStorage.getItem("categories")) || [];
@@ -19,35 +22,52 @@ categorySelect.innerHTML =
   '<option value="all">All</option>' +
   categories.map((c) => `<option value="${c.name}">${c.name}</option>`).join("");
 
-// Filter by category
-function filterByCategory(category, list) {
-  if (!category || category === "all") return [...list];
-  return list.filter(
-    (product) => product.category.toLowerCase() === category.toLowerCase()
-  );
+
+categorySelect.innerHTML =
+  '<option value="all">All</option>' +
+  categories.map((c) => `<option value="${c.id}">${c.name}</option>`).join("");
+
+// Filter by category (by id)
+function filterByCategory(categoryId, list) {
+  if (!categoryId || categoryId === "all") return [...list];
+
+  return list.filter((product) => {
+    if (product.category) {
+      return String(product.category) === String(categoryId);
+    }
+    return false;
+  });
 }
+
+// ===================== Filters =====================
 
 // Filter by price
 function filterByPrice(price, list) {
   if (!price || price === "all") return [...list];
   const [min, max] = price.split("-").map(Number);
-  return list.filter(
-    (product) => product.price >= min && product.price <= max
-  );
+  return list.filter((product) => product.price >= min && product.price <= max);
 }
 
 // Filter by size
 function filterBySize(size, list) {
-  if (!size || size === "all") return list;
+  if (!size || size === "all") return [...list];
+
   return list.filter((product) => {
     if (Array.isArray(product.size)) {
-      return product.size.map((s) => s.toLowerCase()).includes(size.toLowerCase());
+      return product.size
+        .map((s) => String(s).toUpperCase())
+        .includes(size.toUpperCase());
     }
-    return product.size.toLowerCase() === size.toLowerCase();
+
+    if (typeof product.size === "string") {
+      return product.size.toUpperCase() === size.toUpperCase();
+    }
+
+    return false;
   });
 }
 
-// Update URL without reload
+// ===================== URL Helper =====================
 function updateUrlParams(params) {
   const newUrl = new URL(window.location);
   Object.entries(params).forEach(([key, value]) => {
@@ -57,7 +77,7 @@ function updateUrlParams(params) {
   window.history.pushState({}, "", newUrl); // ✅ تحديث الرابط فقط بدون reload
 }
 
-// Render products
+// ===================== Render Products =====================
 function renderProducts(productsToRender, container) {
   const containerWrapper = document.getElementById(container);
   containerWrapper.innerHTML = "";
@@ -83,7 +103,7 @@ function renderProducts(productsToRender, container) {
   renderPagination(totalFilteredProducts, productPage);
 }
 
-// Render pagination
+// ===================== Pagination =====================
 function renderPagination(totalProductsCount, currentPage) {
   const paginationCount = Math.ceil(totalProductsCount / productsPerPage);
   const paginationWrapper = document.getElementById("paginationWrapper");
@@ -92,9 +112,9 @@ function renderPagination(totalProductsCount, currentPage) {
   // Prev button
   paginationWrapper.innerHTML += `
     <li class="page-item">
-      <button class="page-link ${currentPage === 1 && "disabled"}" ${currentPage === 1 ? "disabled" : ""} data-page="${
-    currentPage - 1
-  }" >&laquo;</button>
+      <button class="page-link ${currentPage === 1 && "disabled"}" ${
+    currentPage === 1 ? "disabled" : ""
+  } data-page="${currentPage - 1}" >&laquo;</button>
     </li>
   `;
 
@@ -112,9 +132,9 @@ function renderPagination(totalProductsCount, currentPage) {
   // Next button
   paginationWrapper.innerHTML += `
     <li class="page-item">
-      <button class="page-link ${currentPage === paginationCount && 'disabled'}" ${
-        currentPage === paginationCount ? "disabled" : ""
-      } data-page="${currentPage + 1}">&raquo;</button>
+      <button class="page-link ${currentPage === paginationCount && "disabled"}" ${
+    currentPage === paginationCount ? "disabled" : ""
+  } data-page="${currentPage + 1}">&raquo;</button>
     </li>
   `;
 
@@ -128,7 +148,7 @@ function renderPagination(totalProductsCount, currentPage) {
   });
 }
 
-// ✅ Apply all filters together
+// ===================== Apply All Filters =====================
 function applyFilters() {
   const selectedCategory = document.getElementById("category").value || "all";
   const selectedPrice = document.getElementById("price").value || "all";
@@ -151,11 +171,12 @@ function applyFilters() {
   renderProducts(filteredProducts, "productsWrapper");
 }
 
+// ===================== Init =====================
 window.addEventListener("load", () => {
   // اضبط dropdowns من URL لو موجودة
   if (categoryParam) document.getElementById("category").value = categoryParam;
   if (priceParam) document.getElementById("price").value = priceParam;
-  if (sizeParams) document.getElementById("size").value = sizeParams;
+  if (sizeParam) document.getElementById("size").value = sizeParam;
 
   applyFilters();
 

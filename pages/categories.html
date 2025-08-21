@@ -23,6 +23,9 @@
 <body>
 
       <header id="header-wrapper">
+        <video id="bg-video" autoplay loop muted src="/assets/videos/bgheader.mp4">
+            Your Browse is not support HTML5
+        </video>
         <nav id="main-header" class="navbar navbar-expand-lg bg-body-tertiary bg-nav-transparent fixed-top"></nav>
     </header>
     <svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
@@ -37,29 +40,20 @@
         </symbol>
     </svg>
     <div id="formMessage"></div>
-    <h1 class="main_category">Main Categories</h1>
-
-
     <main class="container">
-        
-  <div class="container text-center">
-  <div id="categoriesRow" class="row align-items-start">
-
-  </div>
-</div>
-
-</main>
-
-     <div class="container mt-4">
-    <div id="productsContainer" class="collapse">
-      <div class="card card-body">
-      
+      <div class="container text-center">
+        <div id="categoriesRow" class="row align-items-start">
+        </div>
+      </div>
+    </main>
+    <div class="container mt-4">
+      <div id="productsContainer" class="collapse">
+        <div class="card card-body">
+        </div>
       </div>
     </div>
-  </div>
-  <button id="toTop">⬆ Scroll To Top</button>
 
-      <footer id="main-footer" class="footer bg-black text-light mt-5"></footer>
+    <footer id="main-footer" class="footer bg-black text-light mt-5"></footer>
     <script src="../assets/js/bootstrap.bundle.min.js"></script>
     <script src="../assets/js/categories.js"></script>
     <script src="../assets/js/add.cart.js"></script>
@@ -69,8 +63,6 @@
         });
     </script>
     <script src="/assets/js/jquery.min.js"></script>
-    <script src="/assets/js/scrolling.js"></script>
-
-     
+    <script src="/assets/js/scrolling.js"></script>        
    </body>
    </html>
