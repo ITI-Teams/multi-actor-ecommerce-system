@@ -3,19 +3,26 @@ function getAverageRating(productId) {
   const productReviews = reviews.filter(r => r.product_id == productId);
   
   if (productReviews.length === 0) return { avg: 0, count: 0 };
+  const sum = productReviews.reduce(
+      (acc, r) => acc + Number(r.review),
+      0
+  );
 
-  const avg = productReviews.reduce((sum, r) => sum + (r.rating || 0), 0) / productReviews.length;
+  const avg = sum / productReviews.length;
   return { avg: Math.round(avg * 2) / 2, count: productReviews.length }; 
 }
 function renderStars(rating) {
+  
+  
+
   const fullStars = Math.floor(rating);
   const hasHalf = rating % 1 >= 0.5;
   const emptyStars = 5 - fullStars - (hasHalf ? 1 : 0);
 
   let stars = '';
-  for (let i = 0; i < fullStars; i++) stars += '<i class="bi bi-star-fill text-warning"></i>';
-  if (hasHalf) stars += '<i class="bi bi-star-half text-warning"></i>';
-  for (let i = 0; i < emptyStars; i++) stars += '<i class="bi bi-star text-secondary"></i>';
+  for (let i = 0; i < fullStars; i++) stars += '<i class="fa fa-star star" style="color: gold;"></i>';
+  for (let i = 0; i < emptyStars; i++) stars += '<i class="fa fa-star star" ></i>';
+  if (hasHalf) stars += '<i class="fa fa-star star" style="color: gold;"></i>';
 
   return stars;
 }

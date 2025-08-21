@@ -119,7 +119,9 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Password updated successfully!");
             bootstrap.Modal.getInstance(document.getElementById("resetModal")).hide();
             resetForm.reset();
+            location.href = '/pages/login.html';
         }
+
     });
 });
 function showFormMessage(message, type = "danger") {

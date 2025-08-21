@@ -31,11 +31,9 @@ if (!product) {
         </div>
     `;
 } else {
-    // استرجاع الريفيوز الخاصة بالمنتج
     const allReviews = JSON.parse(localStorage.getItem("reviews")) || [];
     const productReviews = allReviews.filter((r) => r.product_id == product.id);
 
-    // حساب متوسط التقييم
     let avgRating = 0;
     if (productReviews.length > 0) {
         const sum = productReviews.reduce(
@@ -45,7 +43,6 @@ if (!product) {
         avgRating = sum / productReviews.length;
     }
 
-    // عرض التقييم
     document.getElementById("ratingValue").textContent =
         avgRating.toFixed(1) + " / 5";
 
@@ -54,7 +51,6 @@ if (!product) {
             ? productReviews.length + " Reviews"
             : "No Reviews Yet";
 
-    // تلوين النجوم
     const ratingStars = document.querySelectorAll("#ratingStars .star");
     ratingStars.forEach((star) => {
         const value = parseInt(star.getAttribute("data-value"));
@@ -104,7 +100,6 @@ if (!product) {
         });
     });
 
-    // المقاسات
     const productSizeWrapper = document.getElementById("product-size");
     const sizes = ["s", "m", "l", "XL","XXL", "XXXL"];
     productSizeWrapper.innerHTML = "";
@@ -120,7 +115,6 @@ if (!product) {
         productSizeWrapper.appendChild(button);
     });
 
-    // اختيار المقاس
     const addtocartBtn = document.getElementById("addtocartBtn");
     document.querySelectorAll(".size-btn").forEach((b) => {
         if (b.classList.contains("disabled")) return;
