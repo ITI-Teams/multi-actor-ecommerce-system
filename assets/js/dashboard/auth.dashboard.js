@@ -21,17 +21,14 @@ function checkAuthorization(allowedRoles = []) {
     const session = checkSession();
     if (!session) return;
 
-    // admin مسموح له دخول أي مكان
     if (session.role === "admin") return;
 
-    // التحقق من أن دور المستخدم موجود في القائمة المسموح بها
     if (allowedRoles.length > 0 && !allowedRoles.includes(session.role)) {
         alert("You are not authorized to access this page.");
         window.location.href = "dashboard.html";
     }
 }
 
-// ====== عرض القائمة الجانبية حسب الدور ======
 function filterSidebar() {
     const session = checkSession();
     if (!session) return;
