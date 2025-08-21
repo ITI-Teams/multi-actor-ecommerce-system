@@ -19,45 +19,71 @@ A responsive and interactive e-commerce web application designed for **Customers
 ```bash
 ecommerce-multi-actor/
 │
-├── index.html                      # Optional redirect to pages/home.html
+├── index.html
 │
 ├── pages/
-│   ├── home.html                   # Home page
-│   ├── catalog.html                # Product catalog
-│   ├── product.html                # Product details
-│   ├── cart.html                   # Shopping cart
-│   ├── checkout.html               # Checkout process
-│   ├── login.html                  # User login
-│   ├── register.html               # User registration
-│   └── dashboard/
-│       ├── customer.html           # Customer dashboard
-│       ├── seller.html             # Seller dashboard
-│       ├── admin.html              # Admin panel
-│       └── analytics.html          # Sales analytics (Chart.js)
+│ ├── about.html 
+│ ├── cart.html
+│ ├── categories.html 
+│ ├── checkout.html 
+│ ├── contact.html 
+│ ├── forget.html 
+│ ├── login.html
+│ ├── register.html 
+│ ├── product.html 
+│ ├── products.html 
+│ ├── search.html 
+│ └── profile.html 
+│
+├── dashboard
+│ ├── cart.html 
+│ ├── category.html 
+│ ├── customer.html 
+│ ├── dashboard.html 
+│ ├── login.html 
+│ ├── register.html 
+│ ├── mails.html 
+│ ├── menus.html 
+│ ├── messages.html 
+│ ├── orders.html 
+│ ├── products.html 
+│ ├── profile.html 
+│ ├── reviews.html 
+│ ├── users.html 
+│ └── customers.html 
 │
 ├── assets/
-│   ├── css/
-│   │   ├── style.css               # Custom styles
-│   │   └── bootstrap.min.css       # Bootstrap CSS
-│   ├── js/
-│   │   ├── main.js                 # General JS logic
-│   │   ├── cart.js                 # Cart functionality
-│   │   ├── auth.js                 # Login/role validation
-│   │   ├── seller.js               # Seller features
-│   │   └── admin.js                # Admin functions
-│   ├── img/
-│   │   ├── logo.png                # Site logo
-│   │   └── [product images]        # Product images
-│   └── fonts/
-│       └── [custom fonts]          # Optional web fonts
+│ ├── css/
+│ │ ├── style.css
+│ │ ├── about-us-page.css
+│ │ ├── all.min.css
+│ │ ├── bootstrap.min.css
+│ │ ├── cart.css
+│ │ ├── categories.css
+│ │ ├── checkout-page.css
+│ │ ├── choices.min.css
+│ │ ├── contact-us-page.css
+│ │ ├── dashboard-login.css
+│ │ ├── dashboard-styles.css
+│ │ ├── login&register.css
+│ │ ├── onepage-product.css
+│ │ ├── products.css
+│ │ └── user.css
+│ ├── js/
+│ │ ├── main.js 
+│ │ ├── dashboard.js
+│ │ ├── includes
+│ │ └── auth.js 
+│ ├── img/
+│ │ ├── logo.png # Site logo
+│ │ └── [product images] 
+│ └── fonts/
+│ └── [custom fonts] 
 │
 ├── data/
-│   ├── products.json               # Product data
-│   ├── users.json                  # User data
-│   └── orders.json                 # Orders data
+│ └── data.js 
 │
-├── README.md                       # Project overview and structure
-├── LICENSE                         # License (optional)
-├── .gitignore                      # Git ignored files
-└── package.json                    # npm config (if used)
+├── README.md 
+├── Trendora.ico 
+└── .gitignore 
 
