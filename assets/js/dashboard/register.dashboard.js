@@ -71,9 +71,9 @@ document.getElementById("registerForm").addEventListener("submit", function (e) 
         showMessage("Please enter a valid email address.");
         return;
     }
-    const phonePattern = /^(010|011|012|013|015)\d{8}$/;
+    const phonePattern = /^(010|011|012|015)\d{8}$/;
     if (!phonePattern.test(phone)) {
-        showMessage("Phone number must start with 010, 011, 012, 013, or 015 and be 11 digits.");
+        showMessage("Phone number must start with 010, 011, 012 or 015 and be 11 digits.");
         return;
     }
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;

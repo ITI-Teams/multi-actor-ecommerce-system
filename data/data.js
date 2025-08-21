@@ -35,7 +35,7 @@ let products = JSON.parse(localStorage.getItem("products")) || Array.from({ leng
     id: i + 1,
     name: `Product ${i + 1}`,
     description: `This is description for product ${i + 1}`,
-    category: categories[i % 3].name,
+    category:  (i % 2) + 1,
     reviews: Math.floor(Math.random() * 5) + 1,
     price: (Math.random() * 500 + 50).toFixed(2),
     size: ['S','M','L','XL'],
