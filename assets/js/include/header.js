@@ -13,14 +13,23 @@ const nav_content = `<div class="container">
                         <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                     </div>
                     <ul class="navbar-nav" id="TrendoraMenu">
-                        <li class="nav-item">
+                         <li class="nav-item">
                             <a class="nav-link" href="/pages/categories.html">Men</a>
                         </li>
-                        <li class="nav-item">
+                          <li class="nav-item">
                             <a class="nav-link" href="/pages/categories.html">Women</a>
                         </li>
-                        <li class="nav-item">
+                          <li class="nav-item">
                             <a class="nav-link" href="/pages/categories.html">Kids</a>
+                        </li>
+                            <li class="nav-item">
+                            <a class="nav-link" href="/pages/categories.html">Proudcts</a>
+                        </li>
+                           <li class="nav-item">
+                            <a class="nav-link" href="/pages/categories.html">About</a>
+                        </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="/pages/categories.html">Contact</a>
                         </li>
                     </ul>
                 </div>
@@ -38,7 +47,7 @@ const nav_content = `<div class="container">
                     </div>
                 </div>
 
-                <!-- search -->
+                 <!-- search -->
                 <form method="get" action="/pages/search.html" class="d-flex">
                     <div class="collapse align-content-center me-2" id="searchIcon">
                         <div class="input-group">
@@ -52,8 +61,7 @@ const nav_content = `<div class="container">
                         </i>
                     </p>
                 </form>
-
-                <!-- cart -->
+   <!-- cart -->
                 <div class="dropdown">
                     <a class="btn btn-link text-black text-decoration-none position-relative" type="button"
                         id="cartDropdown"
@@ -66,5 +74,6 @@ const nav_content = `<div class="container">
                     </a>
                 </div>
             </div>`;
+               
 
-export default nav_content;
+export default nav_content

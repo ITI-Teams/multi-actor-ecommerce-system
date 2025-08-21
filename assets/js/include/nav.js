@@ -35,15 +35,35 @@ const storedMenu = JSON.parse(localStorage.getItem("menuData")) || [];
 
 if (!Array.isArray(storedMenu) || storedMenu.length === 0) {
     menuContainer.innerHTML = `
-        <li class="nav-item">
-            <a class="nav-link" href="/pages/categories.html">Men</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/pages/categories.html">Women</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/pages/categories.html">Kids</a>
-        </li>
+       <div class="dropdown">
+                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Categories
+                    </button>
+                <ul class="dropdown-menu">
+                <li class="nav-item">
+                            <a class="nav-link" href="/pages/categories.html">Men</a>
+                        </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="/pages/categories.html">Women</a>
+                        </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="/pages/categories.html">Kids</a>
+                        </li>
+  </ul>
+</div>  
+        
+
+               <li class="nav-item">
+                            <a class="nav-link" href="/pages/products.html">Proudcts</a>
+                        </li>
+                           <li class="nav-item">
+                            <a class="nav-link" href="/pages/about-us-page.html">About</a>
+                        </li>
+                          <li class="nav-item">
+                            <a class="nav-link" href="/pages/contact-us-page.html">Contact</a>
+                        </li>
+
+                      
     `;
 } else {
     menuContainer.innerHTML = '';
