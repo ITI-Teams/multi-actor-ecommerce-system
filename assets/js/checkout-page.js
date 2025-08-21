@@ -36,6 +36,7 @@ const citiesByCountry = {
 /* Demo cart data (dynamic)*/
 const currentID = localStorage.getItem("customerSession");
 let cards = JSON.parse(localStorage.getItem("cards")) || [];
+console.log(cards);
 
 if (!currentID) {
     alert("You must log in first.");
