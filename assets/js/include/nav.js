@@ -6,12 +6,12 @@ if (!dropdownMenu) {
 
 if (!currentID) {
     dropdownMenu.innerHTML = `
-        <li><a class="dropdown-item" href="/pages/register.html">Sign Up</a></li>
-        <li><a class="dropdown-item" href="/pages/login.html">Login</a></li>
+        <li><a class="dropdown-item" href="../../../pages/register.html">Sign Up</a></li>
+        <li><a class="dropdown-item" href="../../../pages/login.html">Login</a></li>
     `;
 } else {
     dropdownMenu.innerHTML = `
-        <li><a class="dropdown-item" href="/pages/user-profile.html">Profile (${currentCustomer?.name || 'User'})</a></li>
+        <li><a class="dropdown-item" href="../../../pages/user-profile.html">Profile (${currentCustomer?.name || 'User'})</a></li>
         <li><hr class="dropdown-divider"></li>
         <li><a class="dropdown-item text-danger" href="#" id="logoutBtn">Logout</a></li>
     `;
@@ -20,7 +20,7 @@ if (!currentID) {
         e.preventDefault();
         localStorage.removeItem("customerSession");
         alert("Successful logout");
-        window.location.href = "/index.html";
+        window.location.href = "../../../index.html";
     });
 }
 
@@ -40,10 +40,10 @@ if (!Array.isArray(storedMenu) || storedMenu.length === 0) {
                     </button>
                 <ul class="dropdown-menu">
                 <li class="nav-item">
-                            <a class="nav-link" href="/pages/categories.html">Men</a>
+                            <a class="nav-link" href="../../../pages/categories.html">Men</a>
                         </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="/pages/categories.html">Women</a>
+                            <a class="nav-link" href="../../../pages/categories.html">Women</a>
                         </li>
                           
   </ul>
@@ -51,13 +51,13 @@ if (!Array.isArray(storedMenu) || storedMenu.length === 0) {
         
 
                <li class="nav-item">
-                            <a class="nav-link" href="/pages/products.html">Proudcts</a>
+                            <a class="nav-link" href="../../../pages/products.html">Proudcts</a>
                         </li>
                            <li class="nav-item">
-                            <a class="nav-link" href="/pages/about-us-page.html">About</a>
+                            <a class="nav-link" href="../../../pages/about-us-page.html">About</a>
                         </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="/pages/contact-us-page.html">Contact</a>
+                            <a class="nav-link" href="../../../pages/contact-us-page.html">Contact</a>
                         </li>
 
                       
