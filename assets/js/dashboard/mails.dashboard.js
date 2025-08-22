@@ -34,7 +34,7 @@ function renderTable() {
     );
 
     const start = (currentPagePagination - 1) * rowsPerPage;
-    const paginatedMails = filteredMails.slice(start, start + rowsPerPage);
+    const paginatedMails = filteredMails.reverse().slice(start, start + rowsPerPage);
 
     const tbody = document.getElementById("mailTableBody");
     tbody.innerHTML = "";

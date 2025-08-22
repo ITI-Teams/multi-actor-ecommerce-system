@@ -30,7 +30,7 @@ function renderTable() {
     );
 
     const start = (currentPagePagination - 1) * rowsPerPage;
-    const paginatedOrders = filteredOrders.slice(start, start + rowsPerPage);
+    const paginatedOrders = filteredOrders.reverse().slice(start, start + rowsPerPage);
 
     const tbody = document.getElementById("orderTableBody");
     tbody.innerHTML = "";
@@ -89,17 +89,6 @@ function updateOrderStatus(orderId, newStatus) {
         return;
     }
     orders[orderIndex].status = newStatus;
-    // if (newStatus === "Completed") {
-    //     let products = JSON.parse(localStorage.getItem("products")) || [];
-    //     const productIndex = products.findIndex(p => p.id === orders[orderIndex].product_id);
-    //     if (productIndex !== -1) {
-    //         products[productIndex].stock = Math.max(
-    //             0, 
-    //             products[productIndex].stock - orders[orderIndex].quntity
-    //         );
-    //         localStorage.setItem("products", JSON.stringify(products));
-    //     }
-    // }
     saveOrders();
     renderTable();
 }

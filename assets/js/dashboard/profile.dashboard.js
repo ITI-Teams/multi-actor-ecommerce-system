@@ -140,7 +140,7 @@ document.querySelector("#editModal form").addEventListener("submit", function(e)
         showFormMessage("This email is already registered. Please use a different email.");
         return;
     }
-    if (currentUser.name.toLowerCase() != newName.toLowerCase()) {
+    if (nameTaken) {
         showFormMessage("This name is already registered. Please use a different name.");
         return;
     }

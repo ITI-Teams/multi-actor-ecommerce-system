@@ -40,13 +40,13 @@ function renderTable() {
     });
 
     const start = (currentPagePagination - 1) * rowsPerPage;
-    const paginatedCarts = filteredCarts.slice(start, start + rowsPerPage);
+    const paginatedCarts = filteredCarts.reverse().slice(start, start + rowsPerPage);
 
     const tbody = document.getElementById("cartTableBody");
     tbody.innerHTML = "";
 
     paginatedCarts.forEach(cart => {
-        const customer = customers.find(cus => cus.id === cart.customer_id);
+        const customer = customers.find(cus => Number(cus.id) === Number(cart.customer_id));
         const seller = sellers.find(sel => sel.id === cart.seller_id);
         const product = products.find(p => p.id === cart.product_id);
 

@@ -25,7 +25,6 @@ if (!currentID) {
 }
 
 
-/////////////////
 const menuContainer = document.getElementById("TrendoraMenu");
 if (!menuContainer) {
     console.warn("#TrendoraMenu not found");

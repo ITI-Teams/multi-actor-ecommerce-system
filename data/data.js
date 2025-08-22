@@ -35,9 +35,9 @@ let products = JSON.parse(localStorage.getItem("products")) || Array.from({ leng
     name: `Product ${i + 1}`,
     description: `This is description for product ${i + 1}`,
     category: (i < 50) ? 1 : 2,
-    reviews: Math.floor(Math.random() * 5) + 1,
-    price: Math.floor(Math.random() * 500 + 50) ,
-    size: ['S','M','L','XL','XXL'],
+    reviews: 0,
+    price: Math.floor(Math.random() * 500 + 50),
+    size: ['S', 'M', 'L', 'XL', 'XXL'],
     color: ["#000000", "#FFFFFF", "#FF0000"],
     images: [`product${(i % 100) + 1}.jpg`],
     seller_id: (i % 5) + 2,
@@ -64,7 +64,7 @@ let carts = JSON.parse(localStorage.getItem("carts")) || Array.from({ length: 20
     quantity: Math.floor(Math.random() * 3) + 1
 }));
 // ========== REVIEWS ==========
-let reviews = JSON.parse(localStorage.getItem("reviews")) || Array.from({ length: 20 }, (_, i) => ({
+let reviews = JSON.parse(localStorage.getItem("reviews")) || Array.from({ length: 100 }, (_, i) => ({
     id: i + 1,
     product_id: (i % 100) + 1,
     customer_id: (i % 100) + 1,
@@ -95,8 +95,8 @@ let cards = JSON.parse(localStorage.getItem("cards")) || Array.from({ length: 10
     number: `4871 0499 9999 9${i}10`,
     exp: "09/35",
     cvc: 123,
-    name: "customer"+i,
-    balance: 30000*i,
+    name: "customer" + i,
+    balance: 30000 * i,
 }));
 
 if (!localStorage.getItem("cards")) {
@@ -132,21 +132,21 @@ if (!localStorage.getItem("users")) {
 function encryptText(text) {
     if (!text) return '';
     let step1 = text.split('').reverse().join('');
-        let step2 = '';
+    let step2 = '';
     for (let i = 0; i < step1.length; i += 2) {
         if (i + 1 < step1.length) {
-            step2 += step1[i+1] + step1[i];
+            step2 += step1[i + 1] + step1[i];
         } else {
             step2 += step1[i];
         }
     }
-    
+
     let step3 = '';
     for (let i = 0; i < step2.length; i++) {
         let charCode = step2.charCodeAt(i);
         step3 += String.fromCharCode(charCode + 3);
     }
-    
+
     const prefix = String.fromCharCode(65 + Math.floor(Math.random() * 26));
     const suffix = String.fromCharCode(65 + Math.floor(Math.random() * 26));
     return prefix + step3 + suffix;
@@ -154,23 +154,46 @@ function encryptText(text) {
 
 function decryptText(encryptedText) {
     if (!encryptedText) return '';
-    
+
     let step1 = encryptedText.substring(1, encryptedText.length - 1);
-    
+
     let step2 = '';
     for (let i = 0; i < step1.length; i++) {
         let charCode = step1.charCodeAt(i);
         step2 += String.fromCharCode(charCode - 3);
     }
-    
+
     let step3 = '';
     for (let i = 0; i < step2.length; i += 2) {
         if (i + 1 < step2.length) {
-            step3 += step2[i+1] + step2[i];
+            step3 += step2[i + 1] + step2[i];
         } else {
             step3 += step2[i];
         }
     }
-    
+
     return step3.split('').reverse().join('');
 }
+(function enforceProductReviewRelation() {
+    const storedReviews = JSON.parse(localStorage.getItem("reviews")) || reviews || [];
+
+    const byProduct = storedReviews.reduce((acc, r) => {
+        const val = typeof r.review === "number" ? r.review : parseFloat(r.review);
+        if (!isNaN(val)) {
+            (acc[r.product_id] ||= []).push(val);
+        }
+        return acc;
+    }, {});
+
+    let currentProducts = JSON.parse(localStorage.getItem("products")) || products || [];
+    currentProducts = currentProducts.map(p => {
+        const ratings = byProduct[p.id] || [];
+        const rating = ratings.length
+            ? Math.round((ratings.reduce((a, b) => a + b, 0) / ratings.length) * 10) / 10
+            : 0;
+        return { ...p, reviews: rating };
+    });
+
+    products = currentProducts;
+    localStorage.setItem("products", JSON.stringify(currentProducts));
+})();
