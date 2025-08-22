@@ -18,7 +18,7 @@ function renderTable() {
     );
 
     const start = (currentPagePagination - 1) * rowsPerPage;
-    const paginatedMessages = filteredMessages.slice(start, start + rowsPerPage);
+    const paginatedMessages = filteredMessages.reverse().slice(start, start + rowsPerPage);
 
     const tbody = document.getElementById("messageTableBody");
     tbody.innerHTML = "";

@@ -64,15 +64,10 @@ const zip = document.getElementById('zip');
 const phone = document.getElementById('phone');
 
 document.getElementById('email').value = currentCustomer.email || '';
-document.getElementById('firstName').value = currentCustomer.FirstName || '';
+document.getElementById('firstName').value = currentCustomer.firstName || '';
 document.getElementById('lastName').value = currentCustomer.lastName || '';
 document.getElementById('address').value = currentCustomer.address || '';
 document.getElementById('country').value = currentCustomer.country || '';
-
-// const option = document.createElement("option");
-// option.value = currentCustomer.city;
-// option.textContent = currentCustomer.city;
-// option.selected = true;
 
 document.getElementById('zip').value = currentCustomer.zip || '';
 document.getElementById('phone').value = currentCustomer.phone || '';

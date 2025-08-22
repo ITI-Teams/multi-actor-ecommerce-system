@@ -91,7 +91,7 @@ if (!product) {
     });
 
     const productSizeWrapper = document.getElementById("product-size");
-    const sizes = ["S", "M", "L", "XL","XXL", "XXXL"];
+    const sizes = ["S", "M", "L", "XL", "XXL", "XXXL"];
     productSizeWrapper.innerHTML = "";
 
     sizes.forEach((size) => {
@@ -120,9 +120,9 @@ if (!product) {
     Color Selection (highlight only)
     ----------------------------- */
     const productColor = document.getElementById("color-swatches");
-        productColor.innerHTML = "";
-        product.color.forEach((color) => {
-            productColor.innerHTML +=`
+    productColor.innerHTML = "";
+    product.color.forEach((color) => {
+        productColor.innerHTML += `
             <div class="swatch" data-color="${color}" title="${color}" style="background: ${color}"></div>
             `;
     });
@@ -138,15 +138,15 @@ if (!product) {
     // منتجات مرتبطة (بنفس الكاتيجوري)
     const relatedProductsWrapper =
         document.getElementById("relatedProductsWrapper");
-    const relatedProducts = products.filter(
-        (p) => p.category === product.category && p.id !== product.id
+    const relatedProducts = products.reverse().filter(
+        (p) => Number(p.category) === Number(product.category) && p.id !== product.id
     ).slice(0, 12);
     relatedProductsWrapper.innerHTML = "";
     relatedProducts.forEach((p) => {
         relatedProductsWrapper.innerHTML += prodcutCard(p);
     });
 }
-document.getElementById('addtocartBtn').addEventListener('click',function(){
+document.getElementById('addtocartBtn').addEventListener('click', function () {
     const customerId = localStorage.getItem("customerSession");
     if (!customerId) {
         let guestCart = JSON.parse(localStorage.getItem("guestCart")) || [];
@@ -165,7 +165,7 @@ document.getElementById('addtocartBtn').addEventListener('click',function(){
         localStorage.setItem("guestCart", JSON.stringify(guestCart));
         showFormMessage("The product has been added to the cart!");
         updateCartBadge();
-    }else{
+    } else {
         const carts = JSON.parse(localStorage.getItem("carts")) || [];
         const existing = carts.find(c => c.product_id == product.id && c.customer_id == customerId);
         if (existing) {
@@ -184,7 +184,7 @@ document.getElementById('addtocartBtn').addEventListener('click',function(){
         showFormMessage("The product has been added to the cart!");
         updateCartBadge();
     }
-    
+
 });
 const mainImg = document.getElementById("main-Img");
 const lens = document.createElement("div");
@@ -195,31 +195,31 @@ mainImg.parentElement.appendChild(lens);
 mainImg.addEventListener("mousemove", moveLens);
 lens.addEventListener("mousemove", moveLens);
 mainImg.addEventListener("mouseleave", () => {
-  lens.style.display = "none";
+    lens.style.display = "none";
 });
 mainImg.addEventListener("mouseenter", () => {
-  lens.style.display = "block";
+    lens.style.display = "block";
 });
 
 function moveLens(e) {
-  const rect = mainImg.getBoundingClientRect();
-  const x = e.clientX - rect.left;
-  const y = e.clientY - rect.top;
+    const rect = mainImg.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
 
-  const lensSize = lens.offsetWidth / 2;
+    const lensSize = lens.offsetWidth / 2;
 
-  let lensX = x - lensSize;
-  let lensY = y - lensSize;
+    let lensX = x - lensSize;
+    let lensY = y - lensSize;
 
-  if (lensX < 0) lensX = 0;
-  if (lensY < 0) lensY = 0;
-  if (lensX > rect.width - lens.offsetWidth) lensX = rect.width - lens.offsetWidth;
-  if (lensY > rect.height - lens.offsetHeight) lensY = rect.height - lens.offsetHeight;
+    if (lensX < 0) lensX = 0;
+    if (lensY < 0) lensY = 0;
+    if (lensX > rect.width - lens.offsetWidth) lensX = rect.width - lens.offsetWidth;
+    if (lensY > rect.height - lens.offsetHeight) lensY = rect.height - lens.offsetHeight;
 
-  lens.style.left = lensX + "px";
-  lens.style.top = lensY + "px";
+    lens.style.left = lensX + "px";
+    lens.style.top = lensY + "px";
 
-  lens.style.backgroundImage = `url(${mainImg.src})`;
-  lens.style.backgroundSize = rect.width * 2 + "px " + rect.height * 2 + "px";
-  lens.style.backgroundPosition = `-${x * 2 - lensSize}px -${y * 2 - lensSize}px`;
+    lens.style.backgroundImage = `url(${mainImg.src})`;
+    lens.style.backgroundSize = rect.width * 2 + "px " + rect.height * 2 + "px";
+    lens.style.backgroundPosition = `-${x * 2 - lensSize}px -${y * 2 - lensSize}px`;
 }

@@ -265,9 +265,11 @@ function loadOrders() {
       
       `;
     }
+    const product = products.find(p => p.id === order.product_id);
+    const productName = product ? product.name : "Unknown Product";
     tr.innerHTML = `
       <td class="text-center">${order.id}</td>
-      <td class="text-center">${ products[order.product_id-1].name }</td>
+      <td class="text-center">${productName}</td>
       <td class="text-center">${order.status}</td>
       <td class="text-center">${order.totalPrice} EGP</td>
       <td class="text-center">${order.quntity}</td>

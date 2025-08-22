@@ -49,7 +49,7 @@ function renderTable() {
                 <td>${customer.country}</td>
                 <td>${customer.city}</td>
                 <td>${customer.address}</td>
-                <td>${new Date(new Date()-new Date(customer.birthday)).getFullYear()-1970}</td>
+                <td>${new Date(new Date()-new Date(customer.birthday)).getFullYear()-1970 || ''}</td>
                 <td>${customer.phone}</td>
                 <td>
                     <button class="btn btn-warning btn-sm" onclick="editCustomer(${customer.id})">
@@ -189,26 +189,23 @@ document.getElementById("customerForm").addEventListener("submit", function(e) {
         showFormMessage("Birthday must be in the past.");
         return;
     }
-    const existingCustomer = customers.find(u => 
-        (u.email === email && u.id != id) || 
-        (u.phone === phone && u.id != id)|| 
-        (u.name === name && u.id != id)
-    );
+    const nameTaken = customers.find(u => u.id != id && u.name.toLowerCase() === name.toLowerCase());
+    const emailTaken = customers.find(u => u.id != id && u.email.toLowerCase() === email.toLowerCase());
+    const phoneTaken = customers.find(u => u.id != id && u.phone === phone);
 
-    if (existingCustomer) {
-        if (existingCustomer.email === email) {
-            showFormMessage("This email is already registered. Please use a different email.");
-            return;
-        }
-        if (existingCustomer.name === name) {
-            showFormMessage("This name is already registered. Please use a different user name.");
-            return;
-        }
-        if (existingCustomer.phone === phone) {
-            showFormMessage("This phone number is already registered. Please use a different phone number.");
-            return;
-        }
+    if (emailTaken) {
+        showFormMessage("This email is already registered. Please use a different email.");
+        return;
     }
+    if (nameTaken) {
+        showFormMessage("This name is already registered. Please use a different user name.");
+        return;
+    }
+    if (phoneTaken) {
+        showFormMessage("This phone number is already registered. Please use a different phone number.");
+        return;
+    }
+
 
     const customerData = {
         id: id ? parseInt(id) : Date.now(),
