@@ -83,6 +83,11 @@ function updateOrderStatus(orderId, newStatus) {
         renderTable(); 
         return;
     }
+    if (orders[orderIndex].status === "Cancelled") {
+        alert("This order is already Cancelled and cannot be changed.");
+        renderTable(); 
+        return;
+    }
     orders[orderIndex].status = newStatus;
     // if (newStatus === "Completed") {
     //     let products = JSON.parse(localStorage.getItem("products")) || [];
