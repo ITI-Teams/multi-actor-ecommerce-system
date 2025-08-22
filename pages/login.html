@@ -7,7 +7,6 @@
     <title>Trendora - Login</title>
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/css/login&register.css">
-
     <style>
         @media (max-width: 425px) {
             .formcontainer {
@@ -17,6 +16,12 @@
     </style>
     <script src="../data/data.js"></script>
     <link rel="icon" type="image/x-icon" href="../Trendora.ico">
+    <script>
+        let currentID = localStorage.getItem("customerSession");
+        if (currentID) {
+            window.location.href = "/index.html";
+        }
+    </script>
 </head>
 
 <body>

@@ -8,6 +8,12 @@
     <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="../assets/css/login&register.css">
     <link rel="icon" type="image/x-icon" href="../Trendora.ico">
+    <script>
+        let currentID = localStorage.getItem("customerSession");
+        if (currentID) {
+            window.location.href = "/index.html";
+        }
+    </script>
 
 </head>
 
