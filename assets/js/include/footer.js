@@ -2,7 +2,7 @@ const footer_content = `<div class="container">
             <div class="row justify-content-center">
                 <div class="col-sm mb-4 d-flex flex-column gap-1">
                     <a class="logo-a" href="/">
-                        <img src="/assets/img/Black White Minimalist Simple Monogram Typography Logo.svg" alt="Logo" class="rounded-circle px-2 py-2 bg-light" width="75">
+                        <img src="./assets/img/Black White Minimalist Simple Monogram Typography Logo.svg" alt="Logo" class="rounded-circle px-2 py-2 bg-light" width="75">
                         Trendora
                     </a>
                     <h3>Subscribe</h3>
@@ -21,20 +21,20 @@ const footer_content = `<div class="container">
                 <div class="col-sm md pt-2 mb-4">
                     <h3>Account</h3>
                     <div class="account-info d-flex flex-column gap-1">
-                        <a href="/pages/user-profile.html" class="nav-link">Profile</a>
-                        <a href="/pages/login.html" class="nav-link">Login</a>
-                        <a href="/pages/register.html" class="nav-link">Register</a>
-                        <a href="/pages/cart.html" class="nav-link">Cart</a>
+                        <a href="../../../pages/user-profile.html" class="nav-link">Profile</a>
+                        <a href="../../../pages/login.html" class="nav-link">Login</a>
+                        <a href="../../../pages/register.html" class="nav-link">Register</a>
+                        <a href="../../../pages/cart.html" class="nav-link">Cart</a>
                     </div>
                 </div>
 
                 <div class="col-sm md pt-2 mb-4">
                     <h3>Quick Link</h3>
                     <div class="quick-link d-flex flex-column gap-1">
-                        <a href="/pages/contact-us-page.html" class="nav-link">Contact</a>
-                        <a href="/pages/about-us-page.html" class="nav-link">About</a>
-                        <a href="/pages/products.html" class="nav-link">Shop All Products</a>
-                        <a href="/pages/dashboard/dashboard.html" class="nav-link">Dashboard of Seller</a>
+                        <a href="../../../pages/contact-us-page.html" class="nav-link">Contact</a>
+                        <a href="../../../pages/about-us-page.html" class="nav-link">About</a>
+                        <a href="../../../pages/products.html" class="nav-link">Shop All Products</a>
+                        <a href="../../../pages/dashboard/dashboard.html" class="nav-link">Dashboard of Seller</a>
                     </div>
                 </div>
             </div>

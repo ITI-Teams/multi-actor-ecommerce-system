@@ -34,7 +34,7 @@ export function renderSidebar(currentPage) {
         <div class="d-flex flex-column align-items-start pt-2" id="sidebar-content">
             <div class="w-100 d-flex align-items-center px-3 py-3" id="toggle-area">
                 <a href="#" class="d-flex align-items-center text-white text-decoration-none me-3" id="logo">
-                    <img src="../../assets/img/Dashboard-logo.png" alt="Logo" width="30" height="30" class="me-2">
+                    <img src="../../../assets/img/Dashboard-logo.png" alt="Logo" width="30" height="30" class="me-2">
                     <span class="fs-5" id="logo-text">Trendora</span>
                 </a>
                 <button class="btn btn-sm btn-outline-light ms-auto" id="collapse-btn">

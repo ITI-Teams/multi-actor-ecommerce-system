@@ -5,7 +5,7 @@ const nav_content = `<div class="container">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <a class="navbar-brand fw-bold fs-4" href="/">
-                <img src="/assets/img/Black White Minimalist Simple Monogram Typography Logo.svg" alt="Logo" width="75">
+                <img src="../../../assets/img/Black White Minimalist Simple Monogram Typography Logo.svg" alt="Logo" width="75">
                     <span class="d-none d-sm-inline">Trendora</span>
                 </a>
                 <div class="offcanvas offcanvas-start ps-3 pt-2" id="navbarNav">
@@ -14,19 +14,19 @@ const nav_content = `<div class="container">
                     </div>
                     <ul class="navbar-nav" id="TrendoraMenu">
                          <li class="nav-item">
-                            <a class="nav-link" href="/pages/categories.html">Men</a>
+                            <a class="nav-link" href="../../../pages/categories.html">Men</a>
                         </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="/pages/categories.html">Women</a>
+                            <a class="nav-link" href="../../../pages/categories.html">Women</a>
                         </li>
                             <li class="nav-item">
-                            <a class="nav-link" href="/pages/categories.html">Proudcts</a>
+                            <a class="nav-link" href="../../../pages/categories.html">Proudcts</a>
                         </li>
                            <li class="nav-item">
-                            <a class="nav-link" href="/pages/categories.html">About</a>
+                            <a class="nav-link" href="../../../pages/categories.html">About</a>
                         </li>
                           <li class="nav-item">
-                            <a class="nav-link" href="/pages/categories.html">Contact</a>
+                            <a class="nav-link" href="../../../pages/categories.html">Contact</a>
                         </li>
                     </ul>
                 </div>
@@ -45,7 +45,7 @@ const nav_content = `<div class="container">
                 </div>
 
                  <!-- search -->
-                <form method="get" action="/pages/search.html" class="d-flex">
+                <form method="get" action="../../../pages/search.html" class="d-flex">
                     <div class="collapse align-content-center me-2" id="searchIcon">
                         <div class="input-group">
                             <input class="form-control bg-transparent text-white border-light" type="search" id="headerSearch"
@@ -62,7 +62,7 @@ const nav_content = `<div class="container">
                 <div class="dropdown">
                     <a class="btn btn-link text-black text-decoration-none position-relative" type="button"
                         id="cartDropdown"
-                        href="/pages/cart.html"
+                        href="../../../pages/cart.html"
                         >
                         <i class="fas fa-shopping-cart"></i>
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-circle bg-danger" id="CartCount">
