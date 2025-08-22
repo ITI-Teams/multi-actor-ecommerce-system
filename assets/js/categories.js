@@ -29,7 +29,7 @@ categoriesRow.innerHTML = categories.map(category => {
   return `
     <div class="col">
       <div class="category">
-        <img src="${imgSrc}" class="card-img-top" alt="Category">
+        <img src="${imgSrc}" class="card-img-top object-fit-cover" alt="Category">
         <p>
           <button class="mt-2 category-btn" data-id="${category.id}">
             ${category.name}
