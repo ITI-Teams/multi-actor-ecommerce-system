@@ -91,7 +91,7 @@ if (!product) {
     });
 
     const productSizeWrapper = document.getElementById("product-size");
-    const sizes = ["s", "m", "l", "XL","XXL", "XXXL"];
+    const sizes = ["S", "M", "L", "XL","XXL", "XXXL"];
     productSizeWrapper.innerHTML = "";
 
     sizes.forEach((size) => {

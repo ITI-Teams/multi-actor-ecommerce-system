@@ -40,3 +40,50 @@ window.addEventListener("load", () => {
         });
     }
 });
+
+
+// Loading screen functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const loadingScreen = document.getElementById('loading-screen');
+    const loadingText = document.querySelector('.loading-text');
+    const texts = [
+        "Selecting the latest trends...",
+        "Preparing your personalized collection...",
+        "Almost ready...",
+        "Welcome to Trendora!"
+    ];
+    
+    let index = 0;
+    const textInterval = setInterval(() => {
+        if (index < texts.length) {
+            loadingText.textContent = texts[index];
+            index++;
+        } else {
+            clearInterval(textInterval);
+        }
+    }, 900);
+    
+    let resourcesLoaded = false;
+    let minDisplayTimeReached = false;
+    setTimeout(() => {
+        minDisplayTimeReached = true;
+        hideLoadingScreenIfReady();
+    }, 1000);
+    
+    window.addEventListener('load', () => {
+        resourcesLoaded = true;
+        hideLoadingScreenIfReady();
+    });
+    
+    function hideLoadingScreenIfReady() {
+        if (resourcesLoaded && minDisplayTimeReached) {
+            document.body.classList.add('loaded');
+            loadingScreen.style.opacity = '0';
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+            }, 500);
+        }
+    }
+    
+    setTimeout(hideLoadingScreenIfReady, 1500);
+});

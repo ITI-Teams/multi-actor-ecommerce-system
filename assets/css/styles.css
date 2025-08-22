@@ -94,7 +94,8 @@
 
 .footer {
   background-color: #f8f9fa;
-  padding: 40px 0;
+  padding-top: 20px;
+  padding-bottom: 5px;
   font-family: Arial, sans-serif;
   font-size: 14px;
 }
@@ -146,7 +147,6 @@
   transition: all 0.3s ease-in-out;
 }
 .footer .copyright {
-  margin-top: 30px;
   text-align: center;
   padding-top: 20px;
   border-top: 1px solid #515151;
@@ -449,3 +449,156 @@ input#headerSearch:focus{
 }
 /*ُEnd  #Progress
 ================================================== */
+/* Loading Screen Styles */
+#loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    transition: opacity 0.5s ease-out;
+}
+
+.loading-container {
+    width: 100%;
+    max-width: 800px;
+    text-align: center;
+    padding: 30px;
+}
+
+.loading-container .logo {
+    margin-bottom: 40px;
+}
+
+.loading-container .logo h1 {
+    font-weight: 300;
+    font-size: 2.5rem;
+    letter-spacing: 8px;
+    text-transform: uppercase;
+    color: #2c3e50;
+}
+
+.loading-container .logo span {
+    font-weight: 600;
+    color: #e74c3c;
+}
+
+.loading-animation {
+    display: flex;
+    justify-content: center;
+    margin: 40px 0;
+}
+
+.hanger {
+    font-size: 2.5rem;
+    color: #2c3e50;
+    animation: swing 2s infinite ease-in-out;
+    transform-origin: top center;
+}
+
+.progress-container {
+    width: 80%;
+    height: 6px;
+    background: #ddd;
+    border-radius: 8px;
+    margin: 30px auto;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #e74c3c, #3498db);
+    border-radius: 8px;
+    animation: loading 3.5s infinite;
+}
+
+.loading-text {
+    font-size: 1.2rem;
+    color: #7f8c8d;
+    margin: 20px 0;
+    font-weight: 500;
+}
+
+.fashion-icons {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 40px;
+}
+
+.fashion-icon {
+    font-size: 1.8rem;
+    color: #95a5a6;
+    animation: pulse 1.5s infinite;
+}
+
+.fashion-icon:nth-child(2) {
+    animation-delay: 0.3s;
+}
+
+.fashion-icon:nth-child(3) {
+    animation-delay: 0.6s;
+}
+
+.fashion-icon:nth-child(4) {
+    animation-delay: 0.9s;
+}
+
+.tagline {
+    margin-top: 30px;
+    color: #bdc3c7;
+    font-style: italic;
+    font-weight: 300;
+}
+
+@keyframes swing {
+    0%, 100% { transform: rotate(-5deg); }
+    50% { transform: rotate(5deg); }
+}
+
+@keyframes loading {
+    0% { width: 0%; }
+    50% { width: 70%; }
+    100% { width: 100%; }
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.7; }
+    50% { transform: scale(1.2); opacity: 1; }
+}
+
+/* Hide page content until loaded */
+body > *:not(#loading-screen) {
+    opacity: 0;
+    transition: opacity 0.5s ease-in;
+}
+
+body.loaded > *:not(#loading-screen) {
+    opacity: 1;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .logo h1 {
+        font-size: 1.8rem;
+        letter-spacing: 4px;
+    }
+    
+    .hanger {
+        font-size: 2rem;
+    }
+    
+    .fashion-icons {
+        gap: 20px;
+    }
+    
+    .fashion-icon {
+        font-size: 1.5rem;
+    }
+}
