@@ -79,7 +79,7 @@ function renderStats() {
                         
                         <div class="text-end">
                             <h3 class="mb-0">Sales</h3>
-                            <p class="mb-0 fs-4 fw-bold text-muted">${formatNumber(totalEarnings)}$</p>
+                            <p class="mb-0 fs-4 fw-bold text-muted">${formatNumber(totalEarnings.toFixed(2))}$</p>
                         </div>
                         <div class="icon-container bg-success p-3 rounded">
                             <i class="fas fa-shopping-cart fa-2x text-white"></i>
@@ -223,7 +223,7 @@ function renderStats() {
                         
                         <div class="text-end">
                             <h3 class="mb-0">Sales</h3>
-                            <p class="mb-0 fs-4 fw-bold text-muted">${formatNumber(totalEarnings)}$</p>
+                            <p class="mb-0 fs-4 fw-bold text-muted">${formatNumber(totalEarnings.toFixed(2))}$</p>
                         </div>
                         <div class="icon-container bg-success p-3 rounded">
                             <i class="fas fa-shopping-cart fa-2x text-white"></i>

@@ -123,12 +123,12 @@ document.getElementById("mailForm").addEventListener("submit", function(e) {
         showFormMessage("All fields are required!");
         return;
     }
-
+    const session = JSON.parse(localStorage.getItem("session")) || null;
     toEmails.forEach(email => {
         const mailData = {
             id: Date.now() + Math.floor(Math.random() * 1000),
             to: email,
-            from: "admin@gmail.com",
+            from: session.email,
             subject,
             message,
             date: new Date().toISOString()
