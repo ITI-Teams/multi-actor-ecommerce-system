@@ -127,7 +127,7 @@ document.getElementById("productForm").addEventListener("submit", function(e) {
     const images =  imagesArray;
 
     // Validation
-    const allowedSizes = ["s", "m", "l", "XL", "XXL", "XXXL"];
+    const allowedSizes = ["S", "M", "L", "XL", "XXL", "XXXL"];
     const allowedImageExtensions = /\.(png|jpg|jpeg|jpe|webp|svg)$/i;
     const colorRegex = /^#([0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/;
     const invalidChars = /<.*?>|[{}[\]<>]/;
