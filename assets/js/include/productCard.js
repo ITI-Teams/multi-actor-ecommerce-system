@@ -31,7 +31,7 @@ export default function prodcutCard({id, name, images, price,description,seller_
     const stars = renderStars(rating);
     return `
       <div class="card shadow" style="min-width: auto;">
-          <img src="${images && images[0] ? (images[0].startsWith('data:') ? images[0] : '/assets/img/products/' + images[0]) : '../../img/women.png'}" 
+          <img src="${images && images[0] ? (images[0].startsWith('data:') ? images[0] : window.location.origin + '/assets/img/products/' + images[0]) : '../../img/women.png'}" 
           class="card-img-top prodcut-img shadow-sm" alt="${name}">
           <div class="card-body">
               <a href="../../../pages/onepage-product.html?product=${id}" class="text-dark link-offset-1-hover text-uppercase" />

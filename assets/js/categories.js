@@ -112,7 +112,7 @@ function renderList(filteredProducts) {
       const { avg: rating = 0, count = 0 } = (typeof getAverageRating === "function") ? getAverageRating(prod.id) : { avg: 0, count: 0 };
       const stars = (typeof renderStars === "function") ? renderStars(rating) : "";
       const imgSrc = prod.images && prod.images[0]
-        ? (prod.images[0].startsWith && prod.images[0].startsWith('data:') ? prod.images[0] : '/assets/img/products/' + prod.images[0])
+        ? (prod.images[0].startsWith && prod.images[0].startsWith('data:') ? prod.images[0] : window.location.origin + '/assets/img/products/' + prod.images[0])
         : '/assets/img/women.png';
 
       return `
