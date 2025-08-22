@@ -5,7 +5,7 @@ const nav_content = `<div class="container">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <a class="navbar-brand fw-bold fs-4" href="/">
-                <img src="../../../assets/img/Black White Minimalist Simple Monogram Typography Logo.svg" alt="Logo" width="75">
+                <img src="/assets/img/Black White Minimalist Simple Monogram Typography Logo.svg" alt="Logo" width="75">
                     <span class="d-none d-sm-inline">Trendora</span>
                 </a>
                 <div class="offcanvas offcanvas-start ps-3 pt-2" id="navbarNav">
