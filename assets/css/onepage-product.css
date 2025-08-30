@@ -22,6 +22,9 @@
 .gallery {
     border-radius: 8px;
     padding: 25px;
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
 }
 
 #main-Img {
@@ -273,7 +276,7 @@
 
     #main-Img {
         width: 100%;
-        height: 200px;
+        height: 350px;
         object-fit: cover;
     }
 }
