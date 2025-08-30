@@ -68,7 +68,7 @@ function saveOrUpdateCustomer(email, birthday, phone, password) {
   }
 
   function updateCustomerData() {
-    customers[existingIndex] = {
+    const updatedData = {
       ...customers[existingIndex], 
       profileImage,
       FirstName,
@@ -83,6 +83,12 @@ function saveOrUpdateCustomer(email, birthday, phone, password) {
       phone,
       password
     };
+    if (password && password.trim() !== "") {
+      updatedData.password = encryptText(password);
+    } else {
+      updatedData.password = customers[existingIndex].password;
+    }
+    customers[existingIndex] = updatedData;
     localStorage.setItem("customers", JSON.stringify(customers));
     localStorage.setItem("customerSession", String(customers[existingIndex].id)); 
     loadProfile(); 
@@ -97,7 +103,7 @@ function fillEditForm(currentCustomer) {
   document.getElementById("genderInput").value = currentCustomer.gender || "";
   document.getElementById("dobInput").value = currentCustomer.birthday || "";
   document.getElementById("phoneInput").value = currentCustomer.phone || "";
-  document.getElementById("passwordInput").value = currentCustomer.password || "";``
+  document.getElementById("passwordInput").value =  "";
   document.getElementById("countryInput").value = currentCustomer.country || "";
   populateCities(); 
   document.getElementById("cityInput").value = currentCustomer.city || "";
@@ -150,8 +156,32 @@ function saveProfile(e) {
   const birthday = document.getElementById("dobInput").value;
   const phone = document.getElementById("phoneInput").value.trim();
   const password = document.getElementById("passwordInput").value;
+  const address = document.getElementById("addressInput").value.trim();
 
-  if (!/^[\w.%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
+
+
+  if (address.length < 5 || !/[a-zA-Z]/.test(address)) {
+    showError("addressInput", "Address must be at least 5 characters and include letters.");
+    isValid = false;
+  } else {
+    clearError("addressInput");
+  }
+
+  if (!/^[A-Za-z\s]+$/.test(document.getElementById("fnameInput").value.trim())) {
+    showError("fnameInput", "First name must contain only letters.");
+    isValid = false;
+  } else {
+    clearError("fnameInput");
+  }
+
+  if (!/^[A-Za-z\s]+$/.test(document.getElementById("lnameInput").value.trim())) {
+    showError("lnameInput", "Last name must contain only letters.");
+    isValid = false;
+  } else {
+    clearError("lnameInput");
+  }
+
+  if (!/^[a-zA-Z][\w.-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
     showError("emailInput", "Enter a valid email address");
     isValid = false;
   }  else {
@@ -177,14 +207,20 @@ function saveProfile(e) {
     clearError("phoneInput");
   }
 
-  if (!/^(?=.*[A-Z]).{8,}$/.test(password)) {
-    showError("passwordInput", "Password must be at least 8 characters and contain at least 1 uppercase letter");
-    isValid = false;
+  if (password && password.trim() !== "") {
+    if (!/^(?=.*[A-Z]).{8,}$/.test(password)) {
+      showError("passwordInput", "Password must be at least 8 characters and contain at least 1 uppercase letter");
+      isValid = false;
+    } else {
+      clearError("passwordInput");
+    }
   } else {
     clearError("passwordInput");
   }
 
   if (!isValid) return;
+  
+  
 
   saveOrUpdateCustomer(email, birthday, phone, password);
 

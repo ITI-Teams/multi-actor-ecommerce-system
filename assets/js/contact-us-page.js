@@ -8,8 +8,10 @@ const forbiddenCharsRe = /[#\$%\^&*<>{}|\\"]/; // Removed @ from here so it's on
     const inputs = form.querySelectorAll('input, textarea');
 
     // Regular expressions for validation
-    const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;  // Proper email format
     const phoneRe = /^(010|011|012|015)\d{8}$/;
+    const emailRe = /^[a-zA-Z][\w.-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; // must start with a letter
+    const nameRe = /^[A-Za-z\s]+$/;     // only letters and spaces
+    const subjectRe = /^[A-Za-z\s]+$/;
 
     // Mark fields as "dirty" on interaction
     inputs.forEach(el => {
@@ -38,11 +40,13 @@ const forbiddenCharsRe = /[#\$%\^&*<>{}|\\"]/; // Removed @ from here so it's on
         // Field-specific validation
         switch (name) {
             case 'name':
+                return nameRe.test(v) && v.length >= 2;
             case 'subject':
+                return subjectRe.test(v) && v.length >= 2;
             case 'message':
                 return v.length >= 2;
             case 'email':
-                return emailRe.test(v); // This allows @ and . in correct format
+                return emailRe.test(v); 
             case 'phone':
                 return phoneRe.test(v);
             default:
