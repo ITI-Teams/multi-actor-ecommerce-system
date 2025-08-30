@@ -25,7 +25,7 @@ if (searchQuery) {
 
 
 document.getElementById("searchInput").addEventListener("input", function (e) {
-    const term = e.target.value.toLowerCase();
+    const term = e.target.value.toLowerCase().replace(/[^a-z0-9\s]/gi, "");
 
     if (term) {
         filteredProducts = products.filter(p => 

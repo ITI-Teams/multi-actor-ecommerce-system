@@ -4,6 +4,8 @@ const passwordInput = document.getElementById("password");
 const confirmPasswordInput = document.getElementById("confirmPassword");
 const form = document.getElementById("registerForm");
 
+const nameRe = /^[A-Za-z\s]+$/;  
+const emailRe = /^[a-zA-Z][\w.-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 function setInvalid(input, message) {
     input.classList.remove("is-valid");
     input.classList.add("is-invalid");
@@ -17,8 +19,13 @@ function setValid(input) {
 }
 
 function validateName() {
-    if (nameInput.value.trim() === "") {
+    const value = nameInput.value.trim();
+    if (value === "") {
         setInvalid(nameInput, "Please enter your name.");
+        return false;
+    }
+    if (!nameRe.test(value)) {
+        setInvalid(nameInput, "Name must only contain letters and spaces.");
         return false;
     }
     setValid(nameInput);
@@ -26,8 +33,9 @@ function validateName() {
 }
 
 function validateEmail() {
-    if (!emailInput.value.endsWith(".com")) {
-        setInvalid(emailInput, "Email must end with .com.");
+    const value = emailInput.value.trim();
+    if (!emailRe.test(value)) {
+        setInvalid(emailInput, "Please enter a valid email (must start with a letter).");
         return false;
     }
     setValid(emailInput);
