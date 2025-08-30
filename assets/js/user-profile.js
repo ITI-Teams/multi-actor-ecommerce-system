@@ -1,35 +1,4 @@
 
-  function loadProfile() {
-  const currentID = localStorage.getItem("customerSession");
-  if (!currentID) {
-    alert("You must log in first.");
-    window.location.href = "login.html";
-    return;
-  }
-
-  const customers = JSON.parse(localStorage.getItem("customers")) || [];
-  const currentCustomer = customers.find(c => String(c.id) === String(currentID));
-
-  if (!currentCustomer) {
-    alert("Profile not found");
-    return;
-  }
-
-  const displayName =
-    (currentCustomer.FirstName || "") +
-    (currentCustomer.lastName ? " " + currentCustomer.lastName : "");
-
-  document.getElementById("profileImage").src = currentCustomer.profileImage || "../assets/img/defultUser.webp";
-  document.getElementById("profileName").textContent = displayName.trim() || currentCustomer.name || "Unknown Customer";
-  document.getElementById("profileEmail").textContent = currentCustomer.email || "Not provided";
-  document.getElementById("profileGender").textContent = "Gender: " + (currentCustomer.gender || "-");
-  document.getElementById("profileDOB").textContent = "Date Of Birth: " + (currentCustomer.birthday || "-");
-  document.getElementById("profileAge").textContent = "Age: " + ( Math.floor((new Date() - new Date(currentCustomer.birthday).getTime()) / (365.25 * 24 * 60 * 60 * 1000)) || "-");
-  document.getElementById("profileCountry").textContent = "Country: " + (currentCustomer.country || "-");
-  document.getElementById("profileCity").textContent = "City: " + (currentCustomer.city || "-");
-  document.getElementById("profileAddress").textContent = "Address: " + (currentCustomer.address || "-");
-  document.getElementById("profilePhone").textContent = "Phone: " + (currentCustomer.phone || "-");
-}
 
 function saveOrUpdateCustomer(email, birthday, phone, password) {
   const FirstName = document.getElementById("fnameInput").value;
@@ -267,121 +236,6 @@ function populateCities() {
   }
 }
 
-function loadOrders() {
-  const currentID = localStorage.getItem("customerSession");
-  const orders = JSON.parse(localStorage.getItem("orders")) || [];
-  const customerOrders = orders.filter(o => String(o.customer_id) === String(currentID));
-  const tbody = document.getElementById("orders-body");
-  const products = JSON.parse(localStorage.getItem("products")) || [];
-
-  tbody.innerHTML = "";
-
-  if (customerOrders.length === 0) {
-    tbody.innerHTML = `<tr><td colspan="5" class="text-center">No orders found</td></tr>`;
-    return;
-  }
-
-  customerOrders.forEach(order => {
-    const tr = document.createElement("tr");
-    let actionBtn = "";
-
-    if (order.status === "Cancelled") {
-      actionBtn = `<button class="btn btn-danger btn-sm disabled" disabled>Cancelled</button>`;   
-    } else if ( order.status !== "Completed"){
-      actionBtn = `<button class="btn btn-danger btn-sm" onclick="cancelOrder(${order.id})">Cancel</button>`;
-      
-    }else {
-      actionBtn = `
-                <button class="btn btn-success btn-sm" 
-                  data-bs-toggle="modal" 
-                  data-bs-target="#reviewModal"
-                  onclick="window.pendingReviewData={productId: ${order.product_id}, orderId: ${order.id}}">
-              Review
-          </button>
-      
-      `;
-    }
-    const product = products.find(p => p.id === order.product_id);
-    const productName = product ? product.name : "Unknown Product";
-    tr.innerHTML = `
-      <td class="text-center">${order.id}</td>
-      <td class="text-center">${productName}</td>
-      <td class="text-center">${order.status}</td>
-      <td class="text-center">${order.totalPrice} EGP</td>
-      <td class="text-center">${order.quntity}</td>
-      <td class="text-center">${order.totalPrice * order.quntity} EGP</td>
-      <td class="text-center">${actionBtn}</td>
-    `;
-    tbody.appendChild(tr);
-  });
-}
-
-  loadProfile();
-  loadOrders();
-
-
-
-function setupPagination() {
-  paginationContainer.innerHTML = "";
-  const totalPages = Math.ceil(CustomerOrders.length / CustomerOrdersPerPage);
-
-  const prev = document.createElement("li");
-  prev.className = `page-item text-dark ${currentPage === 1 ? "disabled" : ""}`;
-  prev.innerHTML = `<a class="page-link text-dark" href="#">&laquo;</a>`;
-  prev.addEventListener("click", () => {
-    if (currentPage > 1) {
-      currentPage--;
-      displayCustomerOrders();
-      setupPagination();
-    }
-  });
-  paginationContainer.appendChild(prev);
-
-  for (let i = 1; i <= totalPages; i++) {
-    const li = document.createElement("li");
-    li.className = `page-item ${currentPage === i ? "active" : ""}`;
-    li.innerHTML = `<a class="page-link text-dark" href="#">${i}</a>`;
-    li.addEventListener("click", () => {
-      currentPage = i;
-      displayCustomerOrders();
-      setupPagination();
-    });
-    paginationContainer.appendChild(li);
-  }
-
-  const next = document.createElement("li");
-  next.className = `page-item ${currentPage === totalPages ? "disabled" : ""}`;
-  next.innerHTML = `<a class="page-link text-dark" href="#">&raquo;</a>`;
-  next.addEventListener("click", () => {
-    if (currentPage < totalPages) {
-      currentPage++;
-      displayCustomerOrders();
-      setupPagination();
-    }
-  });
-  paginationContainer.appendChild(next);
-}
-function logoutCustomer() {
-  localStorage.removeItem("customerSession");
-  window.location.href = "../index.html";
-}
-/////////////
-function cancelOrder(orderId) {
-  if (!confirm("Are you sure you want to cancel this order?")) {
-    return;
-  }
-  let orders = JSON.parse(localStorage.getItem("orders")) || [];
-  orders = orders.map(o => {
-    if (o.id === orderId && o.status != "Completed") {
-      o.status = "Cancelled";
-    }
-    return o;
-  });
-  localStorage.setItem("orders", JSON.stringify(orders));
-  loadOrders();
-}
-
-
 
 let selectedRating = 0;
 document.querySelectorAll("#starRating .star").forEach(star => {
@@ -454,3 +308,142 @@ document.getElementById('reviewModal').addEventListener('hidden.bs.modal', funct
     document.body.classList.remove('modal-open');
     document.body.style = ""; // إزالة أي overflow أو padding
 });
+
+
+
+// ==========================================================
+let currentPagePagination = 1;
+const rowsPerPage = 5;
+
+function loadProfile() {
+  const currentID = localStorage.getItem("customerSession");
+  if (!currentID) {
+    alert("You must log in first.");
+    window.location.href = "login.html";
+    return;
+  }
+
+  const customers = JSON.parse(localStorage.getItem("customers")) || [];
+  const currentCustomer = customers.find(c => String(c.id) === String(currentID));
+
+  if (!currentCustomer) {
+    alert("Profile not found");
+    return;
+  }
+
+  const displayName =
+    (currentCustomer.FirstName || "") +
+    (currentCustomer.lastName ? " " + currentCustomer.lastName : "");
+
+  document.getElementById("profileImage").src = currentCustomer.profileImage || "../assets/img/defultUser.webp";
+  document.getElementById("profileName").textContent = displayName.trim() || currentCustomer.name || "Unknown Customer";
+  document.getElementById("profileEmail").textContent = currentCustomer.email || "Not provided";
+  document.getElementById("profileGender").textContent = "Gender: " + (currentCustomer.gender || "-");
+  document.getElementById("profileDOB").textContent = "Date Of Birth: " + (currentCustomer.birthday || "-");
+  document.getElementById("profileAge").textContent = "Age: " + ( Math.floor((new Date() - new Date(currentCustomer.birthday).getTime()) / (365.25 * 24 * 60 * 60 * 1000)) || "-");
+  document.getElementById("profileCountry").textContent = "Country: " + (currentCustomer.country || "-");
+  document.getElementById("profileCity").textContent = "City: " + (currentCustomer.city || "-");
+  document.getElementById("profileAddress").textContent = "Address: " + (currentCustomer.address || "-");
+  document.getElementById("profilePhone").textContent = "Phone: " + (currentCustomer.phone || "-");
+}
+
+/* ========== ORDERS WITH PAGINATION ========== */
+function loadOrders() {
+  const currentID = localStorage.getItem("customerSession");
+  const orders = JSON.parse(localStorage.getItem("orders")) || [];
+  const products = JSON.parse(localStorage.getItem("products")) || [];
+
+  const customerOrders = orders.filter(o => String(o.customer_id) === String(currentID));
+  const tbody = document.getElementById("orders-body");
+  tbody.innerHTML = "";
+
+  if (customerOrders.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="7" class="text-center">No orders found</td></tr>`;
+    document.getElementById("pagination").innerHTML = "";
+    return;
+  }
+
+  // حساب البداية والنهاية لكل صفحة
+  const start = (currentPagePagination - 1) * rowsPerPage;
+  const paginatedOrders = customerOrders.slice(start, start + rowsPerPage);
+
+  paginatedOrders.forEach(order => {
+    const product = products.find(p => p.id === order.product_id);
+    const productName = product ? product.name : "Unknown Product";
+
+    let actionBtn = "";
+    if (order.status === "Cancelled") {
+      actionBtn = `<button class="btn btn-danger btn-sm disabled" disabled>Cancelled</button>`;   
+    } else if (order.status !== "Completed") {
+      actionBtn = `<button class="btn btn-danger btn-sm" onclick="cancelOrder(${order.id})">Cancel</button>`;
+    } else {
+      actionBtn = `
+        <button class="btn btn-success btn-sm" 
+          data-bs-toggle="modal" 
+          data-bs-target="#reviewModal"
+          onclick="window.pendingReviewData={productId: ${order.product_id}, orderId: ${order.id}}">
+          Review
+        </button>
+      `;
+    }
+
+    const tr = document.createElement("tr");
+    tr.innerHTML = `
+      <td class="text-center">${order.id}</td>
+      <td class="text-center">${productName}</td>
+      <td class="text-center">${order.status}</td>
+      <td class="text-center">${order.totalPrice} EGP</td>
+      <td class="text-center">${order.quntity}</td>
+      <td class="text-center">${order.totalPrice * order.quntity} EGP</td>
+      <td class="text-center">${actionBtn}</td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  renderPagination(customerOrders.length);
+}
+
+function renderPagination(totalRows) {
+  const totalPages = Math.ceil(totalRows / rowsPerPage);
+  const pagination = document.getElementById("pagination");
+  pagination.innerHTML = "";
+
+  for (let i = 1; i <= totalPages; i++) {
+    pagination.innerHTML += `
+      <li class="page-item ${i === currentPagePagination ? "active" : ""}">
+        <a class="page-link" href="#" onclick="changePage(${i})">${i}</a>
+      </li>
+    `;
+  }
+}
+
+function changePage(page) {
+  currentPagePagination = page;
+  loadOrders();
+}
+
+/* ========== CANCEL ORDER ========== */
+function cancelOrder(orderId) {
+  if (!confirm("Are you sure you want to cancel this order?")) {
+    return;
+  }
+  let orders = JSON.parse(localStorage.getItem("orders")) || [];
+  orders = orders.map(o => {
+    if (o.id === orderId && o.status != "Completed") {
+      o.status = "Cancelled";
+    }
+    return o;
+  });
+  localStorage.setItem("orders", JSON.stringify(orders));
+  loadOrders();
+}
+
+/* ========== LOGOUT ========== */
+function logoutCustomer() {
+  localStorage.removeItem("customerSession");
+  window.location.href = "../index.html";
+}
+
+/* ========== INITIAL LOAD ========== */
+loadProfile();
+loadOrders();
