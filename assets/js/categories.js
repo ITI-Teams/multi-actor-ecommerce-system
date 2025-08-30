@@ -148,7 +148,7 @@ function renderList(filteredProducts) {
     // build pagination html
     let paginationHtml = `
       <nav class="mt-3 d-flex justify-content-center" aria-label="Category pages">
-        <ul id="pagination" class="pagination mb-0">
+        <ul id="pagination" class="pagination mb-0 flex-wrap">
           <li class="page-item ${currentPage === 1 ? "disabled" : ""}">
             <a class="page-link" href="#" data-page="${currentPage - 1}" aria-label="Previous">&laquo;</a>
           </li>

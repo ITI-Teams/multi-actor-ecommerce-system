@@ -116,6 +116,14 @@ document.getElementById("categoryForm").addEventListener("submit", function(e) {
         showFormMessage("The Description must begin with a letter and contain only letters and numbers.");
         return;
     }
+    const duplicate = categories.some(cat => 
+        cat.name.toLowerCase() === name.toLowerCase() && cat.id != id
+    );
+    if (duplicate) {
+        showFormMessage("This category name already exists. Please use a unique name.");
+        return;
+    }
+    
 
     const categoryData = {
         id: id ? parseInt(id) : Date.now(),

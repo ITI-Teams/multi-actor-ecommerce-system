@@ -101,7 +101,7 @@ document.querySelector("#editModal form").addEventListener("submit", function(e)
         alert("All fields are required.");
         return;
     }
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    const emailPattern = /^[a-zA-Z][\w.-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailPattern.test(newEmail)) {
         alert("Invalid email address.");
         return;

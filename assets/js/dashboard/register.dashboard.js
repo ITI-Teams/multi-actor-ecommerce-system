@@ -66,7 +66,7 @@ document.getElementById("registerForm").addEventListener("submit", function (e) 
         showMessage("All fields are required!");
         return;
     }
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    const emailPattern = /^[a-zA-Z][\w.-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailPattern.test(email)) {
         showMessage("Please enter a valid email address.");
         return;

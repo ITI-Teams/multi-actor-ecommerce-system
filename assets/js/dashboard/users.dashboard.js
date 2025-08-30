@@ -106,15 +106,15 @@ document.getElementById("userForm").addEventListener("submit", function(e) {
         showFormMessage("All fields are required!");
         return;
     }
-    if (!/^[\p{L}\s]+$/u.test(name)) {
-        showFormMessage("The name must contain only letters, no numbers.");
+    if (!/^[A-Za-z][A-Za-z0-9]*$/u.test(name)) {
+        showFormMessage("Name must start with a letter and contain only letters and numbers (no spaces).");
         return;
     }
     if (name.length > 50) {
         showFormMessage("Name is too long, maximum 50 characters.");
         return;
     }
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    const emailPattern = /^[a-zA-Z][\w.-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailPattern.test(email)) {
         showFormMessage("Invalid email address. Example: abdullah@google.com");
         return;
@@ -124,19 +124,28 @@ document.getElementById("userForm").addEventListener("submit", function(e) {
         return;
     }
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-    if (!id && !passwordPattern.test(password)) {
-        showFormMessage("The password must be at least 8 characters long and contain an uppercase and lowercase letter, a number, and a symbol.");
-        return;
+    if (!id) {
+        if (!passwordPattern.test(password)) {
+            showFormMessage("The password must be at least 8 characters long and contain an uppercase and lowercase letter, a number, and a symbol.");
+            return;
+        }
+        if (password !== confirmPassword) {
+            showFormMessage("Password and Confirm Password do not match!");
+            return;
+        }
+    } else {
+        if (password) {
+            if (!passwordPattern.test(password)) {
+                showFormMessage("The new password must be at least 8 characters long and contain an uppercase and lowercase letter, a number, and a symbol.");
+                return;
+            }
+            if (password !== confirmPassword) {
+                showFormMessage("Password and Confirm Password do not match!");
+                return;
+            }
+        }
     }
-    if (!id && password !== confirmPassword) {
-        showFormMessage("Password and Confirm Password do not match!");
-        return;
-    }
-    if (id && password && password !== confirmPassword) {
-        showFormMessage("Password and Confirm Password do not match!");
-        return;
-    }
-    const phonePattern = /^(010|011|012|013|015)\d{8}$/;
+    const phonePattern = /^(010|011|012|015)\d{8}$/;
     if (!phonePattern.test(phone)) {
         showFormMessage("The phone number must start with 010, 012, 013 or 015 and consist of 11 digits.");
         return;

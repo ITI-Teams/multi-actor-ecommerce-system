@@ -114,6 +114,16 @@ document.getElementById("mailForm").addEventListener("submit", function(e) {
         showFormMessage("Please select at least one customer.");
         return;
     }
+    const validTextRegex = /^[A-Za-z][A-Za-z0-9\s.,!?-]*$/;
+
+    if (!validTextRegex.test(subject)) {
+        showFormMessage("Subject must start with a letter and can include letters, numbers, spaces, and . , ! ? -");
+        return;
+    }
+    if (!validTextRegex.test(message)) {
+        showFormMessage("Message must start with a letter and can include letters, numbers, spaces, and . , ! ? -");
+        return;
+    }
     const invalidChars = /<.*?>|[{}[\]<>]/;
     if ([subject, message].some(field => invalidChars.test(field))) {
         showFormMessage("Entries must not contain HTML codes or prohibited symbols.");
