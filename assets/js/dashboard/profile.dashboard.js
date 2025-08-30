@@ -176,6 +176,27 @@ document.querySelector("#editModal form").addEventListener("submit", function(e)
 
     alert("Profile updated successfully!");
 });
+function decryptText(encryptedText) {
+    if (!encryptedText) return '';
 
+    let step1 = encryptedText.substring(1, encryptedText.length - 1);
+
+    let step2 = '';
+    for (let i = 0; i < step1.length; i++) {
+        let charCode = step1.charCodeAt(i);
+        step2 += String.fromCharCode(charCode - 3);
+    }
+
+    let step3 = '';
+    for (let i = 0; i < step2.length; i += 2) {
+        if (i + 1 < step2.length) {
+            step3 += step2[i + 1] + step2[i];
+        } else {
+            step3 += step2[i];
+        }
+    }
+
+    return step3.split('').reverse().join('');
+}
 
 displayProfile();
