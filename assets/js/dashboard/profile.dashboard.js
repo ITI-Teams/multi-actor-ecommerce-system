@@ -101,6 +101,10 @@ document.querySelector("#editModal form").addEventListener("submit", function(e)
         alert("All fields are required.");
         return;
     }
+    if (!/^[A-Za-z][A-Za-z0-9]*$/u.test(newName)) {
+        showFormMessage("Name must start with a letter and contain only letters and numbers (no spaces).");
+        return;
+    }
     const emailPattern = /^[a-zA-Z][\w.-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailPattern.test(newEmail)) {
         alert("Invalid email address.");
