@@ -147,7 +147,7 @@ document.getElementById("userForm").addEventListener("submit", function(e) {
     }
     const phonePattern = /^(010|011|012|015)\d{8}$/;
     if (!phonePattern.test(phone)) {
-        showFormMessage("The phone number must start with 010, 012, 013 or 015 and consist of 11 digits.");
+        showFormMessage("The phone number must start with 010, 012, 011 or 015 and consist of 11 digits.");
         return;
     }
     const existingUser = users.find(u => 
