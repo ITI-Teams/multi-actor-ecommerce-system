@@ -1,3 +1,5 @@
+import prodcutCard from "./include/productCard.js";
+
 // ===== categories.js =====
 document.addEventListener("DOMContentLoaded", () => {
   const categories = JSON.parse(localStorage.getItem("categories")) || [];
@@ -115,34 +117,7 @@ function renderList(filteredProducts) {
         ? (prod.images[0].startsWith && prod.images[0].startsWith('data:') ? prod.images[0] : window.location.origin + '/assets/img/products/' + prod.images[0])
         : '/assets/img/women.png';
 
-      return `
-        <div class="col-12 col-sm-6 col-md-4 col-lg-3 mb-4">
-          <div class="card shadow h-100">
-            <img src="${imgSrc}" class="card-img-top prodcut-img shadow-sm" alt="${escapeHtml(prod.name)}">
-            <div class="card-body">
-              <a href="/pages/onepage-product.html?product=${prod.id}" class="text-dark text-decoration-none text-uppercase">
-                <h5 class="card-title mb-1">${escapeHtml(prod.name)}</h5>
-              </a>
-              <p class="card-text">${escapeHtml((prod.description || "").trim().split(/\s+/).slice(0, 5).join(' '))}...</p>
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="h5 mb-0">${escapeHtml(prod.price)}$</span>
-                <div>
-                  ${stars}
-                  <small class="text-muted">(${count || 0})</small>
-                </div>
-              </div>
-            </div>
-            <div class="card-footer d-flex flex-column bg-light">
-              <div class="mb-2 p-2 text-center text-white fw-bold rounded ${prod.stock > 0 ? 'bg-secondary' : 'bg-danger'}">
-                ${prod.stock > 0 ? `In Stock: ${prod.stock}` : 'Out of Stock'}
-              </div>
-              <button class="btn btn-dark btn-sm w-100" onclick="addToCart(${prod.id}, ${prod.seller_id})" ${prod.stock === 0 ? 'disabled' : ''}>
-                Add to Cart
-              </button>
-            </div>
-          </div>
-        </div>
-      `;
+      return prodcutCard(prod);
     }).join("");
 
     // build pagination html
@@ -169,7 +144,7 @@ function renderList(filteredProducts) {
     `;
 
     // render everything inside productsContainer
-    productsContainer.innerHTML = `<div class="row" id="productsRow">${rowHtml}</div>${paginationHtml}`;
+    productsContainer.innerHTML = `<div class="justify-content-center" id="productsWrapper">${rowHtml}</div>${paginationHtml}`;
 
     // attach one click handler to the generated pagination
     const pagination = productsContainer.querySelector("#pagination");
@@ -207,9 +182,6 @@ function renderList(filteredProducts) {
 
     // فلترة صحيحة بالـ id مع دعم البيانات القديمة
     const filteredProducts = products.filter(p => getProductCategoryId(p) === categoryId);
-
-    // Debug مفيد أثناء التطوير
-    console.log("[Category click]", { categoryId, filteredCount: filteredProducts.length, totalProducts: products.length });
 
     renderList(filteredProducts);
 
