@@ -136,11 +136,16 @@ document.getElementById("customerForm").addEventListener("submit", function(e) {
         showFormMessage("All fields are required!");
         return;
     }
+    const nameRegex = /^[A-Za-z][A-Za-z0-9]*$/;
+    if (!nameRegex.test(name)) {
+        showFormMessage("Name must start with a letter and contain only letters and numbers (no spaces).");
+        return;
+    }
     if (name.length > 50) {
         showFormMessage("Name is too long, maximum 50 characters.");
         return;
     }
-    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+    const emailPattern = /^[a-zA-Z][\w.-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!emailPattern.test(email)) {
         showFormMessage("Invalid email address. Example: abdullah@google.com");
         return;
@@ -150,19 +155,28 @@ document.getElementById("customerForm").addEventListener("submit", function(e) {
         return;
     }
     const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
-    if (!id && !passwordPattern.test(password)) {
-        showFormMessage("The password must be at least 8 characters long and contain an uppercase and lowercase letter, a number, and a symbol.");
-        return;
+    if (!id) {
+        if (!passwordPattern.test(password)) {
+            showFormMessage("The password must be at least 8 characters long and contain an uppercase and lowercase letter, a number, and a symbol.");
+            return;
+        }
+        if (password !== confirmPassword) {
+            showFormMessage("Password and Confirm Password do not match!");
+            return;
+        }
+    } else {
+        if (password) {
+            if (!passwordPattern.test(password)) {
+                showFormMessage("The new password must be at least 8 characters long and contain an uppercase and lowercase letter, a number, and a symbol.");
+                return;
+            }
+            if (password !== confirmPassword) {
+                showFormMessage("Password and Confirm Password do not match!");
+                return;
+            }
+        }
     }
-    if (!id && password !== confirmPassword) {
-        showFormMessage("Password and Confirm Password do not match!");
-        return;
-    }
-    if (id && password && password !== confirmPassword) {
-        showFormMessage("Password and Confirm Password do not match!");
-        return;
-    }
-    const phonePattern = /^(010|011|012|013|015)\d{8}$/;
+    const phonePattern = /^(010|011|012|015)\d{8}$/;
     if (!phonePattern.test(phone)) {
         showFormMessage("The phone number must start with 010, 012, 013 or 015 and consist of 11 digits.");
         return;
@@ -179,14 +193,26 @@ document.getElementById("customerForm").addEventListener("submit", function(e) {
         showFormMessage("City must contain only letters, spaces, and hyphens.");
         return;
     }
+    if (address.length < 5 || !/[a-zA-Z]/.test(address)) {
+        showFormMessage("Address must be at least 5 characters and include letters.");
+        return;
+    } 
     if (!addressRegex.test(address)) {
         showFormMessage("Address contains invalid characters.");
         return;
     }
+    
+    const birthdayValue = new Date(birthday);
     const today = new Date();
-    const birthDate = new Date(birthday);
-    if (birthDate >= today) {
-        showFormMessage("Birthday must be in the past.");
+
+    let age = today.getFullYear() - birthdayValue.getFullYear();
+    const monthDiff = today.getMonth() - birthdayValue.getMonth();
+    if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthdayValue.getDate())) {
+        age--;
+    }
+
+    if (!birthday || isNaN(birthdayValue.getTime()) || birthdayValue > today || age < 18) {
+        showFormMessage("Birthday must be a valid date, not in the future, and you must be at least 18 years old.");
         return;
     }
     const nameTaken = customers.find(u => u.id != id && u.name.toLowerCase() === name.toLowerCase());

@@ -20,6 +20,18 @@ function addMenuItem() {
         return;
     }
 
+    const nameRegex = /^[A-Za-z\s]+$/; 
+    const linkRegex = /^(https?:\/\/[^\s]+|#[A-Za-z0-9_-]+)$/;
+    if (!nameRegex.test(name)) {
+        alert("Name must contain only letters and spaces.");
+        return;
+    }
+    if (!linkRegex.test(link)) {
+        alert("Link must be a valid URL or start with # followed by text.");
+        return;
+    }
+
+
     if (level === "main") {
         menuData.push({ name, link, children: [] });
     } else {

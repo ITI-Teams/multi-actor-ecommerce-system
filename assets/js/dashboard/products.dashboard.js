@@ -140,8 +140,16 @@ document.getElementById("productForm").addEventListener("submit", function(e) {
         showFormMessage("All fields are required!");
         return;
     }
+    if (!/^[A-Za-z]/.test(name)) {
+        showFormMessage("Name must start with a letter.");
+        return;
+    }
     if (name.length > 50) {
         showFormMessage("Name is too long, maximum 50 characters.");
+        return;
+    }
+    if (!/^[A-Za-z]/.test(description)) {
+        showFormMessage("description must start with a letter.");
         return;
     }
     if (description.length > 1200) {
