@@ -13,7 +13,7 @@ const footer_content = `<div class="container">
                     <h3>Support</h3>
                     <div class="support-info d-flex flex-column gap-1">
                         <a target="_blank" href="https://maps.app.goo.gl/uQVUpHbPq2LidsDE9">Information Technology Institute <br />Creativa Tanta.</a>
-                        <a target="_blank" href="ITIinfo@iti.gov.eg">ITIinfo@iti.gov.eg</a>
+                        <a target="_blank" href="mailto:ITIinfo@iti.gov.eg">ITIinfo@iti.gov.eg</a>
                         <a href="tel:17002">17002</a>
                     </div>
                 </div>
