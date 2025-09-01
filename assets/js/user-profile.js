@@ -392,9 +392,9 @@ function loadOrders() {
       <td class="text-center">${order.id}</td>
       <td class="text-center">${productName}</td>
       <td class="text-center">${order.status}</td>
-      <td class="text-center">${order.totalPrice} EGP</td>
+      <td class="text-center">${order.totalPrice.toFixed(2)} EGP</td>
       <td class="text-center">${order.quntity}</td>
-      <td class="text-center">${order.totalPrice * order.quntity} EGP</td>
+      <td class="text-center">${(order.totalPrice * order.quntity).toFixed(2)} EGP</td>
       <td class="text-center">${actionBtn}</td>
     `;
     tbody.appendChild(tr);
