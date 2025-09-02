@@ -1,3 +1,4 @@
+import { renderPagination } from "./include/pagination.js";
 import productCard from "./include/productCard.js";
 
 let filteredProducts = [];
@@ -85,6 +86,13 @@ function renderProducts(productsToRender, container) {
   if (!productsToRender.length) {
     containerWrapper.innerHTML =
       '<p class="alert alert-danger fs-5 fw-semibold text-capitalize">No Products Found</p>';
+    renderPagination({
+      containerId: 'paginationWrapper',
+      totalItems: 0,
+      pageSize: productsPerPage,
+      currentPage: 1,
+      onPageChange: handlePageChange,
+    });
     return;
   }
 
@@ -100,52 +108,19 @@ function renderProducts(productsToRender, container) {
     containerWrapper.innerHTML += productCard(product);
   });
 
-  renderPagination(totalFilteredProducts, productPage);
+  renderPagination({
+    containerId: 'paginationWrapper',
+    totalItems: totalFilteredProducts,
+    pageSize: productsPerPage,
+    currentPage: productPage,
+    onPageChange: handlePageChange,
+  });
 }
 
-// ===================== Pagination =====================
-function renderPagination(totalProductsCount, currentPage) {
-  const paginationCount = Math.ceil(totalProductsCount / productsPerPage);
-  const paginationWrapper = document.getElementById("paginationWrapper");
-  paginationWrapper.innerHTML = "";
-
-  // Prev button
-  paginationWrapper.innerHTML += `
-    <li class="page-item">
-      <button class="page-link ${currentPage === 1 && "disabled"}" ${
-    currentPage === 1 ? "disabled" : ""
-  } data-page="${currentPage - 1}" >&laquo;</button>
-    </li>
-  `;
-
-  // Page numbers
-  for (let i = 1; i <= paginationCount; i++) {
-    paginationWrapper.innerHTML += `
-      <li class="page-item">
-        <button class="page-link ${currentPage === i ? "active text-white" : ""}" data-page="${i}">
-          ${i}
-        </button>
-      </li>
-    `;
-  }
-
-  // Next button
-  paginationWrapper.innerHTML += `
-    <li class="page-item">
-      <button class="page-link ${currentPage === paginationCount && "disabled"}" ${
-    currentPage === paginationCount ? "disabled" : ""
-  } data-page="${currentPage + 1}">&raquo;</button>
-    </li>
-  `;
-
-  // Handle clicks
-  paginationWrapper.querySelectorAll("button[data-page]").forEach((btn) => {
-    btn.addEventListener("click", () => {
-      productPage = parseInt(btn.dataset.page);
-      updateUrlParams({ page: productPage });
-      renderProducts(filteredProducts, "productsWrapper");
-    });
-  });
+function handlePageChange(nextPage) {
+  productPage = nextPage;
+  updateUrlParams({ page: productPage });
+  renderProducts(filteredProducts, "productsWrapper");
 }
 
 // ===================== Apply All Filters =====================

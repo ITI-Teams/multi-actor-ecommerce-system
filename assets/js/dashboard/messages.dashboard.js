@@ -1,5 +1,6 @@
-let messages = JSON.parse(localStorage.getItem("messages")) || [];
+import { renderPagination } from "../include/pagination.js";
 
+let messages = JSON.parse(localStorage.getItem("messages")) || [];
 
 let currentPagePagination = 1;
 const rowsPerPage = 5;
@@ -9,65 +10,60 @@ function saveMessages() {
 }
 
 function renderTable() {
-    const searchValue = document.getElementById("searchMessage").value.toLowerCase();
-    const filteredMessages = messages.filter(u =>
-        String(u.name).toLowerCase().includes(searchValue)||
-        String(u.email).toLowerCase().includes(searchValue)||
-        String(u.subject).toLowerCase().includes(searchValue)||
-        String(u.phone).toLowerCase().includes(searchValue)
+    const q = (document.getElementById("searchMessage").value || "").toLowerCase();
+
+    const filtered = messages.filter((u) =>
+        String(u.name || "").toLowerCase().includes(q) ||
+        String(u.email || "").toLowerCase().includes(q) ||
+        String(u.subject || "").toLowerCase().includes(q) ||
+        String(u.phone || "").toLowerCase().includes(q)
     );
 
+    // newest first without mutating filtered
+    const sorted = [...filtered].reverse();
+
     const start = (currentPagePagination - 1) * rowsPerPage;
-    const paginatedMessages = filteredMessages.reverse().slice(start, start + rowsPerPage);
+    const pageItems = sorted.slice(start, start + rowsPerPage);
 
     const tbody = document.getElementById("messageTableBody");
     tbody.innerHTML = "";
 
-    paginatedMessages.forEach(message => {
-        
-        tbody.innerHTML += `
-            <tr>
-                <td>${message.name}</td>
-                <td>${message.email}</td>
-                <td>${message.phone}</td>
-                <td>${message.subject}</td>
-                <td>${message.message}</td>
-                <td>${message.date}</td>
-                <td class="text-center">
-                    <button class="btn btn-danger btn-sm" onclick="deleteMessage(${message.id})">
-                        <i class="fas fa-trash"></i>
-                    </button>
-                </td>
-            </tr>
-        `;
+    if (!pageItems.length) {
+        tbody.innerHTML = `
+      <tr>
+        <td colspan="7" class="text-center text-muted">No messages found</td>
+      </tr>
+    `;
+    } else {
+        pageItems.forEach((m) => {
+            tbody.innerHTML += `
+        <tr>
+          <td>${m.name}</td>
+          <td>${m.email}</td>
+          <td>${m.phone}</td>
+          <td>${m.subject}</td>
+          <td>${m.message}</td>
+          <td>${m.date}</td>
+          <td class="text-center">
+            <button class="btn btn-danger btn-sm" onclick="deleteMessage(${m.id})">
+              <i class="fas fa-trash"></i>
+            </button>
+          </td>
+        </tr>
+      `;
+        });
+    }
+
+    renderPagination({
+        containerId: "pagination",
+        totalItems: filtered.length,
+        pageSize: rowsPerPage,
+        currentPage: currentPagePagination,
+        onPageChange: (next) => {
+            currentPagePagination = next;
+            renderTable();
+        },
     });
-
-    renderPagination(filteredMessages.length);
-}
-function getStarsHTML(rating) {
-    let starsHTML = '';
-    for (let i = 1; i <= 5; i++) {
-        if (i <= rating) {
-            starsHTML += '<i class="fas fa-star" style="color: gold;"></i>';
-        } else {
-            starsHTML += '<i class="far fa-star" style="color: gold;"></i>';
-        }
-    }
-    return starsHTML;
-}
-
-function renderPagination(totalRows) {
-    const totalPages = Math.ceil(totalRows / rowsPerPage);
-    const pagination = document.getElementById("pagination");
-    pagination.innerHTML = "";
-
-    for (let i = 1; i <= totalPages; i++) {
-        pagination.innerHTML += `
-            <li class="page-item ${i === currentPagePagination ? "active" : ""}">
-                <a class="page-link" href="#" onclick="changePage(${i})">${i}</a>
-            </li>
-        `;
-    }
 }
 
 function changePage(page) {
@@ -76,14 +72,23 @@ function changePage(page) {
 }
 
 function deleteMessage(id) {
-    if (confirm("Are you sure you want to delete this message?")) {
-        const index = messages.findIndex(u => u.id === id);
-        messages.splice(index, 1);
+    if (!confirm("Are you sure you want to delete this message?")) return;
+    const idx = messages.findIndex((u) => u.id === id);
+    if (idx > -1) {
+        messages.splice(idx, 1);
         saveMessages();
+        const totalPages = Math.max(1, Math.ceil(messages.length / rowsPerPage));
+        if (currentPagePagination > totalPages) currentPagePagination = totalPages;
         renderTable();
     }
 }
 
-document.getElementById("searchMessage").addEventListener("input", renderTable);
+document.getElementById("searchMessage").addEventListener("input", () => {
+    currentPagePagination = 1;
+    renderTable();
+});
 
 renderTable();
+
+window.changePage = changePage;
+window.deleteMessage = deleteMessage;

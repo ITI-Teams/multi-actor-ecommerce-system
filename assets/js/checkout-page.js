@@ -1,35 +1,35 @@
 const citiesByCountry = {
     USA: ["New York", "Los Angeles", "Chicago"],
     GBR: ["London", "Manchester", "Birmingham"],
-    EGY: [  "Cairo",
-            "Alexandria",
-            "Giza",
-            "Port Said",
-            "Suez",
-            "Luxor",
-            "Aswan",
-            "Ismailia",
-            "Beheira",
-            "Dakahlia",
-            "Damietta",
-            "Sharqia",
-            "Qalyubia",
-            "Kafr El Sheikh",
-            "Minya",
-            "Faiyum",
-            "Beni Suef",
-            "Qena",
-            "Sohag",
-            "Red Sea",
-            "New Valley",
-            "North Sinai",
-            "South Sinai",
-            "Matrouh",
-            "Ash Sharqiyah",
-            "Gharbia",
-            "Menoufia",
-            "Assiut"
-        ],
+    EGY: ["Cairo",
+        "Alexandria",
+        "Giza",
+        "Port Said",
+        "Suez",
+        "Luxor",
+        "Aswan",
+        "Ismailia",
+        "Beheira",
+        "Dakahlia",
+        "Damietta",
+        "Sharqia",
+        "Qalyubia",
+        "Kafr El Sheikh",
+        "Minya",
+        "Faiyum",
+        "Beni Suef",
+        "Qena",
+        "Sohag",
+        "Red Sea",
+        "New Valley",
+        "North Sinai",
+        "South Sinai",
+        "Matrouh",
+        "Ash Sharqiyah",
+        "Gharbia",
+        "Menoufia",
+        "Assiut"
+    ],
     SAU: ["Riyadh", "Jeddah", "Dammam"],
 
 };
@@ -44,8 +44,8 @@ if (!currentID) {
 }
 const customers = JSON.parse(localStorage.getItem("customers")) || [];
 const currentCustomer = customers.find(c => String(c.id) === String(currentID));
-let carts = JSON.parse(localStorage.getItem("carts")) ;
-let cart =carts.filter(cart => cart.customer_id == currentID);
+let carts = JSON.parse(localStorage.getItem("carts"));
+let cart = carts.filter(cart => cart.customer_id == currentID);
 let products = JSON.parse(localStorage.getItem("products")) || [];
 const cartList = document.getElementById('cart-list');
 const subtotalPriceEl = document.getElementById('subtotal-price');
@@ -86,15 +86,15 @@ function renderCart() {
         if (!product) return;
         let imgStr = '';
         if (Array.isArray(product?.images)) {
-        imgStr = String(product.images[0]?.src || product.images[0] || '').trim();
+            imgStr = String(product.images[0]?.src || product.images[0] || '').trim();
         } else if (typeof product?.images === 'object') {
-        imgStr = String(product.images?.src || '').trim();
+            imgStr = String(product.images?.src || '').trim();
         } else {
-        imgStr = String(product?.images || '').trim();
+            imgStr = String(product?.images || '').trim();
         }
         const finalSrc = (/^data:|^https?:\/\/|^\/\//i.test(imgStr))
-        ? imgStr
-        : (imgStr ? `../../assets/img/products/${imgStr}` : `../../assets/img/products/default.png`);
+            ? imgStr
+            : (imgStr ? `../../assets/img/products/${imgStr}` : `../../assets/img/products/default.png`);
         const row = document.createElement('div'); row.className = 'item-row';
         row.innerHTML = `
       <img src="${finalSrc}" alt="">
@@ -118,11 +118,11 @@ cartList.addEventListener('input', (e) => {
         const id = Number(e.target.dataset.id);
         const qty = Math.max(1, Number(e.target.value) || 1);
         const it = cart.find(i => i.id === id);
-        if (it) { 
-            it.quantity = qty; 
+        if (it) {
+            it.quantity = qty;
             carts = carts.map(c => c.id === id ? { ...c, quantity: qty } : c);
             localStorage.setItem("carts", JSON.stringify(carts));
-            renderCart(); 
+            renderCart();
             updateCartBadge();
         }
     }
@@ -152,11 +152,11 @@ function escapeHtml(s) {
 
 function updateTotals() {
     let subtotal = 0, items = 0;
-   
-    cart.forEach(i => { 
+
+    cart.forEach(i => {
         const product = products.find(p => p.id === i.product_id);
         if (!product) return;
-        subtotal += product.price * i.quantity; items += i.quantity; 
+        subtotal += product.price * i.quantity; items += i.quantity;
     });
     const shipping = subtotal > 0 ? 1 : 0;
     document.getElementById('subtotal-price').textContent = `$${subtotal.toFixed(2)}`;
@@ -200,15 +200,15 @@ countrySelect.addEventListener("change", () => {
     const cities = citiesByCountry[selectedCountry] || [];
     citySelect.innerHTML = `<option value="" disabled selected>Select city</option>`;
     if (cities.length > 0) {
-      cities.forEach(city => {
-        const option = document.createElement("option");
-        option.value = city;
-        option.textContent = city;
-        citySelect.appendChild(option);
-      });
-      citySelect.disabled = false;
+        cities.forEach(city => {
+            const option = document.createElement("option");
+            option.value = city;
+            option.textContent = city;
+            citySelect.appendChild(option);
+        });
+        citySelect.disabled = false;
     } else {
-      citySelect.disabled = true;
+        citySelect.disabled = true;
     }
 });
 country.value = currentCustomer.country;
@@ -219,7 +219,7 @@ if (citiesByCountry[currentCustomer.country]) {
         option.value = city;
         option.textContent = city;
         if (city === currentCustomer.city) {
-            option.selected = true; 
+            option.selected = true;
         }
         citySelect.appendChild(option);
     });
@@ -249,7 +249,7 @@ function updateCustomerData() {
         name: firstName.value + " " + lastName.value,
         firstName: firstName.value,
         lastName: lastName.value,
-        gender: customers[currentIndex].gender || "",  
+        gender: customers[currentIndex].gender || "",
         email: newEmail,
         country: country.value,
         city: city.value,
@@ -257,7 +257,7 @@ function updateCustomerData() {
         address: address.value,
         birthday: customers[currentIndex].birthday || "",
         phone: newPhone,
-        password: customers[currentIndex].password 
+        password: customers[currentIndex].password
     };
 
     localStorage.setItem("customers", JSON.stringify(customers));
@@ -288,7 +288,7 @@ form.addEventListener("submit", function (e) {
 
         if (product.stock < i.quantity) {
             alert(`Sorry, only ${product.stock} left for "${product.name}".`);
-            return; 
+            return;
         }
 
         subtotal += product.price * i.quantity;
@@ -316,7 +316,7 @@ form.addEventListener("submit", function (e) {
             customer_id: currentCustomer.id,
             status: "Delivery",
             quntity: i.quantity,
-            totalPrice: product.price * i.quantity + (shipping / cart.length), 
+            totalPrice: product.price * i.quantity + (shipping / cart.length),
             date: new Date().toLocaleString()
         };
         orders.push(order);
@@ -390,14 +390,14 @@ function processPayment(total) {
     return true;
 }
 function updateCartBadge() {
-      const customerId = localStorage.getItem("customerSession");
-      if (!customerId) return;
+    const customerId = localStorage.getItem("customerSession");
+    if (!customerId) return;
 
-      const carts = JSON.parse(localStorage.getItem("carts")) || [];
-      const count = carts
+    const carts = JSON.parse(localStorage.getItem("carts")) || [];
+    const count = carts
         .filter(c => c.customer_id == customerId)
         .reduce((sum, c) => sum + c.quantity, 0);
 
-      const badge = document.getElementById('CartCount');
-      if (badge) badge.textContent = count;
-  }
+    const badge = document.getElementById('CartCount');
+    if (badge) badge.textContent = count;
+}

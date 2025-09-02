@@ -751,3 +751,20 @@ body.loaded>*:not(#loading-screen) {
     height: auto !important;
   }
 }
+
+.pagination {
+  justify-content: center;
+}
+
+.pagination .page-link {
+  border-radius: 6px;
+}
+
+.pagination .page-item.active .page-link {
+  background: #111;
+  border-color: #111;
+}
+
+.pagination .page-item.disabled .page-link {
+  opacity: .6;
+}

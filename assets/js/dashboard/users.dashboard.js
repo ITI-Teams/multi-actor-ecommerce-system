@@ -1,3 +1,5 @@
+import { renderPagination } from "../include/pagination.js";
+
 let users = JSON.parse(localStorage.getItem("users")) || [];
 let currentPagePagination = 1;
 const rowsPerPage = 5;
@@ -38,26 +40,17 @@ function renderTable() {
         `;
     });
 
-    renderPagination(filteredUsers.length);
-}
-
-function renderPagination(totalRows) {
-    const totalPages = Math.ceil(totalRows / rowsPerPage);
-    const pagination = document.getElementById("pagination");
-    pagination.innerHTML = "";
-
-    for (let i = 1; i <= totalPages; i++) {
-        pagination.innerHTML += `
-            <li class="page-item ${i === currentPagePagination ? "active" : ""}">
-                <a class="page-link" href="#" onclick="changePage(${i})">${i}</a>
-            </li>
-        `;
-    }
-}
-
-function changePage(page) {
-    currentPagePagination = page;
-    renderTable();
+    // use shared paginator
+    renderPagination({
+        containerId: "pagination",
+        totalItems: filteredUsers.length,
+        pageSize: rowsPerPage,
+        currentPage: currentPagePagination,
+        onPageChange: (next) => {
+            currentPagePagination = next;
+            renderTable();
+        },
+    });
 }
 
 function showFormMessage(message, type = "danger") {
@@ -84,7 +77,7 @@ document.getElementById("createUserBtn").addEventListener("click", () => {
     new bootstrap.Modal(document.getElementById("userModal")).show();
 });
 
-document.getElementById("userForm").addEventListener("submit", function(e) {
+document.getElementById("userForm").addEventListener("submit", function (e) {
     e.preventDefault();
     clearFormMessage();
 
@@ -150,9 +143,9 @@ document.getElementById("userForm").addEventListener("submit", function(e) {
         showFormMessage("The phone number must start with 010, 012, 011 or 015 and consist of 11 digits.");
         return;
     }
-    const existingUser = users.find(u => 
-        (u.email === email && u.id != id) || 
-        (u.phone === phone && u.id != id)|| 
+    const existingUser = users.find(u =>
+        (u.email === email && u.id != id) ||
+        (u.phone === phone && u.id != id) ||
         (u.name === name && u.id != id)
     );
 
@@ -233,21 +226,21 @@ renderTable();
 function encryptText(text) {
     if (!text) return '';
     let step1 = text.split('').reverse().join('');
-        let step2 = '';
+    let step2 = '';
     for (let i = 0; i < step1.length; i += 2) {
         if (i + 1 < step1.length) {
-            step2 += step1[i+1] + step1[i];
+            step2 += step1[i + 1] + step1[i];
         } else {
             step2 += step1[i];
         }
     }
-    
+
     let step3 = '';
     for (let i = 0; i < step2.length; i++) {
         let charCode = step2.charCodeAt(i);
         step3 += String.fromCharCode(charCode + 3);
     }
-    
+
     const prefix = String.fromCharCode(65 + Math.floor(Math.random() * 26));
     const suffix = String.fromCharCode(65 + Math.floor(Math.random() * 26));
     return prefix + step3 + suffix;
@@ -255,23 +248,25 @@ function encryptText(text) {
 
 function decryptText(encryptedText) {
     if (!encryptedText) return '';
-    
+
     let step1 = encryptedText.substring(1, encryptedText.length - 1);
-    
+
     let step2 = '';
     for (let i = 0; i < step1.length; i++) {
         let charCode = step1.charCodeAt(i);
         step2 += String.fromCharCode(charCode - 3);
     }
-    
+
     let step3 = '';
     for (let i = 0; i < step2.length; i += 2) {
         if (i + 1 < step2.length) {
-            step3 += step2[i+1] + step2[i];
+            step3 += step2[i + 1] + step2[i];
         } else {
             step3 += step2[i];
         }
     }
-    
+
     return step3.split('').reverse().join('');
 }
+window.editUser = editUser;
+window.deleteUser = deleteUser;

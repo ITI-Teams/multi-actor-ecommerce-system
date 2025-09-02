@@ -7,35 +7,6 @@ const main_footer = document.getElementById("main-footer");
 main_header.innerHTML = nav_content;
 main_footer.innerHTML = footer_content;
 
-function initNewArrivalsCarousel() {
-    if (!newArrivlesWrapper) return;
-
-    const prevBtn = document.querySelector(".na-carousel .na-prev");
-    const nextBtn = document.querySelector(".na-carousel .na-next");
-
-    const isMobile = () => window.matchMedia("(max-width: 767.98px)").matches;
-
-    function scrollByViewport(dir = 1) {
-        if (!isMobile()) return;
-        const amount = newArrivlesWrapper.clientWidth * 0.9;
-        newArrivlesWrapper.scrollBy({ left: dir * amount, behavior: "smooth" });
-    }
-
-    prevBtn?.addEventListener("click", () => scrollByViewport(-1));
-    nextBtn?.addEventListener("click", () => scrollByViewport(1));
-
-    let resizeTimer;
-    window.addEventListener("resize", () => {
-        clearTimeout(resizeTimer);
-        resizeTimer = setTimeout(() => {
-            if (!isMobile()) return;
-            const children = Array.from(newArrivlesWrapper.children);
-            if (!children.length) return;
-            const first = children[0].getBoundingClientRect().left;
-        }, 150);
-    });
-}
-
 window.addEventListener("load", () => {
     const products = localStorage.getItem("products");
     if (products) {
@@ -71,6 +42,37 @@ window.addEventListener("load", () => {
         });
     }
 });
+
+function initNewArrivalsCarousel() {
+    const newArrivlesWrapper =
+        document.getElementById("newArrivlesWrapper");
+    if (!newArrivlesWrapper) return;
+
+    const prevBtn = document.querySelector(".na-carousel .na-prev");
+    const nextBtn = document.querySelector(".na-carousel .na-next");
+
+    const isMobile = () => window.matchMedia("(max-width: 767.98px)").matches;
+
+    function scrollByViewport(dir = 1) {
+        if (!isMobile()) return;
+        const amount = newArrivlesWrapper.clientWidth * 0.9;
+        newArrivlesWrapper.scrollBy({ left: dir * amount, behavior: "smooth" });
+    }
+
+    prevBtn?.addEventListener("click", () => scrollByViewport(-1));
+    nextBtn?.addEventListener("click", () => scrollByViewport(1));
+
+    let resizeTimer;
+    window.addEventListener("resize", () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(() => {
+            if (!isMobile()) return;
+            const children = Array.from(newArrivlesWrapper.children);
+            if (!children.length) return;
+            const first = children[0].getBoundingClientRect().left;
+        }, 150);
+    });
+}
 
 // Loading screen functionality
 document.addEventListener("DOMContentLoaded", function () {
