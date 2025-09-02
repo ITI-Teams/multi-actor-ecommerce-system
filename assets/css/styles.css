@@ -685,7 +685,7 @@ body.loaded>*:not(#loading-screen) {
     transform: translateY(-50%);
     z-index: 5;
     border: none;
-    background: rgba(0, 0, 0, .6);
+    background: rgba(0, 0, 0, .3);
     color: #fff;
     width: 36px;
     height: 36px;
