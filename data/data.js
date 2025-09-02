@@ -17,7 +17,7 @@ let users = JSON.parse(localStorage.getItem("users")) || [
 let customers = JSON.parse(localStorage.getItem("customers")) || Array.from({ length: 100 }, (_, i) => ({
     id: i + 1,
     name: `Customer${i + 1}`,
-    FirstName: `First${i + 1}`,
+    firstName: `First${i + 1}`,
     lastName: `Last${i + 1}`,
     gender: i % 2 === 0 ? "male" : "female",
     email: `customer${i + 1}@trendora.com`,

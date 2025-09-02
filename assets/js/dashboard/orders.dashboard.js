@@ -62,7 +62,7 @@ function renderTable() {
         <tr>
           <td>${product ? product.name : "Unknown Product"}</td>
           <td>${seller ? (seller.name ?? seller.email ?? "Seller") : "Unknown Seller"}</td>
-          <td>${customer ? (customer.FirstName ? `${customer.FirstName} ${customer.lastName ?? ""}`.trim() : (customer.name ?? customer.email ?? "Customer")) : "Unknown Customer"}</td>
+          <td>${customer ? (customer.firstName ? `${customer.firstName} ${customer.lastName ?? ""}`.trim() : (customer.name ?? customer.email ?? "Customer")) : "Unknown Customer"}</td>
           <td>${order?.quntity ?? "-"}</td>
           <td>${(order?.totalPrice).toFixed(2) ?? "-"}</td>
           <td>
