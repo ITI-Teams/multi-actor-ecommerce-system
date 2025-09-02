@@ -690,11 +690,13 @@ body.loaded>*:not(#loading-screen) {
     width: 36px;
     height: 36px;
     border-radius: 50%;
-    line-height: 36px;
     text-align: center;
     font-size: 18px;
     cursor: pointer;
     user-select: none;
+  }
+  .na-btn:active {
+    background-color: #000;
   }
 
   .na-btn.na-prev {
