@@ -163,7 +163,7 @@ else{
 
       col.innerHTML = `
         <div class="card h-100 shadow-sm">
-          <img src="${finalSrc}" class="card-img-top" alt="${escapeHtml(product.name)}">
+          <img src="${finalSrc}" class="card-img-top object-fit-cover" alt="${escapeHtml(product.name)}">
           <div class="card-body d-flex flex-column">
             <h6 class="card-title mb-1">${escapeHtml(product.name)}</h6>
             <div class="input-group">

@@ -1,3 +1,5 @@
+import { renderPagination as renderPager } from "../include/pagination.js";
+
 let customers = JSON.parse(localStorage.getItem("customers")) || [];
 let sellers = JSON.parse(localStorage.getItem("users")) || [];
 let mails = JSON.parse(localStorage.getItem("mails")) || [];
@@ -56,21 +58,25 @@ function renderTable() {
         `;
     });
 
+    // use shared pagination
     renderPagination(filteredMails.length);
 }
 
 function renderPagination(totalRows) {
-    const totalPages = Math.ceil(totalRows / rowsPerPage);
-    const pagination = document.getElementById("pagination");
-    pagination.innerHTML = "";
-
-    for (let i = 1; i <= totalPages; i++) {
-        pagination.innerHTML += `
-            <li class="page-item ${i === currentPagePagination ? "active" : ""}">
-                <a class="page-link" href="#" onclick="changePage(${i})">${i}</a>
-            </li>
-        `;
-    }
+    renderPager({
+        containerId: "pagination",
+        totalItems: totalRows,
+        pageSize: rowsPerPage,
+        currentPage: currentPagePagination,
+        onPageChange: (next) => {
+            currentPagePagination = next;
+            renderTable();
+        },
+        siblingCount: 1,
+        boundaryCount: 1,
+        labels: { prev: "«", next: "»" },
+        disabledActive: true, // disable the active page button
+    });
 }
 
 function changePage(page) {
@@ -188,3 +194,4 @@ function loadCustomerEmails() {
 }
 
 loadCustomerEmails();
+window.deleteMail = deleteMail;

@@ -1,9 +1,12 @@
+import { renderPagination } from "/assets/js/include/pagination.js";
+
 let categoriesList = JSON.parse(localStorage.getItem("categories")) || [];
 const categorySelect = document.getElementById("category");
 categorySelect.innerHTML = "";
 categoriesList.forEach(cat => {
     categorySelect.innerHTML += `<option value="${cat.id}">${cat.name}</option>`;
 });
+
 let products = JSON.parse(localStorage.getItem("products")) || [];
 let currentPagePagination = 1;
 const rowsPerPage = 5;
@@ -12,84 +15,75 @@ function saveProducts() {
     localStorage.setItem("products", JSON.stringify(products));
 }
 
-
 function renderTable() {
     const session = JSON.parse(localStorage.getItem("session")) || null;
     if (!session) {
-        document.getElementById("productTableBody").innerHTML = 
+        document.getElementById("productTableBody").innerHTML =
             `<tr><td colspan="10" class="text-center text-danger">No session found</td></tr>`;
+        // also clear pagination if no session
+        const pg = document.getElementById("pagination");
+        if (pg) pg.innerHTML = "";
         return;
     }
 
-    let filteredProducts = products;
-    if (session.role === "seller") {
-        filteredProducts = products.filter(p => p.seller_id === session.id);
-    }
+    // seller scoping
+    let filteredProducts = session.role === "seller"
+        ? products.filter(p => p.seller_id === session.id)
+        : products.slice();
 
-    const searchValue = document.getElementById("searchProduct").value.toLowerCase();
+    // search filter
+    const searchValue = (document.getElementById("searchProduct").value || "").toLowerCase();
     filteredProducts = filteredProducts.filter(u =>
-        (u.name && u.name.toLowerCase().includes(searchValue)) ||
-        (u.description && u.description.toLowerCase().includes(searchValue))
+        ((u.name || "").toLowerCase().includes(searchValue)) ||
+        ((u.description || "").toLowerCase().includes(searchValue))
     );
 
+    // slice for current page
     const start = (currentPagePagination - 1) * rowsPerPage;
-    const paginatedProducts = filteredProducts.slice(start, start + rowsPerPage);
+    const paginatedProducts = filteredProducts.reverse().slice(start, start + rowsPerPage);
 
+    // render rows
     const tbody = document.getElementById("productTableBody");
     tbody.innerHTML = "";
-    
-
     paginatedProducts.forEach(product => {
         const categoryObj = categoriesList.find(cat => cat.id == product.category);
         tbody.innerHTML += `
-            <tr>
-                <td>${product.name}</td>
-                <td>${product.description.split(" ").slice(0, 3).join(" ") + "..."}</td>
-                <td>${categoryObj ? categoryObj.name : "Unknown"}</td>
-                <td>${product.reviews}</td>
-                <td>${product.price}</td>
-                <td class="${product.stock == 0 ? 'bg-danger text-white' : ''}">${product.stock}</td>
-                <td>${product.size.map(z => `<span style="padding:2px; background-color: #44ff00; border-radius:4px; border:1px solid #025d74; margin:5px;">${z}</span>`).join("")}</td>
-                <td>${product.color.map(c => `<span style="width:20px;height:20px;display:inline-block;background:${c};border-radius:4px;border:1px solid #ccc;margin-right:5px;"></span>`).join("")}</td>
-                <td>
-                    <button class="btn btn-warning btn-sm" onclick="editProduct(${product.id})"><i class="fas fa-edit"></i></button>
-                    <button class="btn btn-danger btn-sm" onclick="deleteProduct(${product.id})"><i class="fas fa-trash"></i></button>
-                </td>
-            </tr>
-        `;
+      <tr>
+        <td>${product.name}</td>
+        <td>${(product.description || "").split(" ").slice(0, 3).join(" ") + "..."}</td>
+        <td>${categoryObj ? categoryObj.name : "Unknown"}</td>
+        <td>${product.reviews}</td>
+        <td>${product.price}</td>
+        <td class="${product.stock == 0 ? 'bg-danger text-white' : ''}">${product.stock}</td>
+        <td>${(product.size || []).map(z => `<span style="padding:2px; background-color: #44ff00; border-radius:4px; border:1px solid #025d74; margin:5px;">${z}</span>`).join("")}</td>
+        <td>${(product.color || []).map(c => `<span style="width:20px;height:20px;display:inline-block;background:${c};border-radius:4px;border:1px solid #ccc;margin-right:5px;"></span>`).join("")}</td>
+        <td>
+          <button class="btn btn-warning btn-sm" onclick="editProduct(${product.id})"><i class="fas fa-edit"></i></button>
+          <button class="btn btn-danger btn-sm" onclick="deleteProduct(${product.id})"><i class="fas fa-trash"></i></button>
+        </td>
+      </tr>
+    `;
     });
 
-    renderPagination(filteredProducts.length);
-}
-
-
-
-function renderPagination(totalRows) {
-    const totalPages = Math.ceil(totalRows / rowsPerPage);
-    const pagination = document.getElementById("pagination");
-    pagination.innerHTML = "";
-
-    for (let i = 1; i <= totalPages; i++) {
-        pagination.innerHTML += `
-            <li class="page-item ${i === currentPagePagination ? "active" : ""}">
-                <a class="page-link" href="#" onclick="changePage(${i})">${i}</a>
-            </li>
-        `;
-    }
-}
-
-function changePage(page) {
-    currentPagePagination = page;
-    renderTable();
+    renderPagination({
+        containerId: "pagination",
+        totalItems: filteredProducts.length,
+        pageSize: rowsPerPage,
+        currentPage: currentPagePagination,
+        onPageChange: (next) => {
+            currentPagePagination = next;
+            renderTable();
+        },
+    });
 }
 
 function showFormMessage(message, type = "danger") {
     const msgDiv = document.getElementById("formMessage");
     msgDiv.innerHTML = `
-        <div class="alert alert-${type} py-2 px-3" role="alert">
-            ${message}
-        </div>
-    `;
+    <div class="alert alert-${type} py-2 px-3" role="alert">
+      ${message}
+    </div>
+  `;
     msgDiv.style.display = "block";
 }
 
@@ -112,7 +106,7 @@ document.getElementById("createProductBtn").addEventListener("click", () => {
     new bootstrap.Modal(document.getElementById("productModal")).show();
 });
 
-document.getElementById("productForm").addEventListener("submit", function(e) {
+document.getElementById("productForm").addEventListener("submit", function (e) {
     e.preventDefault();
     clearFormMessage();
 
@@ -124,15 +118,15 @@ document.getElementById("productForm").addEventListener("submit", function(e) {
     const stock = document.getElementById("stock").value;
     const size = Array.from(document.getElementById("size").selectedOptions).map(opt => opt.value);
     const color = colorsArray;
-    const images =  imagesArray;
+    const images = imagesArray;
 
     // Validation
     const allowedSizes = ["S", "M", "L", "XL", "XXL", "XXXL"];
-    const allowedImageExtensions = /\.(png|jpg|jpeg|jpe|webp|svg)$/i;
     const colorRegex = /^#([0-9a-fA-F]{3,4}|[0-9a-fA-F]{6}|[0-9a-fA-F]{8})$/;
     const invalidChars = /<.*?>|[{}[\]<>]/;
     const acceptNumber = /^(0|[1-9]\d*)(\.\d{1,2})?$/;
-    if ([name, description, category, price,stock, ...size, ...color].some(field => invalidChars.test(field))) {
+
+    if ([name, description, category, price, stock, ...size, ...color].some(field => invalidChars.test(field))) {
         showFormMessage("Entries must not contain HTML codes or prohibited symbols.");
         return;
     }
@@ -160,7 +154,7 @@ document.getElementById("productForm").addEventListener("submit", function(e) {
         showFormMessage("Price must be a positive number greater than 0.");
         return;
     }
-    if (isNaN(stock) || Number(stock) <= 0 || !acceptNumber.test(stock)) {
+    if (isNaN(stock) || Number(stock) < 0 || !acceptNumber.test(stock)) {
         showFormMessage("Stock must be a positive number or = 0");
         return;
     }
@@ -176,7 +170,7 @@ document.getElementById("productForm").addEventListener("submit", function(e) {
         showFormMessage("Invalid color format. Use valid hex color codes like #FFF, #FFFFFF.");
         return;
     }
-    const nameExists = products.some(p => 
+    const nameExists = products.some(p =>
         p.name.toLowerCase() === name.toLowerCase() && p.id != id
     );
     if (nameExists) {
@@ -192,21 +186,21 @@ document.getElementById("productForm").addEventListener("submit", function(e) {
 
     const productData = {
         id: id ? parseInt(id) : Date.now(),
-        name: name,
-        description: description, 
-        category: category,
+        name,
+        description,
+        category,
         reviews: 4,
-        price: price,
-        size: size,
+        price,
+        size,
         color: colorsArray,
-        images :imagesArray,
+        images: imagesArray,
         seller_id: session ? session.id : 1,
-        stock : stock,
+        stock,
     };
 
     if (id) {
         const index = products.findIndex(u => u.id == id);
-        productData.seller_id = products[index].seller_id;  
+        productData.seller_id = products[index].seller_id;
         products[index] = { ...products[index], ...productData };
     } else {
         productData.seller_id = session ? session.id : 1;
@@ -222,10 +216,10 @@ function editProduct(id) {
     const product = products.find(u => u.id === id);
     document.getElementById("productId").value = product.id;
     document.getElementById("name").value = product.name;
-    document.getElementById("description").value= product.description;
-    document.getElementById("category").value= product.category;
-    document.getElementById("price").value= product.price;
-    document.getElementById("stock").value= product.stock;
+    document.getElementById("description").value = product.description;
+    document.getElementById("category").value = product.category;
+    document.getElementById("price").value = product.price;
+    document.getElementById("stock").value = product.stock;
 
     Array.from(document.getElementById("size").options).forEach(opt => {
         opt.selected = product.size.includes(opt.value);
@@ -246,11 +240,17 @@ function deleteProduct(id) {
         const index = products.findIndex(u => u.id === id);
         products.splice(index, 1);
         saveProducts();
+        // if last item on last page was removed, move one page back
+        const totalPages = Math.max(1, Math.ceil(products.length / rowsPerPage));
+        if (currentPagePagination > totalPages) currentPagePagination = totalPages;
         renderTable();
     }
 }
 
-document.getElementById("searchProduct").addEventListener("input", renderTable);
+document.getElementById("searchProduct").addEventListener("input", () => {
+    currentPagePagination = 1; // reset to first page on search
+    renderTable();
+});
 
 renderTable();
 
@@ -285,6 +285,7 @@ addColorBtn.addEventListener("click", () => {
         renderColors();
     }
 });
+
 let imagesArray = [];
 const fileInput = document.getElementById("imageFileInput");
 const imageList = document.getElementById("imageList");
@@ -295,7 +296,7 @@ fileInput.addEventListener("change", () => {
         Array.from(files).forEach(file => {
             if (file.type.startsWith("image/")) {
                 const reader = new FileReader();
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     imagesArray.push(e.target.result);
                     renderImages();
                 };
@@ -314,17 +315,15 @@ function renderImages() {
         imgWrapper.style.display = "inline-block";
         imgWrapper.style.position = "relative";
         imgWrapper.style.marginRight = "10px";
+
         const img = document.createElement("img");
-        if (imgSrc.startsWith("data:")) {
-            img.src = imgSrc;
-        } else {
-            img.src = "/assets/img/products/"+imgSrc;
-        }
+        img.src = imgSrc.startsWith("data:") ? imgSrc : "/assets/img/products/" + imgSrc;
         img.style.width = "60px";
         img.style.height = "60px";
         img.style.objectFit = "cover";
         img.style.border = "1px solid #ccc";
         img.style.borderRadius = "4px";
+
         const removeBtn = document.createElement("span");
         removeBtn.innerHTML = "✖";
         removeBtn.style.position = "absolute";
@@ -345,3 +344,6 @@ function renderImages() {
         imageList.appendChild(imgWrapper);
     });
 }
+
+window.editProduct = editProduct;
+window.deleteProduct = deleteProduct;

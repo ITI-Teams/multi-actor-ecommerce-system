@@ -1,14 +1,16 @@
 * {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-  font-family: acumin-pro, Helvetica, sans-serif;
-  letter-spacing: 2px;
-  scroll-behavior: smooth;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: acumin-pro, Helvetica, sans-serif;
+    letter-spacing: 2px;
+    scroll-behavior: smooth;
 }
-#header-wrapper{
+
+#header-wrapper {
     height: fit-content;
 }
+
 body {
     background-color: #f8f9fa;
 }
@@ -17,12 +19,14 @@ body {
     background-color: #fff;
     border-right: 1px solid #ddd;
     height: 100vh;
-    padding:40px 20px;
+    padding: 40px 20px;
 }
-.sidebar>p{
+
+.sidebar>p {
     text-align: left;
 }
-.sidebar .sidBtn button{
+
+.sidebar .sidBtn button {
     width: 150px;
 }
 
@@ -34,6 +38,7 @@ body {
     border: 3px solid #ddd;
     margin-bottom: 10px;
 }
+
 .content {
     padding: 20px;
 }
@@ -42,32 +47,27 @@ body {
     display: none;
     text-align: center;
 }
-#layout button {
-    min-width: 10%;
-}
-#layout button:hover {
-    background-color: rgba(176, 176, 175, 0.76) !important;
-    color: black !important;
-}
 
 table {
     overflow-x: auto;
 }
 
 .page-item.active .page-link {
-  background-color: #212529; 
-  border-color: #212529;
-  color: #fff !important;
+    background-color: #212529;
+    border-color: #212529;
+    color: #fff !important;
 }
 
 .page-link {
-  color: #212529 !important;
+    color: #212529 !important;
 }
+
 .is-invalid {
-  border-color: red !important;
+    border-color: red !important;
 }
+
 .error-message {
-  font-size: 0.85em;
+    font-size: 0.85em;
 }
 
 
@@ -75,47 +75,49 @@ table {
 
 @media (min-width: 990px) {
     #layout {
-    display: flex;
-    margin-top: 110px;
-    padding-bottom: 70px;
+        display: flex;
+        margin-top: 110px;
+        padding-bottom: 70px;
     }
 
     .sidebar {
-    position:sticky;
-    top: 0;
-    width: 25%;
-    height: 110vh;
+        position: sticky;
+        top: 0;
+        width: 25%;
+        height: 110vh;
 
     }
 
     .content {
-    width: 75%;
+        width: 75%;
     }
 }
 
 @media (max-width: 991px) {
-    #layout{
+    #layout {
         margin-top: 110px;
     }
+
     .sidebar {
-    width: 100%;
-    height: auto;
-    border-right: none;
-    border-bottom: 1px solid #ddd;
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid #ddd;
     }
 
     .profile-img {
-    width: 90px;
-    height: 90px;
+        width: 90px;
+        height: 90px;
     }
 }
+
 @media (max-width: 425px) {
-    #layout{
+    #layout {
         margin-top: 170px;
     }
-    
+
     #pagination {
         max-width: 100%;
     }
-   
+
 }

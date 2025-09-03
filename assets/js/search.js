@@ -1,124 +1,98 @@
 import prodcutCard from "./include/productCard.js";
+import { renderPagination } from "./include/pagination.js";
 
 let products = JSON.parse(localStorage.getItem("products")) || [];
 let filteredProducts = [...products];
 let currentPage = 1;
 const rowsPerPage = 12;
 
-
+// ---- URL search support ----
 const urlParams = new URLSearchParams(location.search);
 const searchQuery = urlParams.get("search");
 if (searchQuery) {
     const searchInput = document.getElementById("searchInput");
-    searchInput.value = searchQuery;
-    filteredProducts = products.filter(p => 
-        p.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        p.description.toLowerCase().includes(searchQuery.toLowerCase())
+    if (searchInput) searchInput.value = searchQuery;
+    filteredProducts = products.filter(p =>
+        (p.name || "").toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (p.description || "").toLowerCase().includes(searchQuery.toLowerCase())
     );
+}
+displayTable(); // initial render
+
+// ---- Live search ----
+document.getElementById("searchInput")?.addEventListener("input", function (e) {
+    const term = e.target.value.toLowerCase().replace(/[^a-z0-9\s]/gi, "");
+    filteredProducts = term
+        ? products.filter(p =>
+            (p.name || "").toLowerCase().includes(term) ||
+            (p.description || "").toLowerCase().includes(term)
+        )
+        : [...products];
+
     currentPage = 1;
     displayTable();
-} else {
-    filteredProducts = [...products]; 
-    displayTable();
-}
-
-
-
-document.getElementById("searchInput").addEventListener("input", function (e) {
-    const term = e.target.value.toLowerCase().replace(/[^a-z0-9\s]/gi, "");
-
-    if (term) {
-        filteredProducts = products.filter(p => 
-            p.name.toLowerCase().includes(term) ||
-            p.description.toLowerCase().includes(term)
-        );
-    } else {
-        filteredProducts = [...products];
-    }
-
-    currentPage = 1; 
-    displayTable();
 });
-function getAverageRating(productId) {
-  const reviews = JSON.parse(localStorage.getItem("reviews")) || [];
-  const productReviews = reviews.filter(r => r.product_id == productId);
-  
-  if (productReviews.length === 0) return { avg: 0, count: 0 };
 
-  const avg = productReviews.reduce((sum, r) => sum + (r.rating || 0), 0) / productReviews.length;
-  return { avg: Math.round(avg * 2) / 2, count: productReviews.length }; 
+// ---- Ratings helpers (kept, in case productCard uses them later) ----
+function getAverageRating(productId) {
+    const reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+    const productReviews = reviews.filter(r => r.product_id == productId);
+    if (productReviews.length === 0) return { avg: 0, count: 0 };
+    const avg = productReviews.reduce((sum, r) => sum + (r.rating || 0), 0) / productReviews.length;
+    return { avg: Math.round(avg * 2) / 2, count: productReviews.length };
 }
 function renderStars(rating) {
-  const fullStars = Math.floor(rating);
-  const hasHalf = rating % 1 >= 0.5;
-  const emptyStars = 5 - fullStars - (hasHalf ? 1 : 0);
-
-  let stars = '';
-  for (let i = 0; i < fullStars; i++) stars += '<i class="bi bi-star-fill text-warning"></i>';
-  if (hasHalf) stars += '<i class="bi bi-star-half text-warning"></i>';
-  for (let i = 0; i < emptyStars; i++) stars += '<i class="bi bi-star text-secondary"></i>';
-
-  return stars;
+    const full = Math.floor(rating);
+    const half = rating % 1 >= 0.5;
+    const empty = 5 - full - (half ? 1 : 0);
+    let stars = "";
+    for (let i = 0; i < full; i++) stars += '<i class="bi bi-star-fill text-warning"></i>';
+    if (half) stars += '<i class="bi bi-star-half text-warning"></i>';
+    for (let i = 0; i < empty; i++) stars += '<i class="bi bi-star text-secondary"></i>';
+    return stars;
 }
-// دالة عرض الجدول مع pagination
+
+// ---- Render products + paginator ----
 function displayTable() {
-    const Container = document.getElementById("productsWrapper");
-    Container.innerHTML = "";     
-    const start = (currentPage - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-    const pageItems = filteredProducts.slice(start, end);
-    
+    const container = document.getElementById("productsWrapper");
+    const paginationEl = document.getElementById("pagination");
+    if (!container || !paginationEl) return;
 
-    pageItems.forEach(product => {
-      const { avg: rating, count } = getAverageRating(product.id);
-      const stars = renderStars(rating);
-      Container.innerHTML += prodcutCard(product);
+    container.innerHTML = "";
+    container.classList.add('pb-3')
 
-    });
-
-    renderPagination();
-}
-
-function renderPagination() {
-    const totalPages = Math.ceil(filteredProducts.length / rowsPerPage);
-    const pagination = document.getElementById("pagination");
-    
-    if (!totalPages) {
-        pagination.innerHTML = `<div class="text-center py-5 my-5 w-50 mx-auto">
-            <p class="alert alert-danger fs-6 fw-semibold text-capitalize">No Product Found with this name!</p>
-        </div>`;
+    // Empty state
+    const totalItems = filteredProducts.length;
+    if (!totalItems) {
+        paginationEl.innerHTML = `
+      <div class="text-center py-5 my-5 w-50 mx-auto">
+        <p class="alert alert-danger fs-6 fw-semibold text-capitalize">
+          No Product Found with this name!
+        </p>
+      </div>`;
         return;
     }
-    pagination.classList.add('mt-5')
-    pagination.innerHTML = "";
-    pagination.innerHTML += `
-        <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
-            <a class="page-link" href="#" data-page="${currentPage - 1}">&laquo;</a>
-        </li>
-    `;
-    for (let i = 1; i <= totalPages; i++) {
-        pagination.innerHTML += `
-            <li class="page-item ${i === currentPage ? 'active' : ''}">
-                <a class="page-link" href="#" data-page="${i}">${i}</a>
-            </li>
-        `;
-    }
-    pagination.innerHTML += `
-        <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
-            <a class="page-link" href="#" data-page="${currentPage + 1}">&raquo;</a>
-        </li>
-    `;
-    document.querySelectorAll("#pagination a").forEach(a => {
-        a.addEventListener("click", e => {
-            e.preventDefault();
-            const page = parseInt(a.dataset.page);
-            if (page > 0 && page <= totalPages) {
-                currentPage = page;
-                displayTable(currentPage);
-                renderPagination();
-            }
-        });
+
+    // Slice current page
+    const start = (currentPage - 1) * rowsPerPage;
+    const pageItems = filteredProducts.slice(start, start + rowsPerPage);
+
+    // Render cards
+    pageItems.forEach(product => {
+        // keep available for future use; productCard already renders its own rating UI
+        const { avg, count } = getAverageRating(product.id);
+        const stars = renderStars(avg);
+        container.innerHTML += prodcutCard(product);
+    });
+
+    renderPagination({
+        containerId: "pagination",
+        totalItems,
+        pageSize: rowsPerPage,
+        currentPage,
+        onPageChange: (next) => {
+            currentPage = next;
+            displayTable();
+        },
     });
 }
-renderPagination();
-displayTable();

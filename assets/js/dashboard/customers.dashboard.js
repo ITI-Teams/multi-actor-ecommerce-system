@@ -1,3 +1,5 @@
+import { renderPagination as renderPager } from "../include/pagination.js";
+
 // ===== دوال التشفير =====
 function encryptText(text) {
     if (!text) return '';
@@ -5,7 +7,7 @@ function encryptText(text) {
     let step2 = '';
     for (let i = 0; i < step1.length; i += 2) {
         if (i + 1 < step1.length) {
-            step2 += step1[i+1] + step1[i];
+            step2 += step1[i + 1] + step1[i];
         } else {
             step2 += step1[i];
         }
@@ -35,7 +37,7 @@ function renderTable() {
     );
 
     const start = (currentPagePagination - 1) * rowsPerPage;
-    const paginatedCustomers = filteredCustomers.slice(start, start + rowsPerPage);
+    const paginatedCustomers = filteredCustomers.reverse().slice(start, start + rowsPerPage);
 
     const tbody = document.getElementById("customerTableBody");
     tbody.innerHTML = "";
@@ -49,7 +51,7 @@ function renderTable() {
                 <td>${customer.country}</td>
                 <td>${customer.city}</td>
                 <td>${customer.address}</td>
-                <td>${new Date(new Date()-new Date(customer.birthday)).getFullYear()-1970 || ''}</td>
+                <td>${new Date(new Date() - new Date(customer.birthday)).getFullYear() - 1970 || ''}</td>
                 <td>${customer.phone}</td>
                 <td>
                     <button class="btn btn-warning btn-sm" onclick="editCustomer(${customer.id})">
@@ -67,17 +69,16 @@ function renderTable() {
 }
 
 function renderPagination(totalRows) {
-    const totalPages = Math.ceil(totalRows / rowsPerPage);
-    const pagination = document.getElementById("pagination");
-    pagination.innerHTML = "";
-
-    for (let i = 1; i <= totalPages; i++) {
-        pagination.innerHTML += `
-            <li class="page-item ${i === currentPagePagination ? "active" : ""}">
-                <a class="page-link" href="#" onclick="changePage(${i})">${i}</a>
-            </li>
-        `;
-    }
+    renderPager({
+        containerId: "pagination",
+        totalItems: totalRows,
+        pageSize: rowsPerPage,
+        currentPage: currentPagePagination,
+        onPageChange: (next) => {
+            currentPagePagination = next;
+            renderTable();
+        },
+    });
 }
 
 function changePage(page) {
@@ -109,7 +110,7 @@ document.getElementById("createCustomerBtn").addEventListener("click", () => {
     new bootstrap.Modal(document.getElementById("customerModal")).show();
 });
 
-document.getElementById("customerForm").addEventListener("submit", function(e) {
+document.getElementById("customerForm").addEventListener("submit", function (e) {
     e.preventDefault();
     clearFormMessage();
 
@@ -126,9 +127,9 @@ document.getElementById("customerForm").addEventListener("submit", function(e) {
     const phone = document.getElementById("phone").value.trim();
     // Validation
     const invalidChars = /<.*?>|[{}[\]<>]/;
-    const cityRegex = /^[\p{L}\s-]+$/u; 
+    const cityRegex = /^[\p{L}\s-]+$/u;
     const addressRegex = /^[\p{L}\p{N}\s.,#-]+$/u;
-    if ([name, email,gender ,country,city,address,birthday, password, phone].some(field => invalidChars.test(field))) {
+    if ([name, email, gender, country, city, address, birthday, password, phone].some(field => invalidChars.test(field))) {
         showFormMessage("Entries must not contain HTML codes or prohibited symbols.");
         return;
     }
@@ -196,12 +197,12 @@ document.getElementById("customerForm").addEventListener("submit", function(e) {
     if (address.length < 5 || !/[a-zA-Z]/.test(address)) {
         showFormMessage("Address must be at least 5 characters and include letters.");
         return;
-    } 
+    }
     if (!addressRegex.test(address)) {
         showFormMessage("Address contains invalid characters.");
         return;
     }
-    
+
     const birthdayValue = new Date(birthday);
     const today = new Date();
 
@@ -242,8 +243,8 @@ document.getElementById("customerForm").addEventListener("submit", function(e) {
         city: city,
         address: address,
         birthday: birthday,
-        password: password 
-            ? encryptText(password) 
+        password: password
+            ? encryptText(password)
             : (id ? customers.find(u => u.id == id).password : ""),
         phone: phone
     };
@@ -305,35 +306,35 @@ renderTable();
 const countryCities = {
     USA: ["New York", "Los Angeles", "Chicago"],
     GBR: ["London", "Manchester", "Birmingham"],
-    EGY: [  "Cairo",
-            "Alexandria",
-            "Giza",
-            "Port Said",
-            "Suez",
-            "Luxor",
-            "Aswan",
-            "Ismailia",
-            "Beheira",
-            "Dakahlia",
-            "Damietta",
-            "Sharqia",
-            "Qalyubia",
-            "Kafr El Sheikh",
-            "Minya",
-            "Faiyum",
-            "Beni Suef",
-            "Qena",
-            "Sohag",
-            "Red Sea",
-            "New Valley",
-            "North Sinai",
-            "South Sinai",
-            "Matrouh",
-            "Ash Sharqiyah",
-            "Gharbia",
-            "Menoufia",
-            "Assiut"
-        ],
+    EGY: ["Cairo",
+        "Alexandria",
+        "Giza",
+        "Port Said",
+        "Suez",
+        "Luxor",
+        "Aswan",
+        "Ismailia",
+        "Beheira",
+        "Dakahlia",
+        "Damietta",
+        "Sharqia",
+        "Qalyubia",
+        "Kafr El Sheikh",
+        "Minya",
+        "Faiyum",
+        "Beni Suef",
+        "Qena",
+        "Sohag",
+        "Red Sea",
+        "New Valley",
+        "North Sinai",
+        "South Sinai",
+        "Matrouh",
+        "Ash Sharqiyah",
+        "Gharbia",
+        "Menoufia",
+        "Assiut"
+    ],
     SAU: ["Riyadh", "Jeddah", "Dammam"],
     FRA: ["Paris", "Lyon", "Marseille"]
 };
@@ -355,3 +356,6 @@ countrySelect.addEventListener("change", function () {
         });
     }
 });
+
+window.editCustomer = editCustomer;
+window.deleteCustomer = deleteCustomer;

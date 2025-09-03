@@ -1,7 +1,11 @@
+import { renderPagination as renderPager } from "./include/pagination.js";
 
+/* =============================== */
+/*           PROFILE PAGE          */
+/* =============================== */
 
 function saveOrUpdateCustomer(email, birthday, phone, password) {
-  const FirstName = document.getElementById("fnameInput").value;
+  const firstName = document.getElementById("fnameInput").value;
   const lastName = document.getElementById("lnameInput").value;
   const gender = document.getElementById("genderInput").value;
   const age = calculateAge(birthday);
@@ -17,7 +21,6 @@ function saveOrUpdateCustomer(email, birthday, phone, password) {
 
   let customers = JSON.parse(localStorage.getItem("customers")) || [];
   const existingIndex = customers.findIndex(cust => String(cust.id) === String(currentCustomerId));
-
   if (existingIndex === -1) {
     console.warn("Cannot update: Customer not found.");
     return;
@@ -27,7 +30,7 @@ function saveOrUpdateCustomer(email, birthday, phone, password) {
   const fileInput = document.querySelector("input[type='file']");
   if (fileInput && fileInput.files[0]) {
     const reader = new FileReader();
-    reader.onload = function (e) {
+    reader.onload = (e) => {
       profileImage = e.target.result;
       updateCustomerData();
     };
@@ -38,9 +41,9 @@ function saveOrUpdateCustomer(email, birthday, phone, password) {
 
   function updateCustomerData() {
     const updatedData = {
-      ...customers[existingIndex], 
+      ...customers[existingIndex],
       profileImage,
-      FirstName,
+      firstName,
       lastName,
       email,
       gender,
@@ -52,29 +55,31 @@ function saveOrUpdateCustomer(email, birthday, phone, password) {
       phone,
       password
     };
+
+    // keep existing encrypted password if no new password provided
     if (password && password.trim() !== "") {
       updatedData.password = encryptText(password);
     } else {
       updatedData.password = customers[existingIndex].password;
     }
+
     customers[existingIndex] = updatedData;
     localStorage.setItem("customers", JSON.stringify(customers));
-    localStorage.setItem("customerSession", String(customers[existingIndex].id)); 
-    loadProfile(); 
-     
+    localStorage.setItem("customerSession", String(customers[existingIndex].id));
+    loadProfile();
   }
 }
 
 function fillEditForm(currentCustomer) {
-  document.getElementById("fnameInput").value = currentCustomer.FirstName || "";
+  document.getElementById("fnameInput").value = currentCustomer.firstName || "";
   document.getElementById("lnameInput").value = currentCustomer.lastName || "";
   document.getElementById("emailInput").value = currentCustomer.email || "";
   document.getElementById("genderInput").value = currentCustomer.gender || "";
   document.getElementById("dobInput").value = currentCustomer.birthday || "";
   document.getElementById("phoneInput").value = currentCustomer.phone || "";
-  document.getElementById("passwordInput").value =  "";
+  document.getElementById("passwordInput").value = "";
   document.getElementById("countryInput").value = currentCustomer.country || "";
-  populateCities(); 
+  populateCities();
   document.getElementById("cityInput").value = currentCustomer.city || "";
   document.getElementById("addressInput").value = currentCustomer.address || "";
 }
@@ -86,15 +91,15 @@ function showEditForm() {
   const currentID = localStorage.getItem("customerSession");
   const customers = JSON.parse(localStorage.getItem("customers")) || [];
   const currentCustomer = customers.find(c => String(c.id) === String(currentID));
-  if (currentCustomer) {
-    fillEditForm(currentCustomer);
-  }
+  if (currentCustomer) fillEditForm(currentCustomer);
 }
 
 function cancelEdit() {
   document.getElementById("ordersSection").style.display = "block";
   document.getElementById("editProfileForm").style.display = "none";
 }
+
+/* ---------- validation helpers ---------- */
 
 function showError(inputId, message) {
   const input = document.getElementById(inputId);
@@ -111,7 +116,7 @@ function showError(inputId, message) {
 function clearError(inputId) {
   const input = document.getElementById(inputId);
   input.classList.remove("is-invalid");
-  let errorElem = input.nextElementSibling;
+  const errorElem = input.nextElementSibling;
   if (errorElem && errorElem.classList.contains("error-message")) {
     errorElem.textContent = "";
   }
@@ -119,85 +124,62 @@ function clearError(inputId) {
 
 function saveProfile(e) {
   e.preventDefault();
+
   let isValid = true;
-  const customers = JSON.parse(localStorage.getItem("customers")) || [];
   const email = document.getElementById("emailInput").value.trim();
   const birthday = document.getElementById("dobInput").value;
   const phone = document.getElementById("phoneInput").value.trim();
   const password = document.getElementById("passwordInput").value;
   const address = document.getElementById("addressInput").value.trim();
 
-
-
   if (address.length < 5 || !/[a-zA-Z]/.test(address)) {
     showError("addressInput", "Address must be at least 5 characters and include letters.");
     isValid = false;
-  } else {
-    clearError("addressInput");
-  }
+  } else clearError("addressInput");
 
   if (!/^[A-Za-z\s]+$/.test(document.getElementById("fnameInput").value.trim())) {
     showError("fnameInput", "First name must contain only letters.");
     isValid = false;
-  } else {
-    clearError("fnameInput");
-  }
+  } else clearError("fnameInput");
 
   if (!/^[A-Za-z\s]+$/.test(document.getElementById("lnameInput").value.trim())) {
     showError("lnameInput", "Last name must contain only letters.");
     isValid = false;
-  } else {
-    clearError("lnameInput");
-  }
+  } else clearError("lnameInput");
 
   if (!/^[a-zA-Z][\w.-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email)) {
     showError("emailInput", "Enter a valid email address");
     isValid = false;
-  }  else {
-    clearError("emailInput");
-  }
+  } else clearError("emailInput");
 
   if (birthday) {
     const year = new Date(birthday).getFullYear();
     if (year > 2015 || year < 1930) {
       showError("dobInput", "Year of birth must be between 1930 and 2015");
       isValid = false;
-    } else {
-      clearError("dobInput");
-    }
-  } else {
-    clearError("dobInput");
-  }
+    } else clearError("dobInput");
+  } else clearError("dobInput");
 
   if (!/^(010|011|012|015)[0-9]{8}$/.test(phone)) {
     showError("phoneInput", "Enter a valid Egyptian phone number (e.g., 010xxxxxxxx)");
     isValid = false;
-  } else {
-    clearError("phoneInput");
-  }
+  } else clearError("phoneInput");
 
   if (password && password.trim() !== "") {
     if (!/^(?=.*[A-Z]).{8,}$/.test(password)) {
       showError("passwordInput", "Password must be at least 8 characters and contain at least 1 uppercase letter");
       isValid = false;
-    } else {
-      clearError("passwordInput");
-    }
-  } else {
-    clearError("passwordInput");
-  }
+    } else clearError("passwordInput");
+  } else clearError("passwordInput");
 
   if (!isValid) return;
-  
-  
 
   saveOrUpdateCustomer(email, birthday, phone, password);
-
   loadProfile();
   cancelEdit();
 }
 
-
+/* ---------- utilities ---------- */
 
 function calculateAge(birthday) {
   if (!birthday) return "-";
@@ -205,9 +187,7 @@ function calculateAge(birthday) {
   const birthDate = new Date(birthday);
   let age = today.getFullYear() - birthDate.getFullYear();
   const m = today.getMonth() - birthDate.getMonth();
-  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-    age--;
-  }
+  if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) age--;
   return age;
 }
 
@@ -236,82 +216,87 @@ function populateCities() {
   }
 }
 
+/* ======== Reviews ======== */
 
 let selectedRating = 0;
 document.querySelectorAll("#starRating .star").forEach(star => {
   star.addEventListener("click", function () {
     selectedRating = this.getAttribute("data-value");
-    document.querySelectorAll("#starRating .star").forEach(s => {
-      s.classList.remove("text-warning");
-    });
+    document.querySelectorAll("#starRating .star").forEach(s => s.classList.remove("text-warning"));
     for (let i = 0; i < selectedRating; i++) {
       document.querySelectorAll("#starRating .star")[i].classList.add("text-warning");
     }
   });
 });
 
-function openReviewModal(productId,orderId) {
+function openReviewModal(productId, orderId) {
   document.getElementById("reviewOrderId").value = orderId;
+
   const customerId = localStorage.getItem("customerSession");
   selectedRating = 0;
   document.querySelectorAll("#starRating .star").forEach(s => s.classList.remove("text-warning"));
-  let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
-  let existingReview = reviews.find(r => r.product_id == productId && r.customer_id == customerId);
+
+  const reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+  const existingReview = reviews.find(r => r.product_id == productId && r.customer_id == customerId);
   if (existingReview) {
-    selectedRating = existingReview.review; 
+    selectedRating = existingReview.review;
     for (let i = 0; i < selectedRating; i++) {
       document.querySelectorAll("#starRating .star")[i].classList.add("text-warning");
     }
   }
+
   document.getElementById("reviewProductId").value = productId;
-  let modal = new bootstrap.Modal(document.getElementById("reviewModal"));
-  modal.show();
+  new bootstrap.Modal(document.getElementById("reviewModal")).show();
 }
 
 function submitReview() {
   const customerId = localStorage.getItem("customerSession");
   const productId = document.getElementById("reviewProductId").value;
+
   if (selectedRating === 0) {
     alert("Please select a star rating!");
     return;
   }
 
   let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
-  let existingReviewIndex = reviews.findIndex(r => r.product_id == productId && r.customer_id == customerId);
-  if (existingReviewIndex !== -1) {
-    reviews[existingReviewIndex].review = selectedRating;
+  const idx = reviews.findIndex(r => r.product_id == productId && r.customer_id == customerId);
+
+  if (idx !== -1) {
+    reviews[idx].review = selectedRating;
     alert("✏️ Your review has been updated!");
-  }else{
-    let newReview = {
+  } else {
+    reviews.push({
       id: reviews.length + 1,
       product_id: productId,
       customer_id: customerId,
       review: selectedRating
-    };
-    reviews.push(newReview);
+    });
     alert("✅ Review submitted successfully!");
   }
+
   localStorage.setItem("reviews", JSON.stringify(reviews));
-  let reviewModal = bootstrap.Modal.getInstance(document.getElementById('reviewModal'));
-  reviewModal.hide();
+
+  const modal = bootstrap.Modal.getInstance(document.getElementById('reviewModal'));
+  modal?.hide();
   document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
 }
 
 document.getElementById('reviewModal').addEventListener('shown.bs.modal', function () {
-    if (window.pendingReviewData) {
-        openReviewModal(window.pendingReviewData.productId, window.pendingReviewData.orderId);
-        window.pendingReviewData = null; // reset
-    }
+  if (window.pendingReviewData) {
+    openReviewModal(window.pendingReviewData.productId, window.pendingReviewData.orderId);
+    window.pendingReviewData = null;
+  }
 });
 document.getElementById('reviewModal').addEventListener('hidden.bs.modal', function () {
-    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
-    document.body.classList.remove('modal-open');
-    document.body.style = ""; // إزالة أي overflow أو padding
+  document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+  document.body.classList.remove('modal-open');
+  document.body.style = "";
 });
 
+/* =============================== */
+/*           ORDERS LIST           */
+/* =============================== */
 
-
-// ==========================================================
 let currentPagePagination = 1;
 const rowsPerPage = 5;
 
@@ -325,14 +310,13 @@ function loadProfile() {
 
   const customers = JSON.parse(localStorage.getItem("customers")) || [];
   const currentCustomer = customers.find(c => String(c.id) === String(currentID));
-
   if (!currentCustomer) {
     alert("Profile not found");
     return;
   }
 
   const displayName =
-    (currentCustomer.FirstName || "") +
+    (currentCustomer.firstName || "") +
     (currentCustomer.lastName ? " " + currentCustomer.lastName : "");
 
   document.getElementById("profileImage").src = currentCustomer.profileImage || "../assets/img/defultUser.webp";
@@ -340,14 +324,13 @@ function loadProfile() {
   document.getElementById("profileEmail").textContent = currentCustomer.email || "Not provided";
   document.getElementById("profileGender").textContent = "Gender: " + (currentCustomer.gender || "-");
   document.getElementById("profileDOB").textContent = "Date Of Birth: " + (currentCustomer.birthday || "-");
-  document.getElementById("profileAge").textContent = "Age: " + ( Math.floor((new Date() - new Date(currentCustomer.birthday).getTime()) / (365.25 * 24 * 60 * 60 * 1000)) || "-");
+  document.getElementById("profileAge").textContent = "Age: " + (calculateAge(currentCustomer.birthday) || "-");
   document.getElementById("profileCountry").textContent = "Country: " + (currentCustomer.country || "-");
   document.getElementById("profileCity").textContent = "City: " + (currentCustomer.city || "-");
   document.getElementById("profileAddress").textContent = "Address: " + (currentCustomer.address || "-");
   document.getElementById("profilePhone").textContent = "Phone: " + (currentCustomer.phone || "-");
 }
 
-/* ========== ORDERS WITH PAGINATION ========== */
 function loadOrders() {
   const currentID = localStorage.getItem("customerSession");
   const orders = JSON.parse(localStorage.getItem("orders")) || [];
@@ -363,7 +346,6 @@ function loadOrders() {
     return;
   }
 
-  // حساب البداية والنهاية لكل صفحة
   const start = (currentPagePagination - 1) * rowsPerPage;
   const paginatedOrders = customerOrders.slice(start, start + rowsPerPage);
 
@@ -373,13 +355,13 @@ function loadOrders() {
 
     let actionBtn = "";
     if (order.status === "Cancelled") {
-      actionBtn = `<button class="btn btn-danger btn-sm disabled" disabled>Cancelled</button>`;   
+      actionBtn = `<button class="btn btn-danger btn-sm disabled" disabled>Cancelled</button>`;
     } else if (order.status !== "Completed") {
       actionBtn = `<button class="btn btn-danger btn-sm" onclick="cancelOrder(${order.id})">Cancel</button>`;
     } else {
       actionBtn = `
-        <button class="btn btn-success btn-sm" 
-          data-bs-toggle="modal" 
+        <button class="btn btn-success btn-sm"
+          data-bs-toggle="modal"
           data-bs-target="#reviewModal"
           onclick="window.pendingReviewData={productId: ${order.product_id}, orderId: ${order.id}}">
           Review
@@ -392,46 +374,37 @@ function loadOrders() {
       <td class="text-center">${order.id}</td>
       <td class="text-center">${productName}</td>
       <td class="text-center">${order.status}</td>
-      <td class="text-center">${order.totalPrice} EGP</td>
+      <td class="text-center">${order.totalPrice.toFixed(2)} EGP</td>
       <td class="text-center">${order.quntity}</td>
-      <td class="text-center">${order.totalPrice * order.quntity} EGP</td>
+      <td class="text-center">${(order.totalPrice * order.quntity).toFixed(2)} EGP</td>
       <td class="text-center">${actionBtn}</td>
     `;
     tbody.appendChild(tr);
   });
 
-  renderPagination(customerOrders.length);
+  renderOrdersPagination(customerOrders.length);
 }
 
-function renderPagination(totalRows) {
-  const totalPages = Math.ceil(totalRows / rowsPerPage);
-  const pagination = document.getElementById("pagination");
-  pagination.innerHTML = "";
-
-  for (let i = 1; i <= totalPages; i++) {
-    pagination.innerHTML += `
-      <li class="page-item ${i === currentPagePagination ? "active" : ""}">
-        <a class="page-link" href="#" onclick="changePage(${i})">${i}</a>
-      </li>
-    `;
-  }
-}
-
-function changePage(page) {
-  currentPagePagination = page;
-  loadOrders();
+function renderOrdersPagination(totalRows) {
+  renderPager({
+    containerId: "pagination",
+    totalItems: totalRows,
+    pageSize: rowsPerPage,
+    currentPage: currentPagePagination,
+    onPageChange: (next) => {
+      currentPagePagination = next;
+      loadOrders();
+    },
+  });
 }
 
 /* ========== CANCEL ORDER ========== */
 function cancelOrder(orderId) {
-  if (!confirm("Are you sure you want to cancel this order?")) {
-    return;
-  }
+  if (!confirm("Are you sure you want to cancel this order?")) return;
+
   let orders = JSON.parse(localStorage.getItem("orders")) || [];
   orders = orders.map(o => {
-    if (o.id === orderId && o.status != "Completed") {
-      o.status = "Cancelled";
-    }
+    if (o.id === orderId && o.status !== "Completed") o.status = "Cancelled";
     return o;
   });
   localStorage.setItem("orders", JSON.stringify(orders));
@@ -445,5 +418,17 @@ function logoutCustomer() {
 }
 
 /* ========== INITIAL LOAD ========== */
+// Expose functions used by inline HTML handlers
+window.showEditForm   = showEditForm;
+window.cancelEdit     = cancelEdit;
+window.saveProfile    = saveProfile;
+window.populateCities = populateCities;
+
+window.openReviewModal = openReviewModal;
+window.submitReview    = submitReview;
+
+window.cancelOrder    = cancelOrder;
+window.logoutCustomer = logoutCustomer;
+
 loadProfile();
 loadOrders();
